@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Algoritmo — Diarrea Bacteriana (agente por agente)</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{background:#eceae5;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  body{font-family:Arial,Helvetica,sans-serif;color:#1c1c1c;padding:12px;}
+  .sheet{background:#fff;width:287mm;min-height:200mm;margin:0 auto;padding:9mm 8mm;border:1px solid #ccc;}
+  h1{font-size:16px;font-weight:700;text-align:center;}
+  .sub{font-size:9.5px;text-align:center;color:#555;margin:2px 0 8px;font-style:italic;}
+
+  .entry{border:1px solid #2b2b2b;background:#f2f2f2;border-radius:3px;padding:5px 10px;text-align:center;font-size:10px;line-height:1.3;max-width:680px;margin:0 auto;}
+  .entry b{font-size:11px;}
+  .stem{width:1.5px;height:10px;background:#2b2b2b;margin:0 auto;}
+  .hbar{height:1.5px;background:#2b2b2b;width:92%;margin:0 auto;}
+
+  .cols{display:flex;justify-content:space-between;align-items:flex-start;gap:7px;margin-top:0;}
+  .col{flex:1;display:flex;flex-direction:column;align-items:center;min-width:0;}
+  .col .drop{width:1.5px;height:9px;background:#2b2b2b;}
+  .agent{background:#9fc5e8;border:1px solid #2f6094;color:#143553;border-radius:3px;font-weight:700;font-size:9.6px;text-align:center;padding:4px 4px;width:100%;line-height:1.2;}
+  .box{border:1px solid #2b2b2b;border-radius:3px;background:#fff;padding:4px 5px;text-align:center;font-size:8.6px;line-height:1.26;width:100%;margin-top:5px;}
+  .box .t{font-weight:700;display:block;font-size:8.8px;margin-bottom:1px;}
+  .box.dx{background:#f6e6c5;border-color:#9a7a2e;}
+  .box.tx{background:#e7f0e6;border-color:#3f7e44;}
+  .box.alert{background:#f7dcd7;border-color:#a8392a;}
+  .arw{width:1.5px;height:7px;background:#2b2b2b;margin:1px auto;}
+  .sub3{font-size:8px;color:#444;}
+
+  .foot{font-size:8.3px;color:#666;text-align:center;margin-top:9px;border-top:1px dashed #bbb;padding-top:6px;}
+  .legend{font-size:7.8px;color:#888;text-align:center;margin-top:4px;}
+
+  @media print{
+    @page{size:A4 landscape;margin:0;}
+    html,body{background:#fff;padding:0;}
+    .sheet{border:none;width:297mm;min-height:auto;padding:7mm 7mm;}
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+  <h1>DIARREA BACTERIANA — Plan de Trabajo por Agente</h1>
+  <div class="sub">Diagnóstico (Dx) y tratamiento de primera línea (Tx) · IDSA 2017 / ACG 2016 / WHO</div>
+
+  <div class="entry">
+    <b>DIARREA AGUDA INFECCIOSA (&lt; 14 días)</b><br>
+    Historia + examen + valorar deshidratación · estudiar si fiebre, sangre, enf. moderada-grave, &gt;7 días, inmunosupresión o brote<br>
+    Eje diagnóstico: <b>panel multiplex PCR GI + coprocultivo dirigido</b> (leucocitos/lactoferrina fecal NO de rutina)
+  </div>
+  <div class="stem"></div>
+  <div class="hbar"></div>
+
+  <div class="cols">
+
+    <!-- Campylobacter -->
+    <div class="col">
+      <div class="drop"></div>
+      <div class="agent">Campylobacter jejuni</div>
+      <div class="box"><span class="t">Clínica</span>Pollo mal cocido · dolor tipo apendicitis · Guillain-Barré</div>
+      <div class="arw"></div>
+      <div class="box dx"><span class="t">Dx</span>Coprocultivo Skirrow 42 °C microaerófilo · PCR GI</div>
+      <div class="arw"></div>
+      <div class="box tx"><span class="t">Tx</span>Soporte; si grave: azitromicina 500 mg/d ×3 d (evitar quinolona empírica)</div>
+    </div>
+
+    <!-- Salmonella -->
+    <div class="col">
+      <div class="drop"></div>
+      <div class="agent">Salmonella no tifoidea</div>
+      <div class="box"><span class="t">Clínica</span>Huevos/aves/reptiles · riesgo bacteriemia y foco endovascular</div>
+      <div class="arw"></div>
+      <div class="box dx"><span class="t">Dx</span>Coprocultivo + PCR · hemocultivo si riesgo</div>
+      <div class="arw"></div>
+      <div class="box tx"><span class="t">Tx</span>NO ATB si leve. Si riesgo/grave: cipro, azitro o ceftriaxona</div>
+    </div>
+
+    <!-- Shigella -->
+    <div class="col">
+      <div class="drop"></div>
+      <div class="agent">Shigella spp.</div>
+      <div class="box"><span class="t">Clínica</span>Disentería (sangre+moco+pujo) · dosis infectante mínima</div>
+      <div class="arw"></div>
+      <div class="box dx"><span class="t">Dx</span>Coprocultivo + PCR · vigilar SUH (S. dysenteriae)</div>
+      <div class="arw"></div>
+      <div class="box tx"><span class="t">Tx</span>Azitromicina 500→250 mg ×4 d · o cipro/ceftriaxona</div>
+    </div>
+
+    <!-- E. coli -->
+    <div class="col">
+      <div class="drop"></div>
+      <div class="agent">E. coli diarreogénica</div>
+      <div class="box"><span class="t">ETEC — viajero</span>Acuosa · Dx clínico/PCR · Tx azitro 1 g o rifaximina</div>
+      <div class="box"><span class="t">EIEC</span>Disentería · manejo como Shigella</div>
+      <div class="arw"></div>
+      <div class="box alert"><span class="t">EHEC / STEC O157</span>Sangre sin fiebre → agar Sorbitol-MacConkey + toxina Shiga (EIA/PCR) · vigilar SUH<br><b>⚠ SOLO soporte · NO ATB ni antimotílicos</b></div>
+    </div>
+
+    <!-- Vibrio -->
+    <div class="col">
+      <div class="drop"></div>
+      <div class="agent">Vibrio cholerae</div>
+      <div class="box"><span class="t">Clínica</span>"Agua de arroz" · deshidratación masiva en horas</div>
+      <div class="arw"></div>
+      <div class="box dx"><span class="t">Dx</span>Agar TCBS · campo oscuro ("estrella fugaz") · test rápido</div>
+      <div class="arw"></div>
+      <div class="box tx"><span class="t">Tx</span><b>Rehidratación (eje)</b> + doxiciclina 300 mg dosis única</div>
+    </div>
+
+    <!-- C. difficile -->
+    <div class="col">
+      <div class="drop"></div>
+      <div class="agent">Clostridioides difficile</div>
+      <div class="box"><span class="t">Clínica</span>ATB reciente / hospital · colitis pseudomembranosa</div>
+      <div class="arw"></div>
+      <div class="box dx"><span class="t">Dx (2 pasos)</span>GDH + toxina A/B (EIA) → discordante: NAAT/PCR · solo heces no formadas</div>
+      <div class="arw"></div>
+      <div class="box tx"><span class="t">Tx</span>Fidaxomicina 200 mg c/12 h ×10 d · o vancomicina VO 125 mg c/6 h</div>
+    </div>
+
+    <!-- Yersinia -->
+    <div class="col">
+      <div class="drop"></div>
+      <div class="agent">Yersinia enterocolitica</div>
+      <div class="box"><span class="t">Clínica</span>Cerdo/refrigerados · pseudoapendicitis (ileítis terminal)</div>
+      <div class="arw"></div>
+      <div class="box dx"><span class="t">Dx</span>Agar CIN + enriquecimiento en frío · PCR · imagen vs apendicitis</div>
+      <div class="arw"></div>
+      <div class="box tx"><span class="t">Tx</span>Soporte; si grave: TMP-SMX, quinolona o aminoglucósido</div>
+    </div>
+
+  </div>
+
+  <div class="foot">
+    <b>Confirmación:</b> aislamiento en coprocultivo o detección por panel multiplex PCR GI. &nbsp;|&nbsp; <b>¿Qué NO esperaría?</b> Eosinofilia o diarrea &gt;14 días sin germen → reorientar a parásitos.
+  </div>
+  <div class="legend">
+    PCR GI: panel multiplex gastrointestinal · ETEC/EIEC/EHEC/STEC: E. coli enterotoxigénica/enteroinvasiva/enterohemorrágica-productora de toxina Shiga · SUH: síndrome urémico hemolítico · GDH: glutamato deshidrogenasa · TCBS: tiosulfato-citrato-bilis-sacarosa · CIN: cefsulodina-irgasan-novobiocina · TMP-SMX: trimetoprim-sulfametoxazol.
+  </div>
+</div>
+</body>
+</html>

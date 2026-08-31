@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Algoritmo — Diarrea Parasitaria (agente por agente)</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{background:#eceae5;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  body{font-family:Arial,Helvetica,sans-serif;color:#1c1c1c;padding:12px;}
+  .sheet{background:#fff;width:287mm;min-height:200mm;margin:0 auto;padding:9mm 8mm;border:1px solid #ccc;}
+  h1{font-size:16px;font-weight:700;text-align:center;}
+  .sub{font-size:9.5px;text-align:center;color:#555;margin:2px 0 8px;font-style:italic;}
+
+  .entry{border:1px solid #2b2b2b;background:#f2f2f2;border-radius:3px;padding:5px 10px;text-align:center;font-size:10px;line-height:1.32;max-width:720px;margin:0 auto;}
+  .entry b{font-size:11px;}
+  .stem{width:1.5px;height:10px;background:#2b2b2b;margin:0 auto;}
+  .hbar{height:1.5px;background:#2b2b2b;width:66%;margin:0 auto;}
+
+  .cols{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;}
+  .col{flex:1;display:flex;flex-direction:column;align-items:center;min-width:0;}
+  .col .drop{width:1.5px;height:9px;background:#2b2b2b;}
+  .ghdr{color:#fff;border-radius:3px;font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.03em;text-align:center;padding:5px;width:100%;}
+  .ghdr.g1{background:#2f6094;}
+  .ghdr.g2{background:#7a5c1e;}
+  .ghdr.g3{background:#3f6b3f;}
+  .gnote{font-size:8.4px;color:#555;text-align:center;margin:3px 0 2px;font-style:italic;line-height:1.25;}
+
+  .agent{border:1px solid #2b2b2b;border-radius:3px;background:#fff;padding:5px 7px;text-align:left;font-size:9px;line-height:1.32;width:100%;margin-top:6px;}
+  .agent .nm{font-weight:700;font-size:9.6px;display:block;color:#143553;margin-bottom:1px;}
+  .agent .dx{display:block;}
+  .agent .tx{display:block;color:#27602c;font-weight:600;margin-top:1px;}
+  .agent.alert{background:#f7dcd7;border-color:#a8392a;}
+  .agent.alert .nm{color:#8a2718;}
+  b.k{color:#9a6a00;}
+
+  .foot{font-size:8.5px;color:#666;text-align:center;margin-top:11px;border-top:1px dashed #bbb;padding-top:6px;}
+  .legend{font-size:7.9px;color:#888;text-align:center;margin-top:4px;}
+
+  @media print{
+    @page{size:A4 landscape;margin:0;}
+    html,body{background:#fff;padding:0;}
+    .sheet{border:none;width:297mm;min-height:auto;padding:8mm 8mm;}
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+  <h1>DIARREA PARASITARIA — Plan de Trabajo por Agente</h1>
+  <div class="sub">Diagnóstico (Dx) y tratamiento (Tx) · CDC DPDx / WHO / WGO</div>
+
+  <div class="entry">
+    <b>SOSPECHA:</b> diarrea persistente (&gt;14 d) / crónica · viajes · agua-alimentos no tratados · inmunosupresión (VIH) · eosinofilia<br>
+    <b>Prueba núcleo:</b> examen coproparasitológico SERIADO (3 muestras, días alternos) — fresco + concentración
+  </div>
+  <div class="stem"></div>
+  <div class="hbar"></div>
+
+  <div class="cols">
+
+    <!-- PROTOZOOS -->
+    <div class="col">
+      <div class="drop"></div>
+      <div class="ghdr g1">Protozoos luminales</div>
+      <div class="gnote">Antígeno/PCR &gt; microscopía</div>
+      <div class="agent">
+        <span class="nm">Giardia lamblia</span>
+        <span class="dx"><b class="k">Dx:</b> antígeno EIA/DFA o PCR; aspirado duodenal si neg.</span>
+        <span class="tx">Tx: tinidazol 2 g única o metronidazol ×5–7 d</span>
+      </div>
+      <div class="agent">
+        <span class="nm">Entamoeba histolytica</span>
+        <span class="dx"><b class="k">Dx:</b> antígeno/PCR (distingue de E. dispar); serología si absceso</span>
+        <span class="tx">Tx: metronidazol → paromomicina (luminal)</span>
+      </div>
+    </div>
+
+    <!-- COCCIDIAS -->
+    <div class="col">
+      <div class="drop"></div>
+      <div class="ghdr g2">Coccidias</div>
+      <div class="gnote">Tinción ácido-alcohol resistente modificada (Kinyoun) ± antígeno/PCR · pensar VIH</div>
+      <div class="agent">
+        <span class="nm">Cryptosporidium</span>
+        <span class="dx"><b class="k">Dx:</b> ooquistes 4–6 µm; antígeno/PCR</span>
+        <span class="tx">Tx: nitazoxanida ×3 d; en VIH → TAR</span>
+      </div>
+      <div class="agent">
+        <span class="nm">Cystoisospora belli</span>
+        <span class="dx"><b class="k">Dx:</b> ooquistes elipsoidales grandes, autofluorescentes; eosinofilia</span>
+        <span class="tx">Tx: TMP-SMX DS c/12 h ×7–10 d</span>
+      </div>
+      <div class="agent">
+        <span class="nm">Cyclospora cayetanensis</span>
+        <span class="dx"><b class="k">Dx:</b> ooquistes 8–10 µm autofluorescentes; PCR (productos frescos)</span>
+        <span class="tx">Tx: TMP-SMX DS c/12 h ×7–10 d</span>
+      </div>
+    </div>
+
+    <!-- HELMINTOS -->
+    <div class="col">
+      <div class="drop"></div>
+      <div class="ghdr g3">Helmintos</div>
+      <div class="gnote">Huevos/larvas en heces (Kato-Katz) + eosinofilia</div>
+      <div class="agent alert">
+        <span class="nm">Strongyloides stercoralis</span>
+        <span class="dx"><b class="k">Dx:</b> LARVAS (no huevos); Baermann/cultivo agar/serología. ⚠ cribar antes de corticoides (hiperinfección)</span>
+        <span class="tx">Tx: ivermectina 200 µg/kg/d ×1–2 d</span>
+      </div>
+      <div class="agent">
+        <span class="nm">Uncinarias (Ancylostoma · Necator)</span>
+        <span class="dx"><b class="k">Dx:</b> huevos; anemia ferropénica</span>
+        <span class="tx">Tx: albendazol 400 mg (mejor 2 dosis) + hierro</span>
+      </div>
+      <div class="agent">
+        <span class="nm">Trichuris trichiura</span>
+        <span class="dx"><b class="k">Dx:</b> huevos "en balón" con tapones bipolares; prolapso rectal</span>
+        <span class="tx">Tx: albendazol 400 mg/d ×3 d</span>
+      </div>
+      <div class="agent">
+        <span class="nm">Ascaris lumbricoides</span>
+        <span class="dx"><b class="k">Dx:</b> huevos mamelonados; Löffler (migración pulmonar)</span>
+        <span class="tx">Tx: albendazol 400 mg dosis única</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="foot">
+    <b>Confirmación:</b> identificación de quiste/trofozoíto, ooquiste, huevo o larva, o antígeno/PCR específico. &nbsp;|&nbsp; <b>¿Qué NO esperaría?</b> Inicio agudo &lt;3 días, febril y autolimitado → más probable bacteriana/viral.
+  </div>
+  <div class="legend">
+    PCR: reacción en cadena de la polimerasa · EIA: enzimoinmunoanálisis · DFA: inmunofluorescencia directa · TMP-SMX DS: trimetoprim-sulfametoxazol doble potencia · TAR: tratamiento antirretroviral · µm: micrómetros.
+  </div>
+</div>
+</body>
+</html>

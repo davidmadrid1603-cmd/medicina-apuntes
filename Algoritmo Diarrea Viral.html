@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Algoritmo — Diarrea Viral (agente por agente)</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{background:#eceae5;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  body{font-family:Arial,Helvetica,sans-serif;color:#1c1c1c;padding:12px;}
+  .sheet{background:#fff;width:287mm;min-height:200mm;margin:0 auto;padding:9mm 8mm;border:1px solid #ccc;}
+  h1{font-size:16px;font-weight:700;text-align:center;}
+  .sub{font-size:9.5px;text-align:center;color:#555;margin:2px 0 8px;font-style:italic;}
+
+  .entry{border:1px solid #2b2b2b;background:#f2f2f2;border-radius:3px;padding:5px 10px;text-align:center;font-size:10px;line-height:1.32;max-width:720px;margin:0 auto;}
+  .entry b{font-size:11px;}
+  .stem{width:1.5px;height:10px;background:#2b2b2b;margin:0 auto;}
+  .hbar{height:1.5px;background:#2b2b2b;width:88%;margin:0 auto;}
+
+  .cols{display:flex;justify-content:space-between;align-items:flex-start;gap:11px;}
+  .col{flex:1;display:flex;flex-direction:column;align-items:center;min-width:0;}
+  .col .drop{width:1.5px;height:9px;background:#2b2b2b;}
+  .agent{background:#9fc5e8;border:1px solid #2f6094;color:#143553;border-radius:3px;font-weight:700;font-size:10.5px;text-align:center;padding:5px 4px;width:100%;line-height:1.2;}
+  .box{border:1px solid #2b2b2b;border-radius:3px;background:#fff;padding:5px 6px;text-align:center;font-size:9.2px;line-height:1.3;width:100%;margin-top:6px;}
+  .box .t{font-weight:700;display:block;font-size:9.4px;margin-bottom:1px;}
+  .box.dx{background:#f6e6c5;border-color:#9a7a2e;}
+  .box.tx{background:#e7f0e6;border-color:#3f7e44;}
+  .arw{width:1.5px;height:8px;background:#2b2b2b;margin:1px auto;}
+
+  .foot{font-size:8.6px;color:#666;text-align:center;margin-top:12px;border-top:1px dashed #bbb;padding-top:7px;}
+  .legend{font-size:8px;color:#888;text-align:center;margin-top:4px;}
+
+  @media print{
+    @page{size:A4 landscape;margin:0;}
+    html,body{background:#fff;padding:0;}
+    .sheet{border:none;width:297mm;min-height:auto;padding:8mm 8mm;}
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+  <h1>DIARREA VIRAL — Plan de Trabajo por Agente</h1>
+  <div class="sub">Causa más frecuente de gastroenteritis aguda · diagnóstico (Dx) y tratamiento (Tx) · IDSA 2017</div>
+
+  <div class="entry">
+    <b>SOSPECHA CLÍNICA</b> — diarrea acuosa + vómitos · SIN sangre · autolimitada (1–3 d) · brote / estacional<br>
+    Leucocitos fecales NEGATIVOS · coprocultivo NO de rutina · <b>diagnóstico clínico</b> en el inmunocompetente<br>
+    Estudiar (RT-PCR / antígeno en heces · panel multiplex GI) solo si: brote · hospitalizado · inmunodeprimido · niño/anciano grave
+  </div>
+  <div class="stem"></div>
+  <div class="hbar"></div>
+
+  <div class="cols">
+
+    <div class="col">
+      <div class="drop"></div>
+      <div class="agent">Norovirus</div>
+      <div class="box"><span class="t">Clínica</span>1ª causa en adultos · vómitos explosivos · brotes (cruceros, hospital)</div>
+      <div class="arw"></div>
+      <div class="box dx"><span class="t">Dx</span>RT-PCR en heces (elección en brotes)</div>
+      <div class="arw"></div>
+      <div class="box tx"><span class="t">Tx</span>Soporte. Higiene con agua y jabón (resiste alcohol)</div>
+    </div>
+
+    <div class="col">
+      <div class="drop"></div>
+      <div class="agent">Rotavirus</div>
+      <div class="box"><span class="t">Clínica</span>Niños &lt;5 a · diarrea grave con deshidratación</div>
+      <div class="arw"></div>
+      <div class="box dx"><span class="t">Dx</span>Antígeno en heces (EIA) / RT-PCR</div>
+      <div class="arw"></div>
+      <div class="box tx"><span class="t">Tx</span>Soporte + zinc. Prevención: vacuna oral</div>
+    </div>
+
+    <div class="col">
+      <div class="drop"></div>
+      <div class="agent">Adenovirus entérico 40/41</div>
+      <div class="box"><span class="t">Clínica</span>Lactantes/niños · curso más prolongado</div>
+      <div class="arw"></div>
+      <div class="box dx"><span class="t">Dx</span>Antígeno / PCR (no crece en cultivo convencional)</div>
+      <div class="arw"></div>
+      <div class="box tx"><span class="t">Tx</span>Soporte</div>
+    </div>
+
+    <div class="col">
+      <div class="drop"></div>
+      <div class="agent">Astrovirus</div>
+      <div class="box"><span class="t">Clínica</span>Niños, ancianos, inmunodeprimidos · cuadro leve</div>
+      <div class="arw"></div>
+      <div class="box dx"><span class="t">Dx</span>RT-PCR / antígeno (panel GI)</div>
+      <div class="arw"></div>
+      <div class="box tx"><span class="t">Tx</span>Soporte</div>
+    </div>
+
+    <div class="col">
+      <div class="drop"></div>
+      <div class="agent">Sapovirus</div>
+      <div class="box"><span class="t">Clínica</span>Brotes en guarderías/geriátricos · leve, vómitos</div>
+      <div class="arw"></div>
+      <div class="box dx"><span class="t">Dx</span>RT-PCR en heces (panel GI)</div>
+      <div class="arw"></div>
+      <div class="box tx"><span class="t">Tx</span>Soporte</div>
+    </div>
+
+  </div>
+
+  <div class="foot">
+    <b>¿Qué NO esperaría?</b> Fiebre alta con sangre/disentería, leucocitos fecales (+) o diarrea &gt;14 días → reorientar a bacteriana o parasitaria.
+  </div>
+  <div class="legend">
+    RT-PCR: reacción en cadena de la polimerasa con transcripción inversa · EIA: enzimoinmunoanálisis · panel GI: panel multiplex gastrointestinal.
+  </div>
+</div>
+</body>
+</html>

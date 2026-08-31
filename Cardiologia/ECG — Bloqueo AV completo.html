@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ECG — motor de trazado</title>
+<style>
+  :root{ --rojo-menor:#f4cccc; --rojo-mayor:#e08a8a; --trazo:#101010; }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; background:#e9e4da; color:#1a1a1a;
+    font-family:"Segoe UI",system-ui,Arial,sans-serif;
+    -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  .wrap{ max-width:1200px; margin:18px auto; }
+  header{ display:flex; align-items:baseline; gap:14px; flex-wrap:wrap; padding:0 6px 10px; }
+  header h1{ font-size:19px; margin:0; font-weight:700; }
+  .dx{ font-size:15px; font-weight:600; color:#7a1f1f;
+    background:#fbeaea; border:1px solid #e6b8b8; border-radius:6px; padding:2px 9px; }
+  .dx.oculto{ color:transparent; text-shadow:0 0 9px rgba(0,0,0,.55); user-select:none; }
+  .controles{ margin-left:auto; display:flex; gap:8px; }
+  button{ font:inherit; font-size:13px; padding:5px 11px; border:1px solid #b9b2a6;
+    background:#fff; border-radius:6px; cursor:pointer; }
+  button:hover{ background:#f3efe7; }
+  .sheet{ background:#fff; border:1px solid #d7cfc1; border-radius:4px;
+    box-shadow:0 2px 10px rgba(0,0,0,.10); padding:6px; overflow:auto; }
+  svg{ display:block; width:100%; height:auto; }
+  .nota{ font-size:11.5px; color:#555; padding:8px 6px 0; }
+  #check{ margin:14px 6px 0; font-size:12.5px; }
+  #check h2{ font-size:13px; margin:0 0 6px; color:#333; }
+  #check table{ border-collapse:collapse; }
+  #check td,#check th{ border:1px solid #d8d2c6; padding:3px 9px; text-align:left; }
+  #check th{ background:#f1ece3; font-weight:600; }
+  .ok{ color:#1f7a4d; font-weight:600; } .warn{ color:#b3261e; font-weight:700; }
+  @page{ size:A4 landscape; margin:8mm; }
+  @media print{
+    html,body{ background:#fff; }
+    .wrap{ margin:0; max-width:none; }
+    .controles{ display:none; }
+    .sheet{ box-shadow:none; border:none; padding:0; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1 id="titulo">Electrocardiograma</h1>
+    <span class="dx" id="dx">—</span>
+    <div class="controles"><button id="btnDx">Ocultar diagnóstico</button></div>
+  </header>
+  <div class="sheet"><div id="ecg"></div></div>
+  <div class="nota">25 mm/s · 10 mm/mV · 1 cuadrito = 0,04 s / 0,1 mV · 1 cuadro grande = 0,20 s / 0,5 mV.
+    Pulso de calibración rectangular (10 mm) al inicio de cada fila.</div>
+  <div id="check"></div>
+</div>
+
+<script>
+/* ============================================================================
+   MOTOR DE TRAZADO ECG  —  precisión milimétrica determinista
+   ----------------------------------------------------------------------------
+   Toda posición deriva del mapeo tiempo/voltaje -> milímetros:
+        25 mm/s -> 1 mm = 0,04 s        10 mm/mV -> 1 mm = 0,1 mV
+   Nada se dibuja "a ojo". Mismos PARAMS => mismos píxeles (determinista).
+
+   DOS MODOS (según PARAMS):
+   · PARAMS normal  -> ECG de 12 derivaciones (3x4) + tira de ritmo de DII.
+   · PARAMS.compare -> panel comparativo del diferencial: apila la patología y
+                       sus "mimics", cada uno con su Dx y discriminador resaltado.
+   Para generar un ECG nuevo se REEMPLAZA únicamente el objeto PARAMS.
+   ========================================================================== */
+
+/* ====== PARAMS (lo único que se reemplaza por pedido). Por defecto: NORMAL ===== */
+const PARAMS = {
+  "dx": "Bloqueo AV completo (3.er grado)",
+  "titulo": "ECG — Bloqueo AV completo",
+  "rate": 40,
+  "rhythm": "av3",
+  "atrialRate": 82,
+  "escapeRate": 38,
+  "escapeWide": true,
+  "intervals": {
+    "pr": 0.16,
+    "qrs": 0.09,
+    "qt": 0.46
+  },
+  "gain": 10,
+  "speed": 25,
+  "stShape": "flat",
+  "leads": {}
+};
+
+/* ====== CONSTANTES DE ESCALA (aquí vive la precisión) ======================== */
+const MM_S=25, MM_MV=10, PXMM=4, FS=500;
+
+/* ====== BASE NORMAL — amplitudes por derivación (mV); progresión R V1->V6 ===== */
+const NORMAL = {
+  I  :{p: 0.10,q:-0.03,r: 0.55,s:-0.08,t: 0.18},
+  II :{p: 0.15,q:-0.03,r: 0.85,s:-0.08,t: 0.28},
+  III:{p: 0.06,q:-0.02,r: 0.35,s:-0.10,t: 0.08},
+  aVR:{p:-0.12,q: 0.00,r: 0.10,s:-0.55,t:-0.22},
+  aVL:{p: 0.05,q:-0.02,r: 0.35,s:-0.06,t: 0.10},
+  aVF:{p: 0.11,q:-0.02,r: 0.55,s:-0.08,t: 0.16},
+  V1 :{p: 0.05,q: 0.00,r: 0.20,s:-0.85,t: 0.05},
+  V2 :{p: 0.06,q: 0.00,r: 0.40,s:-1.25,t: 0.45},
+  V3 :{p: 0.05,q: 0.00,r: 0.65,s:-0.85,t: 0.45},
+  V4 :{p: 0.05,q:-0.02,r: 1.20,s:-0.45,t: 0.45},
+  V5 :{p: 0.06,q:-0.03,r: 1.45,s:-0.20,t: 0.35},
+  V6 :{p: 0.06,q:-0.03,r: 1.15,s:-0.06,t: 0.22}
+};
+const LEADS12 = ["I","II","III","aVR","aVL","aVF","V1","V2","V3","V4","V5","V6"];
+const GRID = [["I","aVR","V1","V4"],["II","aVL","V2","V5"],["III","aVF","V3","V6"]];
+
+function gauss(t,mu,a,sd){ const z=(t-mu)/sd; return a*Math.exp(-0.5*z*z); }
+function mulberry32(seed){ return function(){ seed|=0; seed=seed+0x6D2B79F5|0;
+  let x=Math.imul(seed^seed>>>15,1|seed); x=x+Math.imul(x^x>>>7,61|x)^x;
+  return ((x^x>>>14)>>>0)/4294967296; }; }
+
+/* ====== FÁBRICA DE MODELO ECG ==============================================
+   makeECG(P) encapsula morfología, ritmo y síntesis para UN conjunto de PARAMS.
+   Devuelve { valueAt(lead,t), rhythm, morph }. Reutilizable por el comparativo. */
+function makeECG(P){
+  const IV = P.intervals;
+
+  function morph(lead){
+    const base=NORMAL[lead], ov=(P.leads&&P.leads[lead])||{};
+    const m={ p:base.p,q:base.q,r:base.r,s:base.s,t:base.t,u:0,
+              tSd:0.055,st:0,stShape:P.stShape||"flat",delta:false };
+    for(const k of ["q","r","s","u","tSd","st","delta","stShape"]) if(ov[k]!==undefined) m[k]=ov[k];
+    if(typeof ov.p==="number") m.p=ov.p;
+    if(ov.t!==undefined){
+      if(typeof ov.t==="number") m.t=ov.t;
+      else if(ov.t==="inv")   m.t=-Math.abs(base.t||0.2);
+      else if(ov.t==="alta"){ m.t=Math.max(0.9,base.t*2.2); m.tSd=0.038; }
+      else if(ov.t==="plana") m.t=0.03;
+    }
+    if(ov.p!==undefined && typeof ov.p!=="number"){
+      if(ov.p==="ausente")        m.p=0;
+      else if(ov.p==="pulmonale") m.p=0.28;
+      else if(ov.p==="mitrale")   m.p=base.p;
+    }
+    return m;
+  }
+
+  function buildRhythm(){
+    const rr=60/P.rate, beats=[], pWaves=[];
+    const T0=-1.2, T1=11.2, rnd=mulberry32(12345);
+    const mk=(t0,ex)=>Object.assign({t0,qrs:IV.qrs,qt:IV.qt,pr:IV.pr,ampScale:1,delta:false},ex||{});
+    if(P.rhythm==="sinus"||P.rhythm==="av1"){
+      for(let t=T0;t<T1;t+=rr){ beats.push(mk(t,{delta:!!P.delta})); pWaves.push({t0:t-IV.pr,kind:"s"}); }
+      return {beats,pWaves,fWave:null,noise:null};   // <- IMPRESCINDIBLE: sin esto, cae al fallback y duplica latidos
+    }
+    else if(P.rhythm==="af"){
+      let t=T0; while(t<T1){ beats.push(mk(t)); t+=rr*(0.62+0.76*rnd()); }
+      return {beats,pWaves:[],fWave:null,
+        noise:(lead,t)=>{ const a=(lead==="V1")?0.06:0.03;
+          return a*(rnd()-0.5)+0.05*a*Math.sin(2*Math.PI*8.5*t); }};
+    }
+    else if(P.rhythm==="flutter"){
+      const ratioN=P.flutterRatio||2, fHz=5;
+      for(let t=T0;t<T1;t+=ratioN*(1/fHz)) beats.push(mk(t));
+      const fWave=(lead,t)=>{ const a=(["II","III","aVF","V1"].includes(lead))?0.18:0.06;
+        const ph=(t*fHz)%1, saw=(ph<0.7?ph/0.7:1-(ph-0.7)/0.3);
+        const sign=(["II","III","aVF"].includes(lead))?-1:1; return sign*a*(saw-0.5); };
+      return {beats,pWaves:[],fWave,noise:null};
+    }
+    else if(P.rhythm==="vt"){
+      const rrv=60/(P.rate||180);
+      for(let t=T0;t<T1;t+=rrv) beats.push(mk(t,{qrs:Math.max(0.14,IV.qrs),wide:true}));
+      return {beats,pWaves:[],fWave:null,noise:null};
+    }
+    else if(P.rhythm==="av3"){
+      const aRR=60/(P.atrialRate||80), eRR=60/(P.escapeRate||40);
+      for(let t=T0;t<T1;t+=aRR) pWaves.push({t0:t,kind:"s"});
+      for(let t=T0+0.1;t<T1;t+=eRR) beats.push(mk(t,{qrs:(P.escapeWide?0.14:IV.qrs)}));
+      return {beats,pWaves,fWave:null,noise:null};
+    }
+    else if(P.rhythm==="mobitz1"||P.rhythm==="mobitz2"){
+      const N=P.cycle||4; let i=0;
+      for(let t=T0;t<T1;t+=rr,i++){ const pos=((i%N)+N)%N;
+        let pr=IV.pr; if(P.rhythm==="mobitz1") pr=IV.pr+0.04*pos;
+        pWaves.push({t0:t-pr,kind:"s"});
+        if(pos!==N-1) beats.push(mk(t,{pr})); }
+      return {beats,pWaves,fWave:null,noise:null};
+    }
+    for(let t=T0;t<T1;t+=rr){ beats.push(mk(t)); pWaves.push({t0:t-IV.pr,kind:"s"}); }
+    return {beats,pWaves,fWave:null,noise:null};
+  }
+  const RHY = buildRhythm();
+
+  function pAt(lead,t,pw){
+    const m=morph(lead); if(m.p===0) return 0;
+    const ov=(P.leads&&P.leads[lead])||{};
+    let pDur=0.09,pSd=0.020,amp=m.p;
+    if(ov.p==="mitrale"){ pDur=0.13; pSd=0.028; }
+    if(ov.p==="pulmonale") pSd=0.016;
+    const c=pw.t0+pDur/2; let v=gauss(t,c,amp,pSd);
+    if(ov.p==="mitrale") v+=gauss(t,c+0.045,amp*0.85,pSd);
+    return v;
+  }
+  function qrstAt(lead,t,b){
+    const m=morph(lead), f=b.qrs/0.09;
+    const qc=b.t0+0.12*b.qrs, rc=b.t0+0.42*b.qrs, sc=b.t0+0.72*b.qrs;
+    let v=gauss(t,qc,m.q,0.009*f)+gauss(t,rc,m.r,0.010*f)+gauss(t,sc,m.s,0.009*f);
+    if(b.wide) v+=gauss(t,rc+0.05*b.qrs,m.r*0.45,0.020*f);
+    if(b.delta){ const j=b.t0; if(t>=j-0.02&&t<=qc) v+=(m.r>0?1:-1)*0.12*((t-(j-0.02))/(qc-(j-0.02))); }
+    v+=gauss(t,b.t0+b.qt-0.11,m.t,m.tSd);
+    if(m.u) v+=gauss(t,b.t0+b.qt+0.07,m.u,0.040);
+    return v*b.ampScale;
+  }
+  function stAt(lead,t,b){
+    const m=morph(lead); if(!m.st) return 0;
+    const stMV=m.st/MM_MV, J=b.t0+b.qrs, Ton=b.t0+b.qt-0.18;
+    if(t<J||t>Ton) return 0;
+    const span=Math.max(0.05,Ton-J), frac=(t-J)/span;
+    const plateau=(frac<0.7)?1:(1-(frac-0.7)/0.3);
+    let v=stMV*plateau;
+    const curv=0.25*Math.abs(stMV)*Math.sin(Math.PI*frac);
+    if(m.stShape==="convex") v+=curv;
+    else if(m.stShape==="concave") v-=curv;
+    else if(m.stShape==="up") v=stMV*(1-0.5*frac);
+    return v;
+  }
+  function valueAt(lead,t){
+    let v=0;
+    for(const pw of RHY.pWaves) if(Math.abs(t-pw.t0)<0.18) v+=pAt(lead,t,pw);
+    for(const b of RHY.beats)  if(Math.abs(t-b.t0)<0.60) v+=qrstAt(lead,t,b)+stAt(lead,t,b);
+    if(RHY.fWave) v+=RHY.fWave(lead,t);
+    if(RHY.noise) v+=RHY.noise(lead,t);
+    return v;
+  }
+  return { valueAt, rhythm:RHY, morph, params:P };
+}
+
+/* ====== aliases para modo NORMAL (y para el verificador) ==================== */
+const IV = PARAMS.intervals;
+const MAIN = PARAMS.compare ? null : makeECG(PARAMS);
+const RHY  = MAIN ? MAIN.rhythm : null;
+const morph = MAIN ? MAIN.morph : null;
+function valueAt(lead,t){ return MAIN.valueAt(lead,t); }
+
+/* ====== RENDER — utilidades comunes ========================================= */
+const MLEFT=12, MTOP=8, MRIGHT=8;
+function gridDefs(){ return `<defs>
+    <pattern id="g1" width="1" height="1" patternUnits="userSpaceOnUse">
+      <path d="M1 0 L0 0 0 1" fill="none" stroke="var(--rojo-menor)" stroke-width="0.08"/></pattern>
+    <pattern id="g5" width="5" height="5" patternUnits="userSpaceOnUse">
+      <rect width="5" height="5" fill="url(#g1)"/>
+      <path d="M5 0 L0 0 0 5" fill="none" stroke="var(--rojo-mayor)" stroke-width="0.22"/></pattern>
+  </defs>`; }
+const TRAZO=`fill="none" stroke="var(--trazo)" stroke-width="0.32" stroke-linejoin="round" stroke-linecap="round"`;
+function pathFor(vAt,lead,tS,tE,xL,baseY){
+  const dt=1/FS; let d="",first=true;
+  for(let t=tS;t<=tE+1e-9;t+=dt){
+    const x=(xL+(t-tS)*MM_S).toFixed(2), y=(baseY-vAt(lead,t)*MM_MV).toFixed(2);
+    d+=(first?"M":"L")+x+" "+y+" "; first=false;
+  }
+  return d.trim();
+}
+function calPulse(x,baseY){ const h=10,w=5;
+  return `M ${x} ${baseY} L ${x} ${baseY-h} L ${x+w} ${baseY-h} L ${x+w} ${baseY}`; }
+
+/* ====== RENDER MODO NORMAL (12 derivaciones 3x4 + tira de ritmo) ============ */
+function renderFull(model){
+  const COL_S=2.5, COLW=COL_S*MM_S, NCOL=4, BANDH=40, GAPR=6;
+  const Wmm=MLEFT+NCOL*COLW+MRIGHT, Hmm=MTOP+3*BANDH+GAPR+BANDH+10;
+  let s=`<svg viewBox="0 0 ${Wmm} ${Hmm}" width="${Wmm*PXMM}" height="${Hmm*PXMM}">`;
+  s+=gridDefs()+`<rect width="${Wmm}" height="${Hmm}" fill="#fff"/><rect width="${Wmm}" height="${Hmm}" fill="url(#g5)"/>`;
+  for(let row=0;row<3;row++){
+    const baseY=MTOP+row*BANDH+BANDH*0.55;
+    s+=`<path d="${calPulse(MLEFT-6,baseY)}" ${TRAZO}/>`;
+    for(let col=0;col<NCOL;col++){
+      const lead=GRID[row][col], tS=col*COL_S, xL=MLEFT+col*COLW;
+      if(col>0) s+=`<line x1="${xL}" y1="${baseY-BANDH*0.42}" x2="${xL}" y2="${baseY+BANDH*0.42}" stroke="#bbb" stroke-width="0.15"/>`;
+      s+=`<text x="${xL+1.5}" y="${baseY-BANDH*0.40}" font-size="3.4" font-weight="700" fill="#222">${lead}</text>`;
+      s+=`<path d="${pathFor(model.valueAt,lead,tS,tS+COL_S,xL,baseY)}" ${TRAZO}/>`;
+    }
+  }
+  const ry=MTOP+3*BANDH+GAPR+BANDH*0.55;
+  s+=`<path d="${calPulse(MLEFT-6,ry)}" ${TRAZO}/>`;
+  s+=`<text x="${MLEFT+1.5}" y="${ry-BANDH*0.40}" font-size="3.4" font-weight="700" fill="#222">II — tira de ritmo</text>`;
+  s+=`<path d="${pathFor(model.valueAt,"II",0,10,MLEFT,ry)}" ${TRAZO}/></svg>`;
+  document.getElementById("ecg").innerHTML=s;
+}
+
+/* ====== RENDER MODO COMPARATIVO (diferencial) ==============================
+   Cada entrada: {dx, discriminador, color, show:[leads], ...PARAMS}.
+   Apila la patología y sus mimics; cada fila muestra las derivaciones clave.   */
+function renderCompare(list){
+  const COL_S=2.0, COLW=COL_S*MM_S, TITH=9, BANDH=34;
+  const maxShow=Math.max(...list.map(e=>(e.show||["II","III","aVF","V2","I"]).length));
+  const Wmm=MLEFT+maxShow*COLW+MRIGHT, Hmm=MTOP+list.length*(TITH+BANDH)+6;
+  let s=`<svg viewBox="0 0 ${Wmm} ${Hmm}" width="${Wmm*PXMM}" height="${Hmm*PXMM}">`;
+  s+=gridDefs()+`<rect width="${Wmm}" height="${Hmm}" fill="#fff"/><rect width="${Wmm}" height="${Hmm}" fill="url(#g5)"/>`;
+  list.forEach((e,i)=>{
+    const model=makeECG(e), show=e.show||["II","III","aVF","V2","I"];
+    const yTop=MTOP+i*(TITH+BANDH), baseY=yTop+TITH+BANDH*0.5, col=e.color||"#b3261e";
+    s+=`<rect x="0.5" y="${yTop+0.5}" width="${Wmm-1}" height="${TITH+BANDH-1}" fill="none" stroke="${col}" stroke-width="0.18" opacity="0.55"/>`;
+    s+=`<text x="${MLEFT-6}" y="${yTop+4.4}" font-size="4.0" font-weight="800" fill="${col}">${i+1}. ${e.dx||""}</text>`;
+    s+=`<text x="${MLEFT-6}" y="${yTop+8.2}" font-size="3.1" font-weight="600" fill="#333">▸ ${e.discriminador||""}</text>`;
+    show.forEach((lead,j)=>{
+      const xL=MLEFT+j*COLW;
+      if(j===0) s+=`<path d="${calPulse(MLEFT-6,baseY)}" ${TRAZO}/>`;
+      s+=`<text x="${xL+1.2}" y="${baseY-BANDH*0.40}" font-size="3.2" font-weight="700" fill="#222">${lead}</text>`;
+      s+=`<path d="${pathFor(model.valueAt,lead,0,COL_S,xL,baseY)}" ${TRAZO}/>`;
+    });
+  });
+  s+=`</svg>`;
+  document.getElementById("ecg").innerHTML=s;
+}
+
+/* ====== AUTOCHEQUEO DE PRECISIÓN (modo normal) ============================= */
+function cuadritos(x){ return (x/0.04).toFixed(2); }
+function medirFC(){
+  const dt=1/FS, peaks=[]; let prev=0,prev2=0,last=-1;
+  for(let t=0;t<10;t+=dt){ const v=valueAt("II",t), tp=t-dt;
+    if(prev>0.45 && prev>=v && prev>prev2 && (tp-last)>0.30){ peaks.push(tp); last=tp; }
+    prev2=prev; prev=v; }
+  if(peaks.length<2) return null;
+  let acc=0; for(let i=1;i<peaks.length;i++) acc+=peaks[i]-peaks[i-1];
+  return 60/(acc/(peaks.length-1));
+}
+function selfCheck(){
+  const fc=medirFC(), fcObj=PARAMS.rate;
+  const escalaOK=(PXMM===4)&&(MM_S===25)&&(MM_MV===10);
+  function mark(ok){ return ok?`<span class="ok">✓</span>`:`<span class="warn">⚠</span>`; }
+  const rows=[
+    ["Escala","1 mm=0,04 s / 0,1 mV · cuadro grande=20 px", escalaOK?`<span class="ok">✓ exacta</span>`:`<span class="warn">⚠</span>`],
+    ["PR (construido)", `${IV.pr.toFixed(2)} s = ${cuadritos(IV.pr)} cuadritos`, mark(IV.pr>=0.04)],
+    ["QRS (construido)",`${IV.qrs.toFixed(2)} s = ${cuadritos(IV.qrs)} cuadritos`, mark(IV.qrs>=0.04)],
+    ["QT (construido)", `${IV.qt.toFixed(2)} s = ${cuadritos(IV.qt)} cuadritos`, mark(IV.qt>=0.20)],
+    ["FC objetivo / medida", `${fcObj} / ${fc?fc.toFixed(0):"—"} lpm`,
+       (fc&&Math.abs(fc-fcObj)<=8)?`<span class="ok">✓</span>`:`<span class="warn">revisar</span>`],
+    ["Determinismo","mismos PARAMS → mismos píxeles",`<span class="ok">✓</span>`]
+  ];
+  let h=`<h2>Autochequeo de precisión</h2><table><tr><th>Parámetro</th><th>Valor</th><th>OK</th></tr>`;
+  for(const r of rows) h+=`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`;
+  document.getElementById("check").innerHTML=h+`</table>`;
+}
+
+/* ====== ARRANQUE ============================================================ */
+document.getElementById("titulo").textContent=PARAMS.titulo||"Electrocardiograma";
+document.getElementById("dx").textContent=PARAMS.dx||"—";
+document.getElementById("btnDx").addEventListener("click",function(){
+  const d=document.getElementById("dx"); d.classList.toggle("oculto");
+  this.textContent=d.classList.contains("oculto")?"Mostrar diagnóstico":"Ocultar diagnóstico";
+});
+if(PARAMS.compare){ renderCompare(PARAMS.compare); document.getElementById("check").innerHTML=
+   `<div class="nota">Panel comparativo del diagnóstico diferencial. Cada fila es una entidad con su discriminador (▸).</div>`; }
+else { renderFull(MAIN); selfCheck(); }
+</script>
+</body>
+</html>

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ECG — motor de trazado (diferencial)</title>
+<style>
+  :root{ --rojo-menor:#f4cccc; --rojo-mayor:#e08a8a; --trazo:#101010; }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; background:#e9e4da; color:#1a1a1a;
+    font-family:"Segoe UI",system-ui,Arial,sans-serif;
+    -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  .wrap{ max-width:1200px; margin:18px auto; }
+  header{ display:flex; align-items:baseline; gap:14px; flex-wrap:wrap; padding:0 6px 10px; }
+  header h1{ font-size:19px; margin:0; font-weight:700; }
+  .dx{ font-size:15px; font-weight:600; color:#7a1f1f;
+    background:#fbeaea; border:1px solid #e6b8b8; border-radius:6px; padding:2px 9px; }
+  .dx.oculto{ color:transparent; text-shadow:0 0 9px rgba(0,0,0,.55); user-select:none; }
+  .controles{ margin-left:auto; display:flex; gap:8px; }
+  button{ font:inherit; font-size:13px; padding:5px 11px; border:1px solid #b9b2a6;
+    background:#fff; border-radius:6px; cursor:pointer; }
+  button:hover{ background:#f3efe7; }
+  .sheet{ background:#fff; border:1px solid #d7cfc1; border-radius:4px;
+    box-shadow:0 2px 10px rgba(0,0,0,.10); padding:6px; overflow:auto; }
+  svg{ display:block; width:100%; height:auto; }
+  .nota{ font-size:11.5px; color:#555; padding:8px 6px 0; }
+  #check{ margin:14px 6px 0; font-size:12.5px; }
+  @page{ size:A4 landscape; margin:8mm; }
+  @media print{
+    html,body{ background:#fff; }
+    .wrap{ margin:0; max-width:none; }
+    .controles{ display:none; }
+    .sheet{ box-shadow:none; border:none; padding:0; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1 id="titulo">Electrocardiograma</h1>
+    <span class="dx" id="dx">—</span>
+    <div class="controles"><button id="btnDx">Ocultar diagnóstico</button></div>
+  </header>
+  <div class="sheet"><div id="ecg"></div></div>
+  <div class="nota">25 mm/s · 10 mm/mV · 1 cuadrito = 0,04 s / 0,1 mV · 1 cuadro grande = 0,20 s / 0,5 mV.
+    Pulso de calibración rectangular (10 mm) al inicio de cada fila.</div>
+  <div id="check"></div>
+</div>
+
+<script>
+/* ====== PARAMS — MODO COMPARATIVO: SCACEST anterior vs sus mimics =========== */
+const PARAMS = {
+  titulo: "Diferencial ECG — Supradesnivel del ST en cara anterior",
+  dx: "¿Es un SCACEST anterior? — comparativo de mimics",
+  compare: [
+    { dx:"SCACEST anterior extenso (DA proximal)",
+      discriminador:"ST CONVEXO (lomo) LOCALIZADO V1-V6 + T hiperaguda + recíprocos inferiores; evoluciona",
+      color:"#b3261e", show:["I","II","V1","V2","V3","V4"],
+      rate:68, rhythm:"sinus", intervals:{pr:0.16,qrs:0.09,qt:0.40}, stShape:"convex",
+      leads:{ V1:{st:1.5}, V2:{st:3,t:"alta"}, V3:{st:3}, V4:{st:2}, III:{st:-1}, aVF:{st:-1} } },
+
+    { dx:"Pericarditis aguda",
+      discriminador:"ST CÓNCAVO (hamaca) DIFUSO (I + II + precordiales), SIN recíprocos, PR descendido",
+      color:"#1f6f4a", show:["I","II","V1","V2","V3","V4"],
+      rate:96, rhythm:"sinus", intervals:{pr:0.16,qrs:0.09,qt:0.36}, stShape:"concave",
+      leads:{ I:{st:1.5}, II:{st:2}, V2:{st:1.5}, V3:{st:2}, V4:{st:2} } },
+
+    { dx:"Repolarización precoz (variante benigna)",
+      discriminador:"Punto J empastado/con muesca, ST CÓNCAVO, T altas, joven sano, ESTABLE (no evoluciona)",
+      color:"#9a6b00", show:["I","II","V1","V2","V3","V4"],
+      rate:62, rhythm:"sinus", intervals:{pr:0.16,qrs:0.09,qt:0.38}, stShape:"concave",
+      leads:{ V2:{st:1,t:"alta"}, V3:{st:2,t:"alta"}, V4:{st:2,t:"alta"}, II:{st:0.5} } },
+
+    { dx:"Bloqueo de rama izquierda (BRI)",
+      discriminador:"QRS ≥0,12 s; supra-ST DISCORDANTE esperable (QRS negativo en V1-V3) → usar Sgarbossa",
+      color:"#5a3d8a", show:["I","II","V1","V2","V3","V4"],
+      rate:75, rhythm:"sinus", intervals:{pr:0.16,qrs:0.15,qt:0.44}, stShape:"flat",
+      leads:{ V1:{r:0.05,s:-1.6,st:2}, V2:{r:0.1,s:-1.6,st:2.5}, V3:{r:0.2,s:-1.1,st:1.5},
+              I:{q:0,r:1.0,t:"inv"}, II:{r:1.0} } }
+  ]
+};
+
+/* ====== CONSTANTES DE ESCALA (aquí vive la precisión) ======================== */
+const MM_S=25, MM_MV=10, PXMM=4, FS=500;
+
+const NORMAL = {
+  I  :{p: 0.10,q:-0.03,r: 0.55,s:-0.08,t: 0.18},
+  II :{p: 0.15,q:-0.03,r: 0.85,s:-0.08,t: 0.28},
+  III:{p: 0.06,q:-0.02,r: 0.35,s:-0.10,t: 0.08},
+  aVR:{p:-0.12,q: 0.00,r: 0.10,s:-0.55,t:-0.22},
+  aVL:{p: 0.05,q:-0.02,r: 0.35,s:-0.06,t: 0.10},
+  aVF:{p: 0.11,q:-0.02,r: 0.55,s:-0.08,t: 0.16},
+  V1 :{p: 0.05,q: 0.00,r: 0.20,s:-0.85,t: 0.05},
+  V2 :{p: 0.06,q: 0.00,r: 0.40,s:-1.25,t: 0.45},
+  V3 :{p: 0.05,q: 0.00,r: 0.65,s:-0.85,t: 0.45},
+  V4 :{p: 0.05,q:-0.02,r: 1.20,s:-0.45,t: 0.45},
+  V5 :{p: 0.06,q:-0.03,r: 1.45,s:-0.20,t: 0.35},
+  V6 :{p: 0.06,q:-0.03,r: 1.15,s:-0.06,t: 0.22}
+};
+const LEADS12 = ["I","II","III","aVR","aVL","aVF","V1","V2","V3","V4","V5","V6"];
+const GRID = [["I","aVR","V1","V4"],["II","aVL","V2","V5"],["III","aVF","V3","V6"]];
+
+function gauss(t,mu,a,sd){ const z=(t-mu)/sd; return a*Math.exp(-0.5*z*z); }
+function mulberry32(seed){ return function(){ seed|=0; seed=seed+0x6D2B79F5|0;
+  let x=Math.imul(seed^seed>>>15,1|seed); x=x+Math.imul(x^x>>>7,61|x)^x;
+  return ((x^x>>>14)>>>0)/4294967296; }; }
+
+function makeECG(P){
+  const IV = P.intervals;
+  function morph(lead){
+    const base=NORMAL[lead], ov=(P.leads&&P.leads[lead])||{};
+    const m={ p:base.p,q:base.q,r:base.r,s:base.s,t:base.t,u:0,
+              tSd:0.055,st:0,stShape:P.stShape||"flat",delta:false };
+    for(const k of ["q","r","s","u","tSd","st","delta","stShape"]) if(ov[k]!==undefined) m[k]=ov[k];
+    if(typeof ov.p==="number") m.p=ov.p;
+    if(ov.t!==undefined){
+      if(typeof ov.t==="number") m.t=ov.t;
+      else if(ov.t==="inv")   m.t=-Math.abs(base.t||0.2);
+      else if(ov.t==="alta"){ m.t=Math.max(0.9,base.t*2.2); m.tSd=0.038; }
+      else if(ov.t==="plana") m.t=0.03;
+    }
+    if(ov.p!==undefined && typeof ov.p!=="number"){
+      if(ov.p==="ausente")        m.p=0;
+      else if(ov.p==="pulmonale") m.p=0.28;
+      else if(ov.p==="mitrale")   m.p=base.p;
+    }
+    return m;
+  }
+  function buildRhythm(){
+    const rr=60/P.rate, beats=[], pWaves=[];
+    const T0=-1.2, T1=11.2, rnd=mulberry32(12345);
+    const mk=(t0,ex)=>Object.assign({t0,qrs:IV.qrs,qt:IV.qt,pr:IV.pr,ampScale:1,delta:false},ex||{});
+    if(P.rhythm==="sinus"||P.rhythm==="av1"){
+      for(let t=T0;t<T1;t+=rr){ beats.push(mk(t,{delta:!!P.delta})); pWaves.push({t0:t-IV.pr,kind:"s"}); }
+      return {beats,pWaves,fWave:null,noise:null};
+    }
+    for(let t=T0;t<T1;t+=rr){ beats.push(mk(t)); pWaves.push({t0:t-IV.pr,kind:"s"}); }
+    return {beats,pWaves,fWave:null,noise:null};
+  }
+  const RHY = buildRhythm();
+  function pAt(lead,t,pw){
+    const m=morph(lead); if(m.p===0) return 0;
+    const ov=(P.leads&&P.leads[lead])||{};
+    let pDur=0.09,pSd=0.020,amp=m.p;
+    if(ov.p==="mitrale"){ pDur=0.13; pSd=0.028; }
+    if(ov.p==="pulmonale") pSd=0.016;
+    const c=pw.t0+pDur/2; let v=gauss(t,c,amp,pSd);
+    if(ov.p==="mitrale") v+=gauss(t,c+0.045,amp*0.85,pSd);
+    return v;
+  }
+  function qrstAt(lead,t,b){
+    const m=morph(lead), f=b.qrs/0.09;
+    const qc=b.t0+0.12*b.qrs, rc=b.t0+0.42*b.qrs, sc=b.t0+0.72*b.qrs;
+    let v=gauss(t,qc,m.q,0.009*f)+gauss(t,rc,m.r,0.010*f)+gauss(t,sc,m.s,0.009*f);
+    if(b.wide) v+=gauss(t,rc+0.05*b.qrs,m.r*0.45,0.020*f);
+    if(b.delta){ const j=b.t0; if(t>=j-0.02&&t<=qc) v+=(m.r>0?1:-1)*0.12*((t-(j-0.02))/(qc-(j-0.02))); }
+    v+=gauss(t,b.t0+b.qt-0.11,m.t,m.tSd);
+    if(m.u) v+=gauss(t,b.t0+b.qt+0.07,m.u,0.040);
+    return v*b.ampScale;
+  }
+  function stAt(lead,t,b){
+    const m=morph(lead); if(!m.st) return 0;
+    const stMV=m.st/MM_MV, J=b.t0+b.qrs, Ton=b.t0+b.qt-0.18;
+    if(t<J||t>Ton) return 0;
+    const span=Math.max(0.05,Ton-J), frac=(t-J)/span;
+    const plateau=(frac<0.7)?1:(1-(frac-0.7)/0.3);
+    let v=stMV*plateau;
+    const curv=0.25*Math.abs(stMV)*Math.sin(Math.PI*frac);
+    if(m.stShape==="convex") v+=curv;
+    else if(m.stShape==="concave") v-=curv;
+    else if(m.stShape==="up") v=stMV*(1-0.5*frac);
+    return v;
+  }
+  function valueAt(lead,t){
+    let v=0;
+    for(const pw of RHY.pWaves) if(Math.abs(t-pw.t0)<0.18) v+=pAt(lead,t,pw);
+    for(const b of RHY.beats)  if(Math.abs(t-b.t0)<0.60) v+=qrstAt(lead,t,b)+stAt(lead,t,b);
+    return v;
+  }
+  return { valueAt, rhythm:RHY, morph, params:P };
+}
+
+const MAIN = PARAMS.compare ? null : makeECG(PARAMS);
+function valueAt(lead,t){ return MAIN.valueAt(lead,t); }
+
+const MLEFT=12, MTOP=8, MRIGHT=8;
+function gridDefs(){ return `<defs>
+    <pattern id="g1" width="1" height="1" patternUnits="userSpaceOnUse">
+      <path d="M1 0 L0 0 0 1" fill="none" stroke="var(--rojo-menor)" stroke-width="0.08"/></pattern>
+    <pattern id="g5" width="5" height="5" patternUnits="userSpaceOnUse">
+      <rect width="5" height="5" fill="url(#g1)"/>
+      <path d="M5 0 L0 0 0 5" fill="none" stroke="var(--rojo-mayor)" stroke-width="0.22"/></pattern>
+  </defs>`; }
+const TRAZO=`fill="none" stroke="var(--trazo)" stroke-width="0.32" stroke-linejoin="round" stroke-linecap="round"`;
+function pathFor(vAt,lead,tS,tE,xL,baseY){
+  const dt=1/FS; let d="",first=true;
+  for(let t=tS;t<=tE+1e-9;t+=dt){
+    const x=(xL+(t-tS)*MM_S).toFixed(2), y=(baseY-vAt(lead,t)*MM_MV).toFixed(2);
+    d+=(first?"M":"L")+x+" "+y+" "; first=false;
+  }
+  return d.trim();
+}
+function calPulse(x,baseY){ const h=10,w=5;
+  return `M ${x} ${baseY} L ${x} ${baseY-h} L ${x+w} ${baseY-h} L ${x+w} ${baseY}`; }
+
+function renderCompare(list){
+  const COL_S=2.0, COLW=COL_S*MM_S, TITH=9, BANDH=34;
+  const maxShow=Math.max(...list.map(e=>(e.show||["II","III","aVF","V2","I"]).length));
+  const Wmm=MLEFT+maxShow*COLW+MRIGHT, Hmm=MTOP+list.length*(TITH+BANDH)+6;
+  let s=`<svg viewBox="0 0 ${Wmm} ${Hmm}" width="${Wmm*PXMM}" height="${Hmm*PXMM}">`;
+  s+=gridDefs()+`<rect width="${Wmm}" height="${Hmm}" fill="#fff"/><rect width="${Wmm}" height="${Hmm}" fill="url(#g5)"/>`;
+  list.forEach((e,i)=>{
+    const model=makeECG(e), show=e.show||["II","III","aVF","V2","I"];
+    const yTop=MTOP+i*(TITH+BANDH), baseY=yTop+TITH+BANDH*0.5, col=e.color||"#b3261e";
+    s+=`<rect x="0.5" y="${yTop+0.5}" width="${Wmm-1}" height="${TITH+BANDH-1}" fill="none" stroke="${col}" stroke-width="0.18" opacity="0.55"/>`;
+    s+=`<text x="${MLEFT-6}" y="${yTop+4.4}" font-size="4.0" font-weight="800" fill="${col}">${i+1}. ${e.dx||""}</text>`;
+    s+=`<text x="${MLEFT-6}" y="${yTop+8.2}" font-size="3.1" font-weight="600" fill="#333">▸ ${e.discriminador||""}</text>`;
+    show.forEach((lead,j)=>{
+      const xL=MLEFT+j*COLW;
+      if(j===0) s+=`<path d="${calPulse(MLEFT-6,baseY)}" ${TRAZO}/>`;
+      s+=`<text x="${xL+1.2}" y="${baseY-BANDH*0.40}" font-size="3.2" font-weight="700" fill="#222">${lead}</text>`;
+      s+=`<path d="${pathFor(model.valueAt,lead,0,COL_S,xL,baseY)}" ${TRAZO}/>`;
+    });
+  });
+  s+=`</svg>`;
+  document.getElementById("ecg").innerHTML=s;
+}
+
+document.getElementById("titulo").textContent=PARAMS.titulo||"Electrocardiograma";
+document.getElementById("dx").textContent=PARAMS.dx||"—";
+document.getElementById("btnDx").addEventListener("click",function(){
+  const d=document.getElementById("dx"); d.classList.toggle("oculto");
+  this.textContent=d.classList.contains("oculto")?"Mostrar diagnóstico":"Ocultar diagnóstico";
+});
+renderCompare(PARAMS.compare);
+document.getElementById("check").innerHTML=
+   `<div class="nota">Panel comparativo del diagnóstico diferencial. Cada fila es una entidad con su discriminador (▸).</div>`;
+</script>
+</body>
+</html>

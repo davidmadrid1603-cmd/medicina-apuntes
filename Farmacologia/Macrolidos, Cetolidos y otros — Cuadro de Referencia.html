@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Macrólidos, Cetólidos y otros — Cuadro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+
+html,body{
+  background:#e9e4da;
+  -webkit-print-color-adjust:exact;
+  print-color-adjust:exact;
+}
+body{
+  font-family:'Lora',Georgia,serif;
+  color:#1d1a16;
+  font-size:12.5px;
+  line-height:1.38;
+  padding:18px;
+}
+
+.sheet{
+  background:#fff;
+  max-width:1180px;
+  margin:0 auto 18px;
+  padding:22px 26px 26px;
+  box-shadow:0 1px 6px rgba(0,0,0,.12);
+}
+
+h1{
+  font-family:'Libre Franklin',sans-serif;
+  font-size:1.35rem;font-weight:700;
+  color:#5a4314;letter-spacing:.01em;
+}
+.sub{font-style:italic;color:#6b6457;font-size:.85rem;margin-top:1px;margin-bottom:4px;}
+
+/* group title bar */
+.gt{
+  font-family:'Libre Franklin',sans-serif;
+  font-size:1.05rem;font-weight:700;
+  color:#fff;background:#7a5c1e;
+  padding:6px 12px;margin:18px 0 0;
+  letter-spacing:.03em;border-radius:3px 3px 0 0;
+}
+.gt.teal{background:#1f6b5e;}
+
+table{width:100%;border-collapse:collapse;font-size:.8rem;}
+table.pk{margin-bottom:0;}
+
+th{
+  font-family:'Libre Franklin',sans-serif;
+  font-size:.62rem;font-weight:600;text-transform:uppercase;
+  letter-spacing:.05em;color:#fff;background:#9a7826;
+  padding:5px 8px;text-align:left;white-space:nowrap;
+  border:1px solid #846420;
+}
+.teal-tbl th{background:#2a7f72;border-color:#23695e;}
+
+td{padding:5px 8px;border:1px solid #d9d2c4;vertical-align:top;}
+tbody tr:nth-child(even) td{background:#faf8f3;}
+
+/* drug name cell */
+td.dn{font-family:'Libre Franklin',sans-serif;font-weight:600;white-space:nowrap;color:#5a4314;}
+.teal-tbl td.dn{color:#1f6b5e;}
+tr.hl td{background:#fbf3dc!important;}
+tr.hl.tl td{background:#e6f4f0!important;}
+
+/* coverage cell */
+td.cov{line-height:1.4;}
+.cv-no{display:block;margin-top:2px;}
+
+/* clinical block: label + content rows */
+table.clin{margin-top:-1px;}
+table.clin td.lbl{
+  font-family:'Libre Franklin',sans-serif;
+  font-weight:600;font-size:.66rem;text-transform:uppercase;
+  letter-spacing:.04em;color:#5a4314;
+  background:#f1ead9;width:118px;white-space:nowrap;
+}
+.teal-tbl td.lbl{color:#1f6b5e;background:#e4f1ee;}
+table.clin td.ct{background:#fff!important;line-height:1.45;}
+
+/* inline emphasis */
+.tag{font-family:'Libre Franklin',sans-serif;font-size:.6rem;font-weight:600;
+  padding:0 5px;border-radius:2px;white-space:nowrap;display:inline-block;line-height:1.5;}
+.t-no{background:#fbe3df;color:#a01f12;}
+.t-adq{background:#fbf0d8;color:#8a5e00;}
+.t-si{background:#dff0e2;color:#1a6e34;}
+.no{color:#a01f12;font-weight:600;}
+.ok{color:#1a6e34;font-weight:600;}
+.am{color:#8a5e00;font-weight:600;}
+b.s3{color:#5a4314;}
+.star{color:#b5870f;font-weight:700;}
+.mech{font-style:italic;}
+.warn{color:#a01f12;font-weight:600;}
+
+ul.tight{margin:0;padding-left:15px;}
+ul.tight li{margin-bottom:1px;}
+
+@media print{
+  @page{size:A4 landscape;margin:8mm;}
+  html,body{background:#fff;}
+  body{padding:0;font-size:9.2px;}
+  .sheet{box-shadow:none;max-width:100%;margin:0;padding:0;}
+  /* el título NUNCA se separa de su tabla; ningún salto forzado deja un título huérfano */
+  h1,.gt{break-after:avoid;page-break-after:avoid;}
+  table.pk{break-after:avoid;page-break-after:avoid;}
+  table,tr,td,th{page-break-inside:avoid;}
+}
+</style>
+</head>
+<body>
+<div class="sheet">
+
+<h1>Macrólidos, Cetólidos &amp; otros inhibidores de la síntesis proteica</h1>
+<div class="sub">Cuadro de referencia · cobertura específica por fármaco · Farmacología 4° año</div>
+
+<!-- ════════ MACRÓLIDOS ════════ -->
+<div class="gt">MACRÓLIDOS</div>
+<table class="pk">
+  <thead><tr>
+    <th>Fármaco</th><th>Vida media</th><th>¿Con comida?</th><th>Eliminación / CYP</th>
+    <th>Cobertura específica ★</th><th>Uso principal ★</th><th>Particularidad / RAM</th>
+  </tr></thead>
+  <tbody>
+    <tr class="hl"><td class="dn">Eritromicina<br>(14 át.)</td><td>1.6 h</td><td class="no">No (ácido-lábil)</td><td>Biliar · <b>CYP Grupo 1 (alta)</b></td>
+      <td class="cov"><span class="ok">✓</span> Cocos G+ (S. pyogenes, S. agalactiae, neumococo sensible) · atípicos (Mycoplasma, Chlamydia, Legionella) · <b class="s3">B. pertussis</b> · <b class="s3">C. diphtheriae</b><span class="cv-no"><span class="no">✗ NO</span> G− entéricos (intrínseca) · floja en H. influenzae</span></td>
+      <td>Difteria · tos ferina · alérgico a penicilina</td><td>Agonista de <b class="s3">motilina</b> (procinético) · ototoxicidad en ancianos</td></tr>
+    <tr class="hl"><td class="dn">Claritromicina<br>(14 át.)</td><td>3–7 h (14-OH 5–9 h)</td><td class="ok">Indiferente</td><td>Hepática + renal 20 % · <b>Grupo 2 (inhibe 3A4)</b></td>
+      <td class="cov"><span class="ok">✓</span> Igual que eritro pero <b class="s3">MÁS potente en G+</b> · añade <b class="s3">M. avium</b> y <b class="s3">H. pylori</b><span class="cv-no"><span class="no">✗ NO</span> G− entéricos</span></td>
+      <td>H. pylori (triple terapia) · M. avium · respiratorias</td><td>Metabolito activo <b class="s3">14-hidroxiclaritromicina</b></td></tr>
+    <tr class="hl"><td class="dn">Azitromicina<br>(15 át.)</td><td><b class="s3">40–68 h</b></td><td class="am">Sin antiácidos Al/Mg</td><td>Biliar · <b>Grupo 3 (sin interacción)</b></td>
+      <td class="cov"><span class="ok">✓</span> La <b class="s3">más anti-G−</b> del grupo: H. influenzae, Moraxella · atípicos potente (Chlamydia, Legionella)<span class="cv-no"><span class="no">✗</span> algo menos en cocos G+ · NO enterobacterias</span></td>
+      <td>Chlamydia (referencia) · atípicos</td><td>Reservorio en <b class="s3">fibroblastos</b> → dosis única · NO penetra LCR</td></tr>
+    <tr><td class="dn">Roxitromicina<br>(14 át.)</td><td>~12 h</td><td class="ok">Indiferente</td><td>Hepática/biliar · Grupo 2</td>
+      <td class="cov"><span class="ok">✓</span> Espectro ≈ eritromicina (cocos G+, atípicos)<span class="cv-no"><span class="no">✗ NO</span> G−</span></td>
+      <td>Respiratorias altas/bajas · ORL</td><td>Muy estable en ácido · buena tolerancia GI</td></tr>
+    <tr><td class="dn">Espiramicina<br>(16 át.)</td><td>Larga</td><td class="ok">Indiferente</td><td>Hepática/biliar · Grupo 3</td>
+      <td class="cov"><span class="ok">✓</span> Cocos G+ · destaca <b class="s3">Toxoplasma gondii</b><span class="cv-no"><span class="no">✗</span> G− limitado</span></td>
+      <td><b class="s3">Toxoplasmosis en embarazo</b></td><td>16 átomos → inhibe el <b class="s3">enlace peptídico (L27)</b>, no la translocación</td></tr>
+  </tbody>
+</table>
+
+<table class="clin">
+  <tr>
+    <td class="lbl">Mecanismo</td>
+    <td class="ct"><span class="mech">Bacteriostático (bactericida a 2–4× CIM mantenido) · diana <b class="s3">50S</b> (sitio cercano al del cloranfenicol). <b class="s3">14 y 15 átomos</b> → bloquean la <b class="s3">translocación</b> (proteína L22: impiden el paso A→P). <b class="s3">16 átomos</b> → inhiben el <b class="s3">enlace peptídico</b> (L27). Tiempo-dependiente (T&gt;CIM) + EPA · los G+ acumulan eritromicina hasta 100× más que los G−.</span> Resistencia: metilasas <i>erm</i> → fenotipo <b class="s3">MLS-B</b>. <span class="warn">⚠ No combinar con clindamicina ni cloranfenicol (mismo sitio).</span></td>
+  </tr>
+  <tr>
+    <td class="lbl">Examen</td>
+    <td class="ct"><b class="s3">Correlación penicilina–macrólido:</b> S. pneumoniae sensible a penicilina → solo 5 % resistente a macrólidos; si ya es <b class="s3">penicilino-resistente → 50 % co-resistente</b> a macrólidos.</td>
+  </tr>
+  <tr>
+    <td class="lbl">Indicaciones</td>
+    <td class="ct">
+      <span class="star">★★★ 1ª elección:</span> Chlamydia (Azitro) · NAC / neumonía atípica · <b class="s3">Tos ferina y difteria</b> · Erradicación de H. pylori (Claritro) · Faringitis/erisipela en alérgico a penicilina<br>
+      <span class="star">★★ Alternativa:</span> M. avium profilaxis/tto (Claritro/Azitro) · Profilaxis de fiebre reumática · Uretritis no gonocócica · <span class="star">★ Especial:</span> Eritromicina <b class="s3">procinético</b> en gastroparesia
+    </td>
+  </tr>
+  <tr>
+    <td class="lbl">RAM (por mecanismo)</td>
+    <td class="ct">
+      <ul class="tight">
+        <li><b class="s3">Agonismo de motilina:</b> epigastralgia, náuseas, diarrea, vómitos (lo más frecuente; máximo con eritromicina)</li>
+        <li><b class="s3">Prolongación del QT:</b> arritmia ventricular (<span class="warn">Torsade de Pointes</span>)</li>
+        <li><b class="s3">Hepatotoxicidad:</b> hepatitis colestásica por hipersensibilidad (10–20 días) · <b class="s3">Ototoxicidad</b> (eritromicina IV, ancianos)</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td class="lbl">Interacciones</td>
+    <td class="ct"><span class="warn">Inhibición de CYP3A4 (Grupos 1 y 2)</span> → ↑ warfarina · carbamazepina · ciclosporina · digoxina · <b>ergotamínicos</b> · teofilina · midazolam/triazolam · estatinas · valproato · ACO. Rifampicina ↓ macrólido ~80 % · itraconazol lo eleva. <span class="ok">Azitromicina (Grupo 3) = la más segura en polimedicados.</span></td>
+  </tr>
+</table>
+
+<!-- ════════ CETÓLIDOS ════════ -->
+<div class="gt teal">CETÓLIDOS — TELITROMICINA</div>
+<table class="pk teal-tbl">
+  <thead><tr>
+    <th>Fármaco</th><th>Vida media · F%</th><th>Diana / Ventaja</th>
+    <th>Cobertura específica ★</th><th>Uso principal ★</th><th>Particularidad / RAM</th>
+  </tr></thead>
+  <tbody>
+    <tr class="hl tl"><td class="dn">Telitromicina</td><td>9.8 h · F 60 % · tisular 2–10× plasma</td><td>50S · <b class="s3">resiste eflujo y metilasas <i>erm</i></b> → activa en cepas macrólido-R</td>
+      <td class="cov"><span class="ok">✓</span> Todo el espectro macrólido <b class="s3">+ cepas macrólido-resistentes</b> (neumococo MDR) · S. aureus · Listeria · Neisseria · Moraxella · Rickettsia · T. pallidum · anaerobios<span class="cv-no"><span class="no">✗ NO</span> enterobacterias G−</span></td>
+      <td>Respiratorias por neumococo/atípicos cuando no hay alternativa</td><td><span class="warn">⚠ Hepatotoxicidad grave</span> · actividad <b class="s3">concentración-dependiente</b></td></tr>
+  </tbody>
+</table>
+
+<table class="clin teal-tbl">
+  <tr>
+    <td class="lbl">Mecanismo</td>
+    <td class="ct"><span class="mech">Similar a los macrólidos (50S) pero con unión más fuerte y actividad <b class="s3">concentración-dependiente</b>. La pérdida de L-cladinosa + el grupo cetónico en C-3 le permiten escapar del eflujo y de las metilasas <i>erm</i>.</span></td>
+  </tr>
+  <tr>
+    <td class="lbl">Indicaciones</td>
+    <td class="ct"><b class="warn">Solo cuando no existan alternativas menos tóxicas:</b> infecciones respiratorias por S. pneumoniae (incluido penicilino/macrólido-R) y patógenos atípicos.</td>
+  </tr>
+  <tr>
+    <td class="lbl">RAM / Alertas</td>
+    <td class="ct"><ul class="tight"><li><b class="warn">Hepatotoxicidad grave</b> (hasta fallo hepático) → su talón de Aquiles</li><li>Prolongación del QT · visión borrosa · agrava la <b class="s3">miastenia gravis</b></li></ul></td>
+  </tr>
+  <tr>
+    <td class="lbl">Interacciones</td>
+    <td class="ct"><span class="warn">Inhibidor potente de CYP3A4</span>: cuidado con estatinas, midazolam, ergotamínicos, warfarina.</td>
+  </tr>
+</table>
+
+<!-- ════════ LINCOSAMIDAS ════════ -->
+<div class="gt">LINCOSAMIDAS — CLINDAMICINA &amp; LINCOMICINA</div>
+<table class="pk">
+  <thead><tr>
+    <th>Fármaco</th><th>Vida media</th><th>Distribución clave</th>
+    <th>Cobertura específica ★</th><th>Uso principal ★</th><th>Particularidad / RAM</th>
+  </tr></thead>
+  <tbody>
+    <tr class="hl"><td class="dn">Clindamicina</td><td>2.9 h</td><td class="ok"><b class="s3">Hueso y abscesos</b> · neutrófilos/macrófagos · UPP 90 %</td>
+      <td class="cov"><span class="ok">✓</span> Cocos G+ (MSSA, <b class="s3">MRSA-CO</b>, estreptococos) <b class="s3">+ anaerobios</b> (B. fragilis, C. perfringens, Peptostreptococcus, Fusobacterium, Actinomyces)<span class="cv-no"><span class="no">✗ NADA</span> de G− aerobios ni enterococo (intrínseca) · NO C. difficile (¡lo causa!)</span></td>
+      <td><b class="s3">Anaerobios supradiafragmáticos</b> · fascitis necrosante (antitoxina)</td><td><span class="warn">⚠ Colitis pseudomembranosa</span> (el mayor riesgo)</td></tr>
+    <tr><td class="dn">Lincomicina</td><td>~5 h</td><td>Similar, menor penetración</td>
+      <td class="cov"><span class="ok">✓</span> ≈ Clindamicina, menor potencia<span class="cv-no"><span class="no">✗</span> Igual (sin G− aerobios ni enterococo)</span></td>
+      <td>Reservada — desplazada por clindamicina</td><td>Compuesto original (<i>S. lincolnensis</i>) · peor absorción oral</td></tr>
+  </tbody>
+</table>
+
+<table class="clin">
+  <tr>
+    <td class="lbl">Mecanismo</td>
+    <td class="ct"><span class="mech">Bacteriostático · diana <b class="s3">50S</b>, fase de <b class="s3">translocación</b>. Comparte sitio con macrólidos y cloranfenicol.</span> <span class="warn">⚠ Antagonismo → NO administrar junto a macrólidos/cloranfenicol.</span> Resistencia: metilación <i>erm</i> → <b class="s3">MLS-B</b> (cruzada con macrólidos y estreptogramina B); ojo con <i>erm</i> inducible en MRSA (test D).</td>
+  </tr>
+  <tr>
+    <td class="lbl">Indicaciones</td>
+    <td class="ct">
+      <span class="star">★★★ 1ª elección:</span> Infecciones necrosantes de piel/partes blandas (efecto <b class="s3">antitoxina</b>, + penicilina) · Absceso pulmonar/empiema por anaerobios<br>
+      <span class="star">★★ Alternativa:</span> SAMR-CO en piel · Profilaxis de endocarditis en alérgicos · Vaginosis (tópica) · <span class="star">★ SIDA:</span> <b class="s3">Toxoplasmosis cerebral</b> (+ pirimetamina) · Pneumocystis leve (+ primaquina)
+    </td>
+  </tr>
+  <tr>
+    <td class="lbl">RAM (por mecanismo)</td>
+    <td class="ct">
+      <ul class="tight">
+        <li><b class="warn">Colitis pseudomembranosa (C. difficile):</b> el riesgo más alto entre antibióticos — diarrea acuosa + fiebre + leucocitosis. Tto: suspender + metronidazol / vancomicina oral / fidaxomicina</li>
+        <li><b class="s3">Hipersensibilidad:</b> erupción (10 %), raro Stevens-Johnson · <b class="s3">Sistémico:</b> ↑ AST/ALT, citopenias, bloqueo neuromuscular</li>
+      </ul>
+    </td>
+  </tr>
+</table>
+
+<!-- ════════ ESTREPTOGRAMINAS ════════ -->
+<div class="gt teal">ESTREPTOGRAMINAS — QUINUPRISTINA / DALFOPRISTINA</div>
+<table class="pk teal-tbl">
+  <thead><tr>
+    <th>Componente</th><th>Acción en 50S</th><th>Vida media</th>
+    <th>Cobertura específica ★ (combinación)</th><th>Farmacocinética</th><th>Uso ★</th><th>Particularidad / RAM</th>
+  </tr></thead>
+  <tbody>
+    <tr class="hl tl"><td class="dn">Quinupristina</td><td>Inhibe la <b class="s3">elongación</b></td><td>0.85 h</td>
+      <td class="cov" rowspan="2" style="vertical-align:middle"><span class="ok">✓</span> G+ resistentes: <b class="s3">MRSA</b> (incl. CA-MRSA), <b class="s3">E. faecium</b> (incl. VRE), neumococo penicilino-R, estreptococos, Listeria, Corynebacterium; algo de Moraxella/Neisseria/Legionella/Mycoplasma/Chlamydia<span class="cv-no"><span class="no">✗ NO E. faecalis</span> (¡solo <i>faecium</i>! — examen) · NO enterobacterias</span></td>
+      <td rowspan="2" style="vertical-align:middle">Solo <b class="s3">IV</b> (glucosado 5 %) · hepático (conjugación) · biliar 80 % · ajuste hepático</td>
+      <td rowspan="2" style="vertical-align:middle"><b class="s3">VRE</b> (E. faecium) · MRSA · neumococo R</td>
+      <td rowspan="2" style="vertical-align:middle">Flebitis · <b class="s3">artralgias/mialgias</b> · inhibe CYP3A4</td></tr>
+    <tr><td class="dn">Dalfopristina</td><td>Cambia la conformación → <b class="s3">sinergia</b></td><td>0.7 h</td></tr>
+  </tbody>
+</table>
+
+<table class="clin teal-tbl">
+  <tr>
+    <td class="lbl">Mecanismo</td>
+    <td class="ct"><span class="mech">Combinación <b class="s3">sinérgica</b> en la 50S: la dalfopristina deforma el ribosoma y aumenta la afinidad de la quinupristina, que detiene la elongación → bactericida frente a estrepto/estafilococos.</span> Resistencia: metilasas <i>erm</i> (MLS-B), eflujo, acetiltransferasas.</td>
+  </tr>
+  <tr>
+    <td class="lbl">Indicaciones</td>
+    <td class="ct"><b class="warn">Reserva para G+ multirresistentes graves:</b> <span class="star">★★★</span> Bacteriemia por <b class="s3">E. faecium resistente a vancomicina (VRE)</b> · <span class="star">★★</span> Piel complicada por MRSA · <span class="star">★</span> Neumococo penicilino-R.</td>
+  </tr>
+  <tr>
+    <td class="lbl">RAM / Interacciones</td>
+    <td class="ct">Flebitis (preferible vía central) · artralgias/mialgias (a veces limitan el tto) · hiperbilirrubinemia. <span class="warn">Inhibidor de CYP3A4</span> → ↑ warfarina, diazepam, ciclosporina, astemizol, INNTR.</td>
+  </tr>
+</table>
+
+<!-- ════════ OXAZOLIDINONAS ════════ -->
+<div class="gt">OXAZOLIDINONAS — LINEZOLID</div>
+<table class="pk">
+  <thead><tr>
+    <th>Fármaco</th><th>F% · Vida media</th><th>Diana única</th>
+    <th>Cobertura específica ★</th><th>Uso principal ★</th><th>Particularidad / RAM</th>
+  </tr></thead>
+  <tbody>
+    <tr class="hl"><td class="dn">Linezolid</td><td class="ok"><b class="s3">F 100 %</b> (IV ⇄ VO) · 4–6 h</td><td>Sitio <b class="s3">23S</b> · bloquea el complejo de iniciación · sin resistencia cruzada</td>
+      <td class="cov"><span class="ok">✓</span> <b class="s3">TODO G+ resistente:</b> MRSA, VISA, <b class="s3">VRE (E. faecium Y E. faecalis)</b>, neumococo penicilino-R, Listeria, Corynebacterium, Nocardia · <b class="s3">M. tuberculosis</b> (MDR)<span class="cv-no"><span class="no">✗ NO</span> G− (Moraxella / H. influenzae solo limitado)</span></td>
+      <td>VRE · MRSA (piel/neumonía) · neumococo R</td><td>Mielosupresión · neuropatía &gt;6 sem · <b class="s3">IMAO débil</b></td></tr>
+  </tbody>
+</table>
+
+<table class="clin">
+  <tr>
+    <td class="lbl">Mecanismo</td>
+    <td class="ct"><span class="mech">Bacteriostático (sintético) · se une al sitio <b class="s3">23S de la 50S</b> e impide la formación del <b class="s3">complejo de iniciación 70S (ribosoma-fMet-tRNA)</b> → bloquea el ARRANQUE de la traducción, no la elongación.</span> <span class="ok">Sitio único → SIN resistencia cruzada con otros grupos.</span></td>
+  </tr>
+  <tr>
+    <td class="lbl">Indicaciones</td>
+    <td class="ct"><b class="s3">Reserva para G+ multirresistentes:</b> <span class="star">★★★</span> E. faecium resistente a vancomicina (VRE) · Piel/partes blandas por MRSA · Neumonía nosocomial por S. aureus · <span class="star">★★</span> NAC por neumococo penicilino-R · <span class="star">★</span> TB extensamente resistente. <span class="ok">F 100 % → permite paso IV→oral y alta domiciliaria.</span></td>
+  </tr>
+  <tr>
+    <td class="lbl">RAM (por mecanismo)</td>
+    <td class="ct">
+      <ul class="tight">
+        <li><b class="s3">Mielosupresión (tox. mitocondrial):</b> anemia · leucopenia · trombocitopenia · pancitopenia (vigilar hemograma)</li>
+        <li><b class="warn">&gt;6 semanas:</b> neuropatía periférica · neuritis óptica · acidosis láctica</li>
+        <li><b class="s3">IMAO débil:</b> <span class="warn">síndrome serotoninérgico con ISRS</span> · crisis hipertensiva con tiramina (quesos curados, vino)</li>
+      </ul>
+    </td>
+  </tr>
+</table>
+
+<!-- ════════ MUPIROCINA ════════ -->
+<div class="gt teal">MUPIROCINA (tópica)</div>
+<table class="pk teal-tbl">
+  <thead><tr>
+    <th>Fármaco</th><th>Diana / Mecanismo</th><th>Absorción</th>
+    <th>Cobertura específica ★</th><th>Uso principal ★</th><th>Particularidad / RAM</th>
+  </tr></thead>
+  <tbody>
+    <tr class="hl tl"><td class="dn">Mupirocina</td><td>Inhibe la <b class="s3">isoleucil-tRNA sintetasa</b> (diana única)</td><td class="ok">Mínima (acción local)</td>
+      <td class="cov"><span class="ok">✓</span> Cocos G+ de piel/fosa nasal: <b class="s3">S. aureus (MSSA y MRSA)</b>, S. pyogenes, S. epidermidis<span class="cv-no"><span class="no">✗</span> Solo tópico (sin uso sistémico) · no G−</span></td>
+      <td><b class="s3">Descolonización nasal de S. aureus/MRSA</b> · impétigo</td><td>De <i>P. fluorescens</i> · RAM: irritación/sensibilización local</td></tr>
+  </tbody>
+</table>
+
+<table class="clin teal-tbl">
+  <tr>
+    <td class="lbl">Mecanismo</td>
+    <td class="ct"><span class="mech">Unión específica y competitiva a la <b class="s3">isoleucil-tRNA sintetasa</b> → impide cargar isoleucina al tRNA → cesa la síntesis proteica. Diana distinta del ribosoma → sin resistencia cruzada.</span> Resistencia cromosómica (mutación de la sintasa) o por plásmidos.</td>
+  </tr>
+  <tr>
+    <td class="lbl">Indicaciones</td>
+    <td class="ct"><span class="star">★★★</span> <b class="s3">Descolonización nasal de S. aureus/MRSA</b> (pre-quirúrgica, brotes) · <span class="star">★★</span> Impétigo y lesiones traumáticas sobreinfectadas. RAM: irritación local; sin toxicidad sistémica.</td>
+  </tr>
+</table>
+
+<!-- ════════ POLIMIXINAS ════════ -->
+<div class="gt">POLIMIXINAS — COLISTINA &amp; POLIMIXINA B</div>
+<table class="pk">
+  <thead><tr>
+    <th>Fármaco</th><th>Vida media</th><th>Vía</th>
+    <th>Cobertura específica ★</th><th>Uso principal ★</th><th>Particularidad / RAM</th>
+  </tr></thead>
+  <tbody>
+    <tr class="hl"><td class="dn">Colistina<br>(Polimixina E)</td><td>2–4.5 h</td><td>IV · inhalatoria · intratecal</td>
+      <td class="cov"><span class="ok">✓</span> <b class="s3">SOLO G−</b>, en especial <b class="s3">MDR:</b> Pseudomonas aeruginosa, Acinetobacter, Klebsiella, E. coli, Enterobacter<span class="cv-no"><span class="no">✗ NADA</span> de G+, anaerobios, Proteus, Serratia, Neisseria (intrínseca)</span></td>
+      <td><b class="s3">G− MDR respiratorios</b> (incl. fibrosis quística, inhalada)</td><td>Profármaco (colistimetato) · <b class="warn">nefrotoxicidad ~20 %</b></td></tr>
+    <tr><td class="dn">Polimixina B</td><td>6–7 h</td><td>IV · tópica/ótica/oftálmica</td>
+      <td class="cov"><span class="ok">✓</span> <b class="s3">Idéntico espectro a colistina</b> (solo G− MDR)<span class="cv-no"><span class="no">✗</span> Igual: nada de G+ ni anaerobios</span></td>
+      <td>Bacteriemia por G− MDR · tópicos combinados</td><td>Forma activa directa (no profármaco)</td></tr>
+  </tbody>
+</table>
+
+<table class="clin">
+  <tr>
+    <td class="lbl">Mecanismo</td>
+    <td class="ct"><span class="mech">Bactericida tipo <b class="s3">detergente</b>: estructura anfipática que interactúa con los <b class="s3">fosfolípidos de la membrana externa de los G−</b> (LPS) → desorganiza la permeabilidad → fuga de contenido → lisis.</span> El <b class="s3">calcio reduce</b> la fijación. Resistencia cruzada entre polimixinas, no con otros grupos.</td>
+  </tr>
+  <tr>
+    <td class="lbl">Indicaciones</td>
+    <td class="ct"><b class="warn">No 1ª elección (tóxicas) — alternativa crítica en G− panresistentes:</b> <span class="star">★★★</span> Pseudomonas/Acinetobacter/Klebsiella resistentes a carbapenémicos · <span class="star">★★</span> G− MDR en fibrosis quística (colistina inhalada) · <span class="star">★</span> Meningitis MDR (intratecal: no alcanza LCR por vía sistémica).</td>
+  </tr>
+  <tr>
+    <td class="lbl">RAM / Interacciones</td>
+    <td class="ct"><b class="warn">Nefrotoxicidad (~20 %)</b> directa del túbulo (dosis-dependiente, reversible) · <b class="s3">Neurotoxicidad</b> (parestesias periorales, vértigo, ataxia) · <b class="s3">Bloqueo neuromuscular</b> (apnea). <span class="warn">No sumar otros nefrotóxicos</span> (aminoglucósidos, vancomicina, AINE).</td>
+  </tr>
+</table>
+
+<!-- ════════ BACITRACINA ════════ -->
+<div class="gt teal">BACITRACINA (inhibe la PARED celular)</div>
+<table class="pk teal-tbl">
+  <thead><tr>
+    <th>Fármaco</th><th>Diana / Mecanismo</th>
+    <th>Cobertura específica ★</th><th>Uso principal ★</th><th>Particularidad / RAM</th>
+  </tr></thead>
+  <tbody>
+    <tr class="hl tl"><td class="dn">Bacitracina</td><td>Inhibe la <b class="s3">defosforilación del bactrenol</b> → no recicla precursores de peptidoglicano (<b class="s3">PARED</b>)</td>
+      <td class="cov"><span class="ok">✓</span> Cocos G+ (<b class="s3">S. aureus MSSA</b>, S. pyogenes, S. epidermidis) + N. gonorrhoeae, T. pallidum, anaerobios (Actinomyces, Fusobacterium)<span class="cv-no"><span class="no">✗</span> Solo tópico (nefrotóxico sistémico) · no enterobacterias</span></td>
+      <td>Sobreinfección dérmica · conjuntivitis · C. difficile (oral)</td><td><span class="warn">⚠ Parenteral contraindicada</span> (nefrotox. aguda grave) · de <i>B. subtilis</i></td></tr>
+  </tbody>
+</table>
+
+<table class="clin teal-tbl">
+  <tr>
+    <td class="lbl">Mecanismo</td>
+    <td class="ct"><span class="mech"><b class="s3">Único del grupo que NO toca el ribosoma:</b> inhibe la defosforilación del <b class="s3">bactrenol</b> (undecaprenil-pirofosfato), el transportador lipídico que lleva los precursores del peptidoglicano por la membrana → la bacteria no construye la <b class="s3">pared celular</b>.</span></td>
+  </tr>
+  <tr>
+    <td class="lbl">Indicaciones</td>
+    <td class="ct"><span class="star">★★</span> Infecciones cutáneas superficiales / conjuntivitis (sola o con neomicina/polimixina) · <span class="star">★</span> Colitis pseudomembranosa (oral, no se absorbe). <b class="warn">RAM: nefrotoxicidad aguda grave parenteral → uso estrictamente local.</b></td>
+  </tr>
+</table>
+
+<!-- ════════ ALGORITMO: SELECCIÓN POR ORGANISMO ════════ -->
+<div class="gt">¿EN QUÉ ORDEN? — SELECCIÓN POR ORGANISMO / ESCENARIO</div>
+<table class="pk">
+  <thead><tr>
+    <th>Organismo / Escenario</th><th>1ª línea</th><th>2ª línea / alternativa</th><th>3ª línea / reserva</th><th>Comentario clave</th>
+  </tr></thead>
+  <tbody>
+    <tr><td class="dn">Faringitis/erisipela en <b>alérgico a penicilina</b></td><td class="ok">Penicilina/amoxicilina (si no alérgico)</td><td><b class="s3">Macrólido</b> (azitro/claritro)</td><td>Clindamicina</td><td>El macrólido entra cuando la penicilina está vetada; clinda si además hay resistencia a macrólido</td></tr>
+    <tr><td class="dn">Neumonía <b>atípica</b> (Mycoplasma, Chlamydophila, Legionella)</td><td class="ok"><b class="s3">Macrólido</b> (azitro) o doxiciclina</td><td>Fluoroquinolona respiratoria</td><td>—</td><td>Atípicos sin pared → los betalactámicos no sirven</td></tr>
+    <tr><td class="dn">Tos ferina · difteria</td><td class="ok"><b class="s3">Macrólido</b> (eritro/azitro)</td><td>TMP-SMX (tos ferina)</td><td>—</td><td>1ª elección indiscutida del macrólido</td></tr>
+    <tr><td class="dn"><i>Helicobacter pylori</i></td><td class="ok"><b class="s3">Claritromicina</b> + amoxicilina + IBP</td><td>Cuádruple con bismuto</td><td>—</td><td>Sustituir si resistencia local a claritro &gt;15 %</td></tr>
+    <tr><td class="dn"><b>Anaerobios</b> supradiafragmáticos · fascitis necrosante</td><td class="ok"><b class="s3">Clindamicina</b> (+ betalactámico)</td><td>Metronidazol (infradiafragmático)</td><td>—</td><td>Clinda aporta efecto antitoxina; metronidazol cubre mejor abdomen/pelvis</td></tr>
+    <tr><td class="dn"><b>MRSA</b> — piel leve (comunidad)</td><td class="ok">TMP-SMX · doxiciclina · <b class="s3">clindamicina</b></td><td>Linezolid (oral)</td><td>—</td><td>Vía oral ambulatoria; ojo con <i>erm</i> inducible en clinda (test D)</td></tr>
+    <tr><td class="dn"><b>MRSA</b> — grave (bacteriemia, neumonía)</td><td class="ok">Vancomicina o daptomicina</td><td><b class="s3">Linezolid</b> (neumonía: penetra pulmón)</td><td><b class="s3">Quinupristina/dalfopristina</b></td><td>Estreptograminas = reserva final; linezolid si se busca paso a VO</td></tr>
+    <tr><td class="dn"><b>VRE</b> — <i>E. faecium</i> resistente a vancomicina</td><td class="ok"><b class="s3">Linezolid</b></td><td>Daptomicina</td><td><b class="s3">Quinupristina/dalfopristina</b></td><td>Quinu/dalfo NO sirve para <i>E. faecalis</i> (resistencia intrínseca)</td></tr>
+    <tr><td class="dn"><b>G− MDR</b> (Pseudomonas, Acinetobacter, Klebsiella carbapenem-R)</td><td class="ok">Carbapenémico / nuevos betalactámicos (si sensible)</td><td>Aminoglucósido</td><td><b class="s3">Colistina / Polimixina B</b></td><td>Polimixinas = último recurso por nefrotoxicidad; nada más del cuadro cubre G−</td></tr>
+    <tr><td class="dn"><i>C. difficile</i> (colitis pseudomembranosa)</td><td class="ok">Vancomicina oral o fidaxomicina</td><td>Metronidazol</td><td><b class="s3">Bacitracina oral</b></td><td>Suspender primero el antibiótico causal (¡típicamente la clindamicina!)</td></tr>
+    <tr><td class="dn">Portador nasal de S. aureus · impétigo localizado</td><td class="ok"><b class="s3">Mupirocina</b> tópica/intranasal</td><td>Retapamulina tópica</td><td>—</td><td>Tratamiento local; no usar sistémicos para descolonización simple</td></tr>
+  </tbody>
+</table>
+
+<table class="clin">
+  <tr>
+    <td class="lbl">Abreviaturas</td>
+    <td class="ct"><b>MSSA/MRSA</b> S. aureus meticilino-sensible/resistente · <b>CA-MRSA</b> MRSA de la comunidad · <b>VRE</b> enterococo resistente a vancomicina · <b>VISA</b> S. aureus con sensibilidad intermedia a vancomicina · <b>MDR</b> multirresistente · <b>MLS-B</b> resistencia cruzada macrólido–lincosamida–estreptogramina B (gen <i>erm</i>) · <b>CYP3A4</b> isoenzima del citocromo P450 · <b>EPA</b> efecto postantibiótico · <b>CIM</b> concentración inhibitoria mínima · <b>UPP</b> unión a proteínas plasmáticas · <b>LCR</b> líquido cefalorraquídeo · <b>IBP</b> inhibidor de bomba de protones · <b>NAC</b> neumonía adquirida en la comunidad · <b>Test D</b> prueba que detecta resistencia inducible a clindamicina.</td>
+  </tr>
+</table>
+
+</div>
+</body>
+</html>

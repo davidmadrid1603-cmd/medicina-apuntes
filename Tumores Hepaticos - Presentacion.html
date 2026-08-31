@@ -1,0 +1,1264 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tumores Hepáticos — Seminario</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,900;1,9..144,400;1,9..144,600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0B0C10; --bg2:#121419; --panel:#161A21; --panel2:#1C212B;
+  --ink:#ECE9E1; --ink-soft:#A6ADBA; --ink-dim:#727A88;
+  --amber:#F2A93B; --amber-2:#F7C36B; --cyan:#46D4E6; --cyan-2:#8BE7F2;
+  --crimson:#F0563B; --gold:#E8C26B; --green:#5FD08A;
+  --rule:#262C36; --line:#333A47;
+  --glow-amber:0 0 32px rgba(242,169,59,.30);
+  --glow-cyan:0 0 32px rgba(70,212,230,.28);
+  --shadow:0 24px 60px -28px rgba(0,0,0,.8);
+  --display:"Fraunces", Georgia, serif;
+  --body:"Newsreader", Georgia, serif;
+  --mono:"IBM Plex Mono", ui-monospace, monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  background:radial-gradient(1200px 800px at 75% -10%, #15212b 0%, var(--bg) 55%) fixed, var(--bg);
+  color:var(--ink); font-family:var(--body); font-size:17px; overflow:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+body::after{ /* grain (estático, sin blend para no titilar) */
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:9000;opacity:.035;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---------- STAGE / SLIDES ---------- */
+#stage{position:fixed;inset:0}
+.slide{
+  position:absolute;inset:0;display:none;flex-direction:column;
+  padding:5.2vh 5.4vw 8vh;overflow:hidden;will-change:transform,opacity;
+}
+.slide-inner{flex:1;display:flex;flex-direction:column;min-height:0}
+
+/* ---------- TYPOGRAPHY ---------- */
+.kicker{font-family:var(--mono);font-size:.72rem;letter-spacing:.34em;text-transform:uppercase;color:var(--amber);font-weight:600;display:flex;align-items:center;gap:.8rem;margin-bottom:1rem}
+.kicker::before{content:"";width:38px;height:1px;background:linear-gradient(90deg,var(--amber),transparent)}
+.kicker.cy{color:var(--cyan)}.kicker.cy::before{background:linear-gradient(90deg,var(--cyan),transparent)}
+.kicker.cr{color:var(--crimson)}.kicker.cr::before{background:linear-gradient(90deg,var(--crimson),transparent)}
+
+h2.sec{font-family:var(--display);font-weight:600;font-size:clamp(2rem,4.6vw,3.7rem);line-height:1.0;letter-spacing:-.02em;color:var(--ink)}
+h2.sec em{font-style:italic;color:var(--amber);text-shadow:var(--glow-amber)}
+.lead{font-size:clamp(1.05rem,1.7vw,1.4rem);color:var(--ink-soft);max-width:64ch;line-height:1.5}
+p{line-height:1.55;margin-bottom:.65rem;color:var(--ink-soft)}
+strong{color:var(--ink);font-weight:600}
+em{color:var(--cyan-2);font-style:italic}
+.star{color:var(--amber)}
+.hr{height:1px;background:var(--rule);border:0;margin:.9rem 0}
+.scroll{overflow:auto;min-height:0;padding-right:.5rem}
+.scroll::-webkit-scrollbar{width:8px}.scroll::-webkit-scrollbar-thumb{background:var(--line);border-radius:8px}
+
+/* kinetic title */
+.kinetic{font-family:var(--display);font-weight:900;line-height:.94;letter-spacing:-.03em}
+.kinetic .word{display:inline-block;overflow:hidden;vertical-align:top;padding:0 .02em}
+.kinetic .word .inner{display:inline-block}
+
+/* layout helpers */
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:2rem;flex:1;min-height:0}
+.cols-3{display:grid;grid-template-columns:repeat(3,1fr);gap:1.3rem}
+.cols-32{display:grid;grid-template-columns:1.3fr 1fr;gap:2rem;flex:1;min-height:0}
+.cols-23{display:grid;grid-template-columns:1fr 1.4fr;gap:2rem;flex:1;min-height:0}
+.fill{flex:1;min-height:0}
+
+/* cards */
+.card{background:linear-gradient(180deg,var(--panel) 0%,var(--bg2) 100%);border:1px solid var(--rule);border-radius:10px;padding:1.05rem 1.2rem;box-shadow:var(--shadow)}
+.card h3{font-family:var(--display);font-weight:600;font-size:1.12rem;margin-bottom:.3rem;color:var(--ink)}
+.card.am{border-left:3px solid var(--amber)} .card.am h3{color:var(--amber-2)}
+.card.cy{border-left:3px solid var(--cyan)} .card.cy h3{color:var(--cyan-2)}
+.card.cr{border-left:3px solid var(--crimson)} .card.cr h3{color:var(--crimson)}
+.card p{font-size:.92rem;margin-bottom:.3rem}
+
+/* lists */
+ul.clean{list-style:none}
+ul.clean li{position:relative;padding-left:1.35rem;margin-bottom:.5rem;line-height:1.45;color:var(--ink-soft);font-size:.96rem}
+ul.clean li::before{content:"";position:absolute;left:0;top:.55em;width:6px;height:6px;background:var(--amber);transform:rotate(45deg);box-shadow:var(--glow-amber)}
+ul.clean.cy li::before{background:var(--cyan);box-shadow:var(--glow-cyan)}
+ul.clean li b{color:var(--ink)}
+ul.clean li .why{display:block;color:var(--ink-dim);font-style:italic;font-size:.86em;margin-top:.05rem}
+
+/* alert */
+.alert{border-left:3px solid var(--crimson);background:rgba(240,86,59,.10);padding:.8rem 1.05rem;border-radius:0 8px 8px 0;color:#ffb7a6;font-style:italic;font-size:.95rem}
+.alert strong{color:#ffd2c7}
+
+/* tables */
+table{border-collapse:collapse;width:100%;font-size:.86rem;background:var(--panel);border-radius:10px;overflow:hidden;box-shadow:var(--shadow)}
+caption{caption-side:top;text-align:left;font-family:var(--mono);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--amber);padding:0 0 .5rem}
+thead th{background:linear-gradient(180deg,#1f2632,#19202a);color:var(--ink);font-family:var(--body);font-weight:600;text-align:left;padding:.5rem .65rem;font-size:.82rem;border-bottom:1px solid var(--line)}
+tbody td{padding:.45rem .65rem;border-bottom:1px solid var(--rule);vertical-align:top;line-height:1.32;color:var(--ink-soft)}
+tbody tr:nth-child(even){background:rgba(255,255,255,.018)}
+tbody tr:hover{background:rgba(70,212,230,.06)}
+td strong{color:var(--ink)}
+.tag{font-family:var(--mono);font-size:.66rem;font-weight:600;padding:.08rem .4rem;border-radius:4px;letter-spacing:.04em}
+.tag.b{background:rgba(95,208,138,.16);color:var(--green)}
+.tag.m1{background:rgba(240,86,59,.16);color:var(--crimson)}
+.tag.m2{background:rgba(242,169,59,.16);color:var(--amber-2)}
+.tag.pre{background:rgba(232,194,107,.16);color:var(--gold)}
+.legend{font-size:.74rem;color:var(--ink-dim);font-style:italic;margin-top:.5rem;line-height:1.4}
+
+/* mono block */
+.mono{font-family:var(--mono);font-size:.8rem;line-height:1.5;background:#0E1116;color:#cfd6df;border:1px solid var(--rule);border-radius:10px;padding:1rem 1.2rem;white-space:pre-wrap;overflow:auto;box-shadow:var(--shadow)}
+.mono .am{color:var(--amber-2)} .mono .cy{color:var(--cyan-2)} .mono .cr{color:#ff9b8a} .mono .gn{color:var(--green)} .mono .dim{color:var(--ink-dim)}
+
+/* HC blocks */
+.hcgrid{display:grid;grid-template-columns:1fr 1fr;gap:1rem 2rem}
+.hch{font-family:var(--mono);font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;color:var(--amber);border-bottom:1px solid var(--rule);padding-bottom:.22rem;margin-bottom:.45rem}
+.fili{font-family:var(--mono);font-size:.8rem;line-height:1.75;color:var(--ink-soft)} .fili b{color:var(--ink)}
+.quote-mc{font-family:var(--display);font-style:italic;font-size:clamp(1.2rem,1.9vw,1.6rem);color:var(--cyan-2);line-height:1.25;text-shadow:var(--glow-cyan)}
+
+/* ALICIA chips */
+.alicia{display:grid;grid-template-columns:1fr;gap:.45rem}
+.alicia .ax{display:grid;grid-template-columns:auto 1fr;gap:.7rem;align-items:start;font-size:.92rem}
+.alicia .ax b{font-family:var(--display);font-weight:900;color:var(--amber);font-size:1.15rem;line-height:1;width:1.1em;text-align:center;text-shadow:var(--glow-amber)}
+.alicia .ax .lab{color:var(--ink)} .alicia .ax .why{color:var(--ink-dim);font-style:italic}
+
+/* hook */
+.hook{font-family:var(--display);font-style:italic;font-weight:600;font-size:clamp(1.5rem,3vw,2.4rem);line-height:1.18;color:var(--ink);max-width:22ch}
+.hook b{color:var(--amber);text-shadow:var(--glow-amber)}
+
+/* big numbers (epi) */
+.bignum{font-family:var(--display);font-weight:900;font-size:clamp(2.6rem,5vw,4.4rem);line-height:1;color:var(--amber);text-shadow:var(--glow-amber)}
+.bignum.cy{color:var(--cyan);text-shadow:var(--glow-cyan)}
+.bignum.cr{color:var(--crimson)}
+.numlabel{font-size:.92rem;color:var(--ink-soft);margin-top:.3rem;line-height:1.35}
+
+/* figures */
+figure{margin:0;display:flex;flex-direction:column;height:100%}
+.imgbox{flex:1;min-height:110px;border:1.5px dashed var(--line);border-radius:8px;background:repeating-linear-gradient(45deg,#10131a,#10131a 11px,#141822 11px,#141822 22px);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:.9rem;gap:.4rem}
+.imgbox img{width:100%;height:100%;object-fit:contain;border-radius:6px}
+.imgbox .ph{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.4rem}
+.imgbox.has-img{padding:0;border-style:solid;border-color:var(--rule);background:#000}
+.imgbox .code{font-family:var(--mono);font-weight:600;letter-spacing:.1em;background:var(--amber);color:#1a1205;padding:.16rem .55rem;border-radius:4px;font-size:.74rem}
+.imgbox .desc{font-style:italic;font-size:.82rem;max-width:32ch;color:var(--ink-soft)}
+figcaption{font-size:.76rem;color:var(--ink-dim);margin-top:.45rem;line-height:1.35}
+figcaption b{color:var(--amber-2);font-family:var(--mono);font-size:.7rem}
+.panelleg{font-family:var(--mono);font-size:.68rem;letter-spacing:.01em;color:var(--amber-2);margin-top:.3rem;line-height:1.45;border-top:1px solid var(--rule);padding-top:.3rem}
+.panelleg b{color:var(--ink)}
+
+/* closing slide */
+.closing{overflow:hidden}
+.closing .vargas-bg{position:absolute;top:0;right:0;bottom:0;width:56%;background:url('assets/img/img-vargas.jpg') center 18%/cover no-repeat;z-index:0}
+.closing .vargas-bg::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--bg) 2%, rgba(11,12,16,.78) 32%, rgba(11,12,16,.15) 100%)}
+.closing .vargas-bg::after{content:"";position:absolute;inset:0;box-shadow:inset 0 0 160px 40px var(--bg)}
+.closing blockquote{font-family:var(--display);font-style:italic;font-weight:600;font-size:clamp(1.25rem,2.5vw,2rem);color:var(--amber-2);border-left:3px solid var(--amber);padding-left:1.1rem;max-width:26ch;margin-top:1.1rem;text-shadow:var(--glow-amber)}
+.closing .qauthor{font-family:var(--mono);font-size:.8rem;letter-spacing:.16em;color:var(--ink-soft);margin-top:.8rem;text-transform:uppercase}
+
+/* perlas */
+.pearl{font-family:var(--display);font-size:clamp(1.05rem,1.9vw,1.45rem);line-height:1.3;color:var(--ink);border-left:3px solid var(--amber);padding:.25rem 0 .25rem 1rem;margin-bottom:.95rem;box-shadow:-1px 0 var(--glow-amber)}
+.pearl b{color:var(--amber);font-weight:600}
+
+/* sources slide */
+.srcitem{font-size:.86rem;color:var(--ink-soft);line-height:1.5;margin-bottom:.5rem;padding-left:1.3rem;position:relative}
+.srcitem::before{content:"§";position:absolute;left:0;color:var(--amber)}
+.srcitem a{color:var(--cyan-2);word-break:break-all}
+
+/* dossier */
+.dossier .links a{display:block;color:var(--cyan-2);font-size:.76rem;word-break:break-all;margin-bottom:.12rem}
+
+/* ====== ANIMATED SVG (draw via pathLength=1) ====== */
+.svgdraw .stroke{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 1.3s cubic-bezier(.6,0,.2,1)}
+.slide.play .svgdraw .stroke{stroke-dashoffset:0}
+.svgdraw .fade{opacity:0;transition:opacity .7s ease}
+.slide.play .svgdraw .fade{opacity:1}
+.svgdraw .fade.d1{transition-delay:.5s}.svgdraw .fade.d2{transition-delay:.9s}.svgdraw .fade.d3{transition-delay:1.3s}.svgdraw .fade.d4{transition-delay:1.7s}.svgdraw .fade.d5{transition-delay:2.1s}
+
+/* wash demo */
+.washrow{display:flex;gap:1.4rem;align-items:stretch;justify-content:center;flex-wrap:wrap}
+.washcell{display:flex;flex-direction:column;align-items:center;gap:.5rem}
+.phlabel{font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);text-align:center}
+.phlabel b{display:block;font-size:.92rem;letter-spacing:.02em;margin-top:.12rem}
+.phlabel b.am{color:var(--amber-2)} .phlabel b.cy{color:var(--cyan-2)}
+.btn{font-family:var(--mono);font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;background:transparent;color:var(--amber);border:1px solid var(--amber);padding:.5rem 1.05rem;border-radius:6px;cursor:pointer;transition:all .2s}
+.btn:hover{background:var(--amber);color:#1a1205;box-shadow:var(--glow-amber)}
+.lesion{transition:fill 1.1s ease, filter 1.1s ease}
+
+/* algorithm tree */
+.tree{display:flex;flex-direction:column;gap:.6rem;align-items:center;font-size:.84rem}
+.tnode{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:.5rem .85rem;text-align:center;color:var(--ink);box-shadow:var(--shadow);
+  opacity:0;transform:translateY(14px) scale(.96);transition:all .55s cubic-bezier(.22,.61,.36,1)}
+.slide.play .tnode{opacity:1;transform:none}
+.tnode.am{border-color:var(--amber);color:var(--amber-2)} .tnode.cy{border-color:var(--cyan)} .tnode.cr{border-color:var(--crimson);color:#ffb7a6}
+.tnode.head{background:linear-gradient(180deg,#1f2632,#181f29);font-weight:600}
+.trow{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;width:100%}
+.connector{width:1px;height:22px;background:var(--line);transform:scaleY(0);transform-origin:top;transition:transform .5s ease}
+.slide.play .connector{transform:scaleY(1)}
+.tnode.s1{transition-delay:.1s}.tnode.s2{transition-delay:.45s}.tnode.s3{transition-delay:.8s}.tnode.s4{transition-delay:1.15s}
+
+/* cover */
+.cover-eyebrow{font-family:var(--mono);letter-spacing:.42em;font-size:.78rem;text-transform:uppercase;color:var(--amber)}
+.cover-meta{font-family:var(--mono);font-size:.8rem;letter-spacing:.12em;color:var(--ink-dim);text-transform:uppercase}
+.cover-axis{max-width:56ch;font-size:1.12rem;color:var(--ink-soft);border-left:2px solid var(--cyan);padding-left:1.1rem;font-style:italic;line-height:1.5}
+.cover-top{display:flex;justify-content:space-between;align-items:flex-start;gap:2rem}
+.cover-head div{font-family:var(--body);color:var(--ink-soft);font-size:1.05rem;line-height:1.7}
+.cover-head .ch1{color:var(--ink);font-weight:600;font-size:1.18rem}
+.cover-logos{display:flex;gap:1.1rem;align-items:center;flex-shrink:0}
+.cover-logos .logo{height:104px;width:auto;object-fit:contain;filter:drop-shadow(0 6px 18px rgba(0,0,0,.55))}
+.logo-fb{height:92px;width:92px;border-radius:50%;border:1px dashed var(--line);display:none;align-items:center;justify-content:center;font-family:var(--mono);font-size:.74rem;color:var(--ink-dim);text-align:center;line-height:1.2}
+.cover-foot{display:flex;justify-content:space-between;align-items:flex-end}
+.cover-presenter{font-size:1.15rem;color:var(--ink-soft)} .cover-presenter b{color:var(--amber);font-weight:600;text-shadow:var(--glow-amber)}
+.cover-tutor{font-size:1rem;color:var(--ink-dim);margin-top:.2rem}
+
+/* ---------- CHROME ---------- */
+.chrome{position:fixed;left:0;right:0;bottom:0;height:42px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;z-index:9500;font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;color:var(--ink-dim);background:linear-gradient(0deg,rgba(11,12,16,.92),transparent);pointer-events:none}
+#c-sec{text-transform:uppercase;color:var(--amber)}
+#c-src{flex:1;text-align:center;padding:0 1.5rem;font-style:normal;color:var(--ink-dim);font-size:.66rem;letter-spacing:.04em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#c-count{color:var(--ink-soft)}
+#bar{position:fixed;left:0;bottom:0;height:2px;background:linear-gradient(90deg,var(--amber),var(--cyan));z-index:9600;width:0;transition:width .6s ease;box-shadow:var(--glow-amber)}
+#hint{position:fixed;right:22px;bottom:46px;font-family:var(--mono);font-size:.62rem;color:var(--rule);z-index:9500;letter-spacing:.08em}
+
+/* overview */
+#stage.ov{position:fixed;inset:0;display:grid !important;grid-template-columns:repeat(4,1fr);gap:9px;padding:20px 20px 54px;overflow:auto;perspective:none}
+#stage.ov .slide{position:relative;inset:auto;display:flex !important;transform:none !important;opacity:1 !important;height:auto;aspect-ratio:16/10;padding:12px;border:1px solid var(--rule);border-radius:8px;overflow:hidden;cursor:pointer;background:var(--bg2)}
+#stage.ov .slide:hover{border-color:var(--amber)}
+#stage.ov .slide.cur{outline:2px solid var(--amber)}
+#stage.ov .slide-inner > *{zoom:.5}
+#stage.ov .kinetic .inner{transform:none !important}
+
+@media print{
+  body{overflow:visible;background:#fff;color:#111}
+  #stage{position:static;perspective:none}
+  .slide{display:flex !important;position:relative;inset:auto;transform:none !important;opacity:1 !important;page-break-after:always;height:100vh;border-bottom:1px solid #ccc}
+  .chrome,#bar,#hint{display:none}
+}
+@media (max-width:900px){
+  .cols,.cols-3,.cols-32,.cols-23,.hcgrid,.trow{grid-template-columns:1fr}
+  .slide{padding:4vh 5vw 8vh}
+}
+</style>
+</head>
+<body>
+<div id="stage">
+
+<!-- 1 · PORTADA -->
+<section class="slide cover" data-sec="Portada" data-src="UCV · Escuela de Medicina «José María Vargas» · Cátedra de Clínica Médica C">
+ <div class="slide-inner" style="justify-content:space-between">
+  <div class="cover-top r">
+    <div class="cover-head">
+      <div class="ch1">Universidad Central de Venezuela</div>
+      <div>Facultad de Medicina — Escuela de Medicina «José María Vargas»</div>
+      <div>Cátedra de Clínica Médica C</div>
+    </div>
+    <div class="cover-logos">
+      <img class="logo" src="assets/img/logo-ucv.svg" alt="UCV" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <span class="logo-fb" style="display:none">UCV</span>
+      <img class="logo" src="assets/img/logo-vargas.png" alt="Facultad de Medicina de Caracas" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <span class="logo-fb" style="display:none">FM<br>Caracas</span>
+    </div>
+  </div>
+
+  <div>
+    <div class="r cover-eyebrow">Seminario de Medicina Interna</div>
+    <h1 class="kinetic r" style="font-size:clamp(2.6rem,8vw,6.6rem);margin:.4rem 0 .3rem;color:var(--ink)">Tumores Hepáticos</h1>
+    <div class="r" style="display:flex;gap:.7rem;align-items:center;margin:.2rem 0 1.1rem">
+      <span style="width:48px;height:2px;background:var(--amber);box-shadow:var(--glow-amber)"></span>
+      <span class="cover-meta">Benignos · malignos primarios · metastásicos</span>
+    </div>
+    <p class="r cover-axis">El diagnóstico del tumor hepático es, ante todo, un problema de <strong style="color:var(--amber)">caracterización por patrón de realce dinámico con contraste</strong> sobre un contexto clínico: ¿hay cirrosis? ¿hay primario conocido?</p>
+  </div>
+
+  <div class="cover-foot r">
+    <div>
+      <div class="cover-presenter">Presentador: <b>Br. David Madrid</b></div>
+      <div class="cover-tutor">Tutor: Dr. Pedro Francis</div>
+    </div>
+    <span class="cover-meta">Junio 2026</span>
+  </div>
+ </div>
+</section>
+
+<!-- 2 · CASO: filiatorios + motivo -->
+<section class="slide" data-sec="Caso clínico" data-src="App Historia Clínica (estructura) · Argente–Álvarez, Semiología Médica">
+ <div class="slide-inner">
+  <div class="r kicker">Caso clínico · Historia de ingreso</div>
+  <h2 class="sec r">Un cirrótico que <em>se descompensa</em></h2>
+  <div class="hcgrid r" style="margin-top:1.3rem">
+    <div class="card">
+      <div class="hch">1 · Datos filiatorios</div>
+      <p class="fili"><b>Edad:</b> 61 años &nbsp;·&nbsp; <b>Sexo:</b> Hombre &nbsp;·&nbsp; <b>Género:</b> Masculino<br>
+      <b>Natural y procedente de:</b> Caracas<br>
+      <b>Ocupación:</b> Comerciante &nbsp;·&nbsp; <b>Estado civil:</b> Casado</p>
+      <div class="hch" style="margin-top:.9rem">2 · Motivo de consulta</div>
+      <p class="quote-mc">“Dolor en el lado derecho del abdomen, hinchazón y pérdida de peso.”</p>
+    </div>
+    <div class="card cr" style="display:flex;flex-direction:column;justify-content:center">
+      <div class="hch" style="color:var(--crimson);border-color:rgba(240,86,59,.4)">⭐ Por qué importa este motivo</div>
+      <p style="font-size:1.02rem">Un cirrótico estable que <strong>se descompensa sin causa aparente</strong> —ascitis nueva, ictericia, encefalopatía— tiene un <strong>hepatocarcinoma hasta demostrar lo contrario.</strong></p>
+      <p style="font-size:.92rem;color:var(--ink-dim)">El motivo de consulta ya orienta toda la rama diagnóstica: contexto cirrótico → vía HCC (αFP + imagen multifásica + LI-RADS).</p>
+    </div>
+  </div>
+ </div>
+</section>
+
+<!-- 3 · CASO: enfermedad actual -->
+<section class="slide" data-sec="Caso clínico · Enfermedad actual" data-src="App Historia Clínica · Guías ALICIA-DPH (Oxford / Geeky Medics / Argente-Álvarez)">
+ <div class="slide-inner">
+  <div class="r kicker">3 · Enfermedad actual</div>
+  <div class="cols-32" style="margin-top:.3rem">
+    <div class="r scroll">
+      <p style="font-size:1.0rem;color:var(--ink)"><strong>Paciente masculino de 61 años</strong>, natural y procedente de Caracas, con cirrosis hepática por VHC y consumo crónico de alcohol, en vigilancia semestral, quien refiere inicio de enfermedad actual de <strong>~8 semanas</strong> de evolución, de instalación <strong>insidiosa</strong> y curso <strong>progresivo</strong>, caracterizado por dolor en hipocondrio derecho de tipo <strong>sordo y pesadez</strong>, irradiado al <strong>hombro y escápula derecha</strong>, de intensidad moderada (5–6/10), continuo, que se exacerba con la ingesta copiosa y el decúbito.</p>
+      <p style="font-size:1.0rem;color:var(--ink)">En las últimas <strong>2 semanas</strong> el cuadro se agrava: aumento progresivo del perímetro abdominal (ascitis de novo), tinte ictérico de piel y escleras, coluria, y un <strong>episodio de desorientación y somnolencia diurna</strong> advertido por la familia.</p>
+      <div class="hch" style="margin-top:.7rem">Síntomas concomitantes</div>
+      <ul class="clean">
+        <li>Astenia marcada e hiporexia <span class="why">consumo metabólico tumoral + citoquinas</span></li>
+        <li>Pérdida de ~8 kg en 3 meses (involuntaria)</li>
+        <li>Distensión abdominal y saciedad precoz <span class="why">ascitis + hepatomegalia</span></li>
+        <li>Febrícula vespertina <span class="why">fiebre tumoral (ver patrón)</span></li>
+      </ul>
+    </div>
+    <div class="r" style="display:flex;flex-direction:column;gap:1rem">
+      <div class="card am">
+        <h3>🔥 Patrón de la fiebre</h3>
+        <ul class="clean" style="margin-top:.2rem">
+          <li><b>Febrícula</b> 37,5–38 °C, <b>vespertina</b> e <b>intermitente</b></li>
+          <li><b>Sin escalofríos rigurosos</b> ni foco infeccioso localizador</li>
+          <li>No responde a antibióticos empíricos</li>
+        </ul>
+        <p class="legend">Fiebre <strong>tumoral/paraneoplásica</strong>: pirógenos endógenos (IL-6, TNF-α, IL-1) y necrosis tumoral. El patrón vespertino comparte el grupo TB/linfoma/absceso/neoplasia. <em>Vigilar tríada de Charcot (fiebre + dolor CSD + ictericia) que indicaría colangitis.</em></p>
+      </div>
+      <div class="card cy">
+        <h3>¿Por qué irradia al hombro derecho?</h3>
+        <p style="font-size:.9rem">La <strong>cara diafragmática</strong> del hígado y la <strong>cápsula de Glisson</strong> reciben inervación del <strong>nervio frénico (C3–C5)</strong>, cuyo dermatoma cutáneo corresponde al hombro; por eso la distensión capsular se percibe como <strong>dolor referido al hombro/escápula derecha</strong>. El carácter <em>sordo y constante</em> lo distingue del cólico biliar.</p>
+      </div>
+    </div>
+  </div>
+ </div>
+</section>
+
+<!-- 4 · CASO: antecedentes/hábitos/interrogatorio -->
+<section class="slide" data-sec="Caso clínico · Antecedentes" data-src="App Historia Clínica — secciones 4–7 (antecedentes, hábitos, interrogatorio funcional)">
+ <div class="slide-inner">
+  <div class="r kicker">5–7 · Antecedentes, hábitos e interrogatorio funcional</div>
+  <div class="cols-3 r" style="flex:1;min-height:0;margin-top:.5rem">
+    <div class="card scroll">
+      <h3>Antecedentes</h3>
+      <p><strong>Adulto:</strong> cirrosis hepática por VHC (Dx hace 6 años); várices esofágicas grado II en endoscopia previa.</p>
+      <p><strong>ETS:</strong> hepatitis C.</p>
+      <p><strong>Quirúrgicos/familiares:</strong> sin relevancia.</p>
+      <p class="legend">Resto de antecedentes: negados.</p>
+    </div>
+    <div class="card scroll">
+      <h3>Hábitos psicobiológicos</h3>
+      <p><strong>Alcohólicos:</strong> hábito diario ~25 años, ingesta elevada, alcanzaba la embriaguez; abstinencia parcial el último año.</p>
+      <p><strong>Tabáquicos:</strong> desde los 20 años, 10 cig/día → <em>IPA ≈ 20,5 (riesgo alto)</em>.</p>
+      <p class="legend">Resto de hábitos: negados.</p>
+    </div>
+    <div class="card scroll">
+      <h3>Interrogatorio funcional</h3>
+      <p><strong>General:</strong> fiebre, pérdida de peso, astenia.</p>
+      <p><strong>Piel:</strong> ictericia, prurito, equimosis.</p>
+      <p><strong>Gastrointestinal:</strong> hiporexia, distensión, saciedad precoz, coluria.</p>
+      <p><strong>Neurológico:</strong> desorientación, somnolencia, cambios de carácter.</p>
+      <p class="legend">Resto de aparatos: negados.</p>
+    </div>
+  </div>
+ </div>
+</section>
+
+<!-- 6 · CASO: examen físico florido -->
+<section class="slide" data-sec="Caso clínico · Examen físico" data-src="App Historia Clínica — sección 8 · Semiología de hepatopatía crónica (Argente-Álvarez)">
+ <div class="slide-inner">
+  <div class="r kicker">8 · Examen físico florido</div>
+  <h2 class="sec r" style="font-size:clamp(1.5rem,2.9vw,2.3rem)">Una hepatopatía escrita <em>en todo el cuerpo</em></h2>
+  <div class="cols" style="margin-top:.7rem">
+    <div class="r scroll">
+      <div class="hch">Signos vitales · aspecto general</div>
+      <p style="font-size:.92rem">T 37,8 °C · PA 104/64 · FR 18 · Pulso 92 · IMC 19,1 kg/m². Paciente <strong>adelgazado, con sarcopenia temporal</strong>, ictérico, somnoliento pero despertable.</p>
+      <div class="hch" style="margin-top:.6rem">Piel y mucosas</div>
+      <ul class="clean">
+        <li>Ictericia cutáneo-mucosa y escleral</li>
+        <li>⭐ Arañas vasculares en tórax superior <span class="why">hiperestrogenismo</span></li>
+        <li>Eritema palmar; equimosis dispersas <span class="why">déficit de factores</span></li>
+      </ul>
+      <div class="hch" style="margin-top:.6rem">Neurológico · genital</div>
+      <ul class="clean">
+        <li>⭐ <b>Asterixis (flapping)</b> + desorientación <span class="why">encefalopatía hepática grado I–II</span></li>
+        <li>Ginecomastia y atrofia testicular</li>
+      </ul>
+    </div>
+    <div class="r" style="display:flex;flex-direction:column;gap:.9rem">
+      <div class="card cr">
+        <h3 style="color:var(--crimson)">Abdomen — el hallazgo central</h3>
+        <ul class="clean">
+          <li>Distendido, con <b>circulación venosa colateral</b></li>
+          <li>⭐ <b>Hepatomegalia dura, nodular</b>, span >13 cm, borde irregular</li>
+          <li>Dolor a la palpación profunda del HCD (cápsula tensa); Murphy negativo</li>
+          <li>⭐ <b>Soplo hepático</b> sobre la lesión <span class="why">neoangiogénesis del HCC hipervascular</span></li>
+          <li><b>Ascitis</b>: matidez desplazable + oleada ascítica</li>
+          <li>Esplenomegalia <span class="why">hipertensión portal</span></li>
+        </ul>
+      </div>
+      <p class="legend">El examen integra <strong>4 sistemas</strong>: nutricional · tegumentario · neurológico · abdominal (tumor + hipertensión portal). Es la presentación <em>florida</em> del HCC sobre cirrosis descompensada.</p>
+    </div>
+  </div>
+ </div>
+</section>
+
+<!-- 7 · CASO: paraclínicos + diferenciales -->
+<section class="slide" data-sec="Caso clínico · Paraclínicos y DDx" data-src="AASLD 2023 · Child-Pugh · diagnóstico diferencial de masa hepática">
+ <div class="slide-inner">
+  <div class="r kicker">Paraclínicos de ingreso y diagnóstico diferencial</div>
+  <div class="cols" style="margin-top:.3rem">
+    <div class="r">
+      <div class="mono">PARACLÍNICOS DE INGRESO
+<span class="dim">────────────────────────────────</span>
+Hb 10,2 g/dL   Plaquetas <span class="cr">78 ×10³/µL</span> <span class="dim">(hiperesplenismo)</span>
+AST 96 · ALT 71 U/L
+FA 310 · GGT 240 U/L           <span class="dim">patrón colestásico</span>
+Bilirrubina total <span class="am">4,1</span> (directa 2,9) mg/dL
+Albúmina <span class="cr">2,8 g/dL</span>   ·   INR <span class="cr">1,6</span>
+<span class="dim">──────────</span>
+<span class="am">α-fetoproteína   480 ng/mL</span>  <span class="cr">◄ clave</span>
+CA 19-9 / CEA: solicitados</div>
+      <p class="legend" style="margin-top:.5rem">Child-Pugh estimado <strong>clase B–C</strong> (bilirrubina, albúmina, INR, ascitis, encefalopatía).</p>
+    </div>
+    <div class="r">
+      <div class="hch">Diagnóstico diferencial de la masa hepática</div>
+      <ul class="clean">
+        <li><b>Hepatocarcinoma sobre cirrosis</b> — contexto + αFP↑ + descompensación <span class="why">primera probabilidad</span></li>
+        <li><b>Colangiocarcinoma</b> — si predomina colestasis + retracción capsular</li>
+        <li><b>Metástasis hepáticas</b> — si fueran múltiples y hubiera primario</li>
+        <li><b>Absceso hepático</b> — fiebre héctica, leucocitosis, doble diana</li>
+        <li><b>Adenoma / HNF</b> — improbable: terreno no típico (varón cirrótico)</li>
+      </ul>
+      <p class="hook" style="margin-top:1rem">¿Qué lesión es… <b>y qué pediría a continuación?</b></p>
+    </div>
+  </div>
+ </div>
+</section>
+
+<!-- 8 · CONCEPTO -->
+<section class="slide" data-sec="Concepto" data-src="AASLD 2023 · The Radiology Assistant — Characterisation of liver masses">
+ <div class="slide-inner">
+  <div class="r kicker cy">Concepto</div>
+  <h2 class="sec r">El tumor hepático es un <em>problema de patrón</em></h2>
+  <p class="lead r" style="margin-top:.5rem">Las lesiones focales hepáticas van desde hallazgos benignos incidentales muy frecuentes hasta neoplasias de alta letalidad. Su naturaleza se define por el <strong>cruce de tres datos</strong>.</p>
+  <div class="cols-3 r" style="margin-top:1.4rem">
+    <div class="card am"><h3>1 · Contexto clínico</h3><p>¿Hígado cirrótico / VHB? ¿Antecedente oncológico? El terreno cambia por completo la <strong>probabilidad pre-test.</strong></p></div>
+    <div class="card cy"><h3>2 · Patrón de realce</h3><p>Hipervascular con lavado · relleno centrípeto · target · realce tardío. La <strong>huella dactilar</strong> de cada lesión.</p></div>
+    <div class="card am"><h3>3 · Marcadores</h3><p>αFP · CA 19-9 · CEA. <strong>Complementan</strong> la imagen, no la sustituyen.</p></div>
+  </div>
+  <div class="alert r" style="margin-top:1.3rem"><strong>Regla maestra:</strong> el contexto (cirrosis sí/no, primario sí/no) decide la vía diagnóstica y permite —en el HCC— diagnosticar <strong>sin biopsia.</strong></div>
+ </div>
+</section>
+
+<!-- 9 · FISIOPATOLOGÍA: doble irrigación (SVG) -->
+<section class="slide" data-sec="Fisiopatología" data-src="EASL / AASLD · fisiología de la perfusión hepática y neoangiogénesis tumoral">
+ <div class="slide-inner">
+  <div class="r kicker cy">Fisiopatología · 1</div>
+  <h2 class="sec r">Todo nace de la <em>doble irrigación</em></h2>
+  <div class="cols-23" style="margin-top:.5rem">
+    <div class="r" style="display:flex;align-items:center;justify-content:center">
+      <svg class="svgdraw" viewBox="0 0 360 300" style="width:100%;max-width:420px">
+        <!-- liver blob -->
+        <path class="fade" d="M60 120 q20 -60 120 -55 q120 5 120 70 q0 80 -110 95 q-130 15 -130 -50 z" fill="#3a2a22" stroke="#5b4034" stroke-width="2"/>
+        <!-- portal vein (big) -->
+        <path class="stroke" d="M20 250 q70 -30 120 -90" fill="none" stroke="var(--cyan)" stroke-width="9" pathLength="1" stroke-linecap="round"/>
+        <text class="fade d2" x="14" y="270" fill="var(--cyan-2)" font-family="IBM Plex Mono" font-size="13">Vena porta · 75%</text>
+        <!-- hepatic artery (small) -->
+        <path class="stroke" d="M30 70 q70 20 110 70" fill="none" stroke="var(--amber)" stroke-width="4" pathLength="1" stroke-linecap="round"/>
+        <text class="fade d2" x="18" y="60" fill="var(--amber-2)" font-family="IBM Plex Mono" font-size="13">Arteria hepática · 25%</text>
+        <!-- tumor nodule fed by artery -->
+        <circle class="fade d3" cx="225" cy="150" r="26" fill="#5a3b30" stroke="var(--amber)" stroke-width="2"/>
+        <path class="stroke" d="M150 120 q45 15 70 28" fill="none" stroke="var(--amber)" stroke-width="3" pathLength="1" stroke-dasharray="4 3"/>
+        <text class="fade d4" x="200" y="200" fill="var(--amber-2)" font-family="IBM Plex Mono" font-size="12">tumor</text>
+      </svg>
+    </div>
+    <div class="r scroll">
+      <ul class="clean cy">
+        <li>El hígado recibe <b>~75% de la vena porta</b> y ~25% de la arteria hepática.</li>
+        <li>Casi todos los tumores se nutren de la <b>arteria hepática</b> (neoangiogénesis) → por eso la <b>fase arterial</b> separa lesiones hipervasculares de hipovasculares.</li>
+        <li>En el <b>HCC</b>, la cirrosis genera inflamación-regeneración crónica: nódulo displásico → <em>bajo grado → alto grado → HCC</em>, ganando arterialización y perdiendo el aporte portal.</li>
+        <li>El <b>colangiocarcinoma</b> es intensamente fibroso (desmoplásico): el contraste entra lento y queda atrapado → realce tardío.</li>
+      </ul>
+    </div>
+  </div>
+ </div>
+</section>
+
+<!-- 10 · FISIOPATOLOGÍA: wash-in/wash-out (SVG animado) -->
+<section class="slide" data-sec="Fisiopatología · patrón sello" data-src="ACR LI-RADS v2018 · AASLD 2023 — APHE + wash-out + cápsula">
+ <div class="slide-inner">
+  <div class="r kicker">Fisiopatología · 2 — el patrón sello del HCC</div>
+  <h2 class="sec r" style="font-size:clamp(1.6rem,3vw,2.4rem)"><em>Wash-in</em> arterial → <em style="color:var(--cyan)">wash-out</em> venoso</h2>
+  <div class="r fill" style="display:flex;flex-direction:column;justify-content:center;gap:1.4rem;margin-top:.5rem">
+    <div class="washrow" id="washDemo">
+      <div class="washcell">
+        <svg viewBox="0 0 150 130" style="width:170px"><rect x="6" y="6" width="138" height="118" rx="14" fill="#2c2018"/><circle id="lesA" class="lesion" cx="75" cy="65" r="30" fill="#4a3328"/></svg>
+        <div class="phlabel">Basal<b>sin contraste</b></div>
+      </div>
+      <div class="washcell" style="justify-content:center"><span style="color:var(--amber);font-size:1.6rem">→</span></div>
+      <div class="washcell">
+        <svg viewBox="0 0 150 130" style="width:170px"><rect x="6" y="6" width="138" height="118" rx="14" fill="#2c2018"/><circle id="lesB" class="lesion" cx="75" cy="65" r="30" fill="#4a3328"/></svg>
+        <div class="phlabel">Arterial<b class="am">wash-in (APHE)</b></div>
+      </div>
+      <div class="washcell" style="justify-content:center"><span style="color:var(--cyan);font-size:1.6rem">→</span></div>
+      <div class="washcell">
+        <svg viewBox="0 0 150 130" style="width:170px"><rect x="6" y="6" width="138" height="118" rx="14" fill="#2c2018"/><circle id="lesCring" cx="75" cy="65" r="33" fill="none" stroke="var(--cyan)" stroke-width="0"/><circle id="lesC" class="lesion" cx="75" cy="65" r="30" fill="#4a3328"/></svg>
+        <div class="phlabel">Venosa / tardía<b class="cy">wash-out + cápsula</b></div>
+      </div>
+    </div>
+    <div style="text-align:center"><button class="btn" onclick="playWash()">▶ Reproducir realce dinámico</button></div>
+    <p class="legend" style="text-align:center;max-width:70ch;margin:0 auto">El nódulo capta intensamente en arterial (arterialización por neovasos) y se "lava" en fase venosa al perder el aporte portal del parénquima vecino; la <strong>cápsula</strong> realza en fase tardía. Especificidad <strong>~95–100%</strong> en población de riesgo.</p>
+  </div>
+ </div>
+</section>
+
+<!-- 11 · EPIDEMIOLOGÍA -->
+<section class="slide" data-sec="Epidemiología" data-src="AASLD 2023 · estimaciones GLOBOCAN · epidemiología de lesiones focales hepáticas">
+ <div class="slide-inner">
+  <div class="r kicker cy">Epidemiología</div>
+  <h2 class="sec r">Quién, cuánto y <em>sobre qué hígado</em></h2>
+  <div class="cols-3 r" style="margin-top:1.3rem">
+    <div class="card cy"><div class="bignum cy count" data-to="5" data-suffix="%">0%</div><div class="numlabel"><strong>Hemangioma</strong> — tumor hepático <strong>más frecuente</strong> en conjunto (~5% de la población). Benigno, incidental, predominio femenino.</div></div>
+    <div class="card am"><div class="bignum count" data-to="20" data-prefix="≈" data-suffix=":1">0</div><div class="numlabel"><strong>Metástasis</strong> — tumor maligno hepático <strong>más frecuente</strong> (relación con primarios en Occidente). Colon, mama, páncreas, pulmón, NET.</div></div>
+    <div class="card cr"><div class="bignum cr count" data-to="3" data-suffix=".ª">0</div><div class="numlabel"><strong>Hepatocarcinoma</strong> — <strong>3.ª causa de muerte por cáncer</strong> en el mundo; primario hepático más común. <strong>≈80–90% sobre cirrosis.</strong></div></div>
+  </div>
+  <div class="r card" style="margin-top:1.2rem">
+    <div class="hch">Factores de riesgo del HCC</div>
+    <p style="font-size:.96rem">VHB (oncogénico <em>incluso sin cirrosis</em>, por integración viral) · VHC · alcohol · esteatohepatitis metabólica (MASH, en ascenso) · aflatoxina B1 · hemocromatosis. El <strong>hepatoblastoma</strong> es el tumor maligno propio del <strong>niño &lt;3 años.</strong></p>
+  </div>
+ </div>
+</section>
+
+<!-- 12 · CLÍNICA -->
+<section class="slide" data-sec="Clínica" data-src="AASLD 2023 · EASL · manifestaciones clínicas de los tumores hepáticos">
+ <div class="slide-inner">
+  <div class="r kicker">Clínica · formas de presentación</div>
+  <h2 class="sec r" style="font-size:clamp(1.6rem,2.9vw,2.4rem)">Del <em>incidentaloma</em> a la descompensación</h2>
+  <div class="cols" style="margin-top:.7rem">
+    <div class="r scroll" style="display:flex;flex-direction:column;gap:.7rem">
+      <div class="card cy"><h3>⭐ Hallazgo incidental asintomático</h3><p>La forma más común. El hígado tiene gran reserva: el tumor crece silente.</p></div>
+      <div class="card"><h3>Síndrome tumoral hepático</h3><p>Dolor/pesadez en HCD (cápsula de Glisson), hepatomegalia dura nodular, pérdida de peso, astenia, fiebre tumoral.</p></div>
+      <div class="card cr"><h3>⭐ Descompensación del cirrótico</h3><p>Ascitis nueva, ictericia, encefalopatía o hemorragia variceal "sin causa" → invasión portal / caída de reserva. <strong>HCC hasta demostrar lo contrario.</strong></p></div>
+    </div>
+    <div class="r scroll" style="display:flex;flex-direction:column;gap:.7rem">
+      <div class="card cr"><h3 style="color:var(--crimson)">⭐ Ictericia obstructiva (colangiocarcinoma)</h3><p>Ictericia <strong>indolora</strong> progresiva + coluria + acolia + prurito (tumor de Klatskin perihiliar).</p></div>
+      <div class="card am"><h3>⭐ Síndromes paraneoplásicos del HCC</h3><p>Hipoglicemia (IGF-II) · hipercalcemia (PTHrP) · eritrocitosis (EPO) · hipercolesterolemia.</p></div>
+      <div class="card am"><h3>⭐ Adenoma — riesgo propio</h3><p>Hemorragia intratumoral/intraperitoneal y malignización (β-catenina); hormonodependiente (ACO, anabólicos, embarazo).</p></div>
+    </div>
+  </div>
+ </div>
+</section>
+
+<!-- 13 · SEMIOLOGÍA -->
+<section class="slide" data-sec="Clínica · Semiología" data-src="Argente–Álvarez, Semiología Médica · exploración del hígado tumoral">
+ <div class="slide-inner">
+  <div class="r kicker">Semiología dirigida</div>
+  <h2 class="sec r" style="font-size:clamp(1.6rem,2.9vw,2.4rem)">Técnica → positivo → <em>por qué</em></h2>
+  <div class="r scroll" style="margin-top:.7rem">
+   <table>
+    <thead><tr><th style="width:20%">Maniobra</th><th style="width:27%">Técnica</th><th style="width:25%">Positivo</th><th>Por qué</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Hepatomegalia tumoral</strong></td><td>Percusión del span en LMC derecha; palpación "en cuchara" con inspiración profunda</td><td>Borde <strong>duro, nodular</strong>, span >12–13 cm</td><td>Masa e infiltración endurecen y agrandan el hígado (≠ congestión: blanda y lisa)</td></tr>
+      <tr><td><strong>Signo de cápsula tensa</strong></td><td>Palpación profunda del HCD; Murphy negativo</td><td>Dolor sordo sin foco vesicular</td><td>El crecimiento distiende la cápsula de Glisson (única con inervación somática)</td></tr>
+      <tr><td><strong>Soplo / frote hepático</strong></td><td>Auscultación sobre el área hepática</td><td>Soplo arterial sobre la lesión</td><td>El HCC es tan hipervascular que genera flujo turbulento audible</td></tr>
+      <tr><td><strong>Estigmas de hepatopatía</strong></td><td>Inspección: arañas, eritema palmar, ginecomastia, colaterales, ascitis, ictericia</td><td>Presentes → hígado cirrótico de base</td><td>Cambian la probabilidad pre-test: sobre cirrosis, lesión hipervascular con lavado <strong>es HCC</strong></td></tr>
+    </tbody>
+   </table>
+  </div>
+ </div>
+</section>
+
+<!-- 14 · SUBTIPOS 1 -->
+<section class="slide" data-sec="Subtipos" data-src="The Radiology Assistant — liver masses · ACG/AASLD lesiones focales benignas">
+ <div class="slide-inner">
+  <div class="r kicker">Subtipos · el corazón del seminario (1/2) — benignos</div>
+  <div class="r scroll" style="margin-top:.4rem">
+   <table>
+    <thead><tr><th>Lesión</th><th>Contexto</th><th>Patrón de realce (clave)</th><th>Discriminador</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Quiste simple</strong> <span class="tag b">benigno</span></td><td>Cualquiera, incidental</td><td><strong>No realza</strong>; anecoico, densidad agua</td><td>Pared imperceptible, refuerzo posterior; nunca capta</td></tr>
+      <tr><td><strong>Hemangioma</strong> <span class="tag b">+ frecuente</span></td><td>Mujer, incidental</td><td>Globular periférico → <strong>relleno centrípeto</strong></td><td>"Sigue a la sangre"; muy hiperintenso en T2 ("bombilla")</td></tr>
+      <tr><td><strong>HNF</strong> <span class="tag b">benigno</span></td><td>Mujer joven, no hormonodep.</td><td>Arterial homogéneo + <strong>cicatriz central</strong> tardía</td><td>Capta contraste hepatobiliar (hepatocitos + conductillos)</td></tr>
+      <tr><td><strong>Adenoma</strong> <span class="tag pre">premaligno</span></td><td>Mujer + ACO; varón + anabólicos</td><td>Arterial, lavado leve; <strong>heterogéneo</strong> (grasa/hemorragia)</td><td>Riesgo de <strong>sangrado</strong> y malignización; NO capta hepatobiliar</td></tr>
+    </tbody>
+   </table>
+   <p class="legend">Distinción clave HNF vs adenoma: la <strong>fase hepatobiliar</strong> (HNF capta, adenoma no) y la <strong>cicatriz central.</strong></p>
+  </div>
+ </div>
+</section>
+
+<!-- 15 · SUBTIPOS 2 -->
+<section class="slide" data-sec="Subtipos" data-src="AASLD 2023 · ACR LI-RADS · The Radiology Assistant — malignos">
+ <div class="slide-inner">
+  <div class="r kicker cr">Subtipos · el corazón del seminario (2/2) — malignos</div>
+  <div class="r scroll" style="margin-top:.4rem">
+   <table>
+    <thead><tr><th>Lesión</th><th>Contexto</th><th>Patrón de realce (clave)</th><th>Discriminador</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Hepatocarcinoma</strong> <span class="tag m1">maligno 1.º</span></td><td><strong>Cirrosis / VHB</strong></td><td>⭐ <strong>Wash-in arterial (APHE) + wash-out + cápsula</strong></td><td>αFP↑; LI-RADS permite Dx <strong>sin biopsia</strong></td></tr>
+      <tr><td><strong>Colangiocarcinoma intrahep.</strong> <span class="tag m1">maligno 1.º</span></td><td>Colangitis esclerosante, parásitos</td><td>Anillo periférico + <strong>relleno tardío progresivo</strong> + retracción capsular</td><td>CA 19-9↑; masa fibrosa + dilatación biliar</td></tr>
+      <tr><td><strong>Hepatoblastoma</strong> <span class="tag m1">maligno 1.º</span></td><td><strong>Niño &lt;3 años</strong></td><td>Masa heterogénea, calcificaciones</td><td>αFP muy elevada; Beckwith-Wiedemann</td></tr>
+      <tr><td><strong>Metástasis</strong> <span class="tag m2">maligno 2.º</span></td><td><strong>Primario conocido</strong></td><td><strong>Múltiples</strong>; anillo "target", mayoría hipovasculares</td><td>Hipervasculares: NET, renal, melanoma, tiroides; clave = multiplicidad</td></tr>
+    </tbody>
+   </table>
+  </div>
+ </div>
+</section>
+
+<!-- 16 · PLAN: lista rápida / estrategia -->
+<section class="slide" data-sec="Plan de trabajo" data-src="AASLD 2023 · EASL · estrategia diagnóstica por contexto">
+ <div class="slide-inner">
+  <div class="r kicker am">Plan de trabajo · estrategia y lista rápida</div>
+  <h2 class="sec r" style="font-size:clamp(1.6rem,2.9vw,2.4rem)">Primero <em>contextualizar</em>, luego pedir</h2>
+  <div class="cols" style="margin-top:.6rem">
+    <div class="r">
+      <div class="mono">CONTEXTUALIZAR (define toda la rama)
+<span class="dim">────────────────────────────────</span>
+<span class="cr">¿Hígado cirrótico / VHB?</span>   → vía HCC (αFP + LI-RADS)
+<span class="am">¿Primario oncológico?</span>     → vía metástasis
+<span class="cy">¿Hígado sano, mujer?</span>      → vía benigna (hemang/HNF/adenoma)
+<span class="dim">────────────────────────────────</span>
+LABORATORIO   hemograma · química · enzimas · síntesis
+MARCADORES    αFP · CA 19-9 · CEA · ±PIVKA-II
+ETIOLOGÍA     serologías virales · Fe · Cu · autoinmunidad
+IMAGEN        eco/CEUS → TC/RM multifásica (LI-RADS)
+EXTENSIÓN     TC tórax · PET · colangio-RM
+ESPECIALES    biopsia + IHQ · endoscopia · colonoscopia
+RESERVA       Child-Pugh · MELD · BCLC (en HCC)</div>
+    </div>
+    <div class="r scroll">
+      <p>El plan no es una lista fija: <strong>el contexto reordena las prioridades.</strong> En el cirrótico con nódulo, la <strong>imagen multifásica</strong> es el eje (puede cerrar el diagnóstico sin biopsia); en el paciente oncológico, lo prioritario es <strong>confirmar metástasis y buscar primario</strong>; en la mujer joven sana, <strong>caracterizar la lesión benigna por RM</strong> y evitar biopsias peligrosas.</p>
+      <div class="alert" style="margin-top:.6rem"><strong>Antes del tomógrafo:</strong> evaluar reserva (albúmina, INR, plaquetas) — condiciona qué procedimientos son seguros y forma parte de la estadificación.</div>
+    </div>
+  </div>
+ </div>
+</section>
+
+<!-- 17 · PLAN: laboratorio completo -->
+<section class="slide" data-sec="Plan · Laboratorio" data-src="AASLD 2023 · valores de referencia de laboratorio clínico">
+ <div class="slide-inner">
+  <div class="r kicker am">Plan · laboratorio general — qué busco y por qué</div>
+  <div class="cols-23" style="margin-top:.3rem">
+    <div class="r scroll">
+     <table style="font-size:.8rem">
+      <caption>Hematología · química · enzimas · síntesis</caption>
+      <thead><tr><th>Examen</th><th>Normal</th><th>Hallazgo orientador</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Hemoglobina</strong></td><td>13–17 g/dL</td><td>Anemia (enf. crónica/sangrado); <em>eritrocitosis</em> = paraneoplásico (EPO)</td></tr>
+        <tr><td><strong>Plaquetas</strong></td><td>150–400 ×10³/µL</td><td><strong>&lt;150</strong> → hipertensión portal / cirrosis (hiperesplenismo)</td></tr>
+        <tr><td><strong>Leucocitos</strong></td><td>4–11 ×10³/µL</td><td>Leucocitosis → absceso; valorar foco</td></tr>
+        <tr><td><strong>Glicemia</strong></td><td>70–100 mg/dL</td><td><strong>Hipoglicemia</strong> paraneoplásica (IGF-II)</td></tr>
+        <tr><td><strong>Calcio</strong></td><td>8,5–10,5 mg/dL</td><td><strong>&gt;10,5</strong> → hipercalcemia (PTHrP)</td></tr>
+        <tr><td>AST / ALT</td><td>10–40 U/L</td><td>Según hepatopatía de base (patrón hepatocelular)</td></tr>
+        <tr><td><strong>FA</strong></td><td>40–129 U/L</td><td><strong>200–1000+</strong> → patrón <strong>colestásico</strong> (colangio/infiltración)</td></tr>
+        <tr><td><strong>GGT</strong></td><td>8–61 U/L</td><td>Elevada, acompaña a FA en colestasis tumoral</td></tr>
+        <tr><td>Bilirrubina total</td><td>0,3–1,2 mg/dL</td><td>↑ a expensas de directa en obstrucción biliar</td></tr>
+        <tr><td><strong>Albúmina</strong></td><td>3,5–5,0 g/dL</td><td><strong>&lt;3,5</strong> → reserva reducida (Child-Pugh)</td></tr>
+        <tr><td><strong>INR</strong></td><td>0,8–1,1</td><td><strong>&gt;1,1</strong> → disfunción de síntesis</td></tr>
+      </tbody>
+     </table>
+    </div>
+    <div class="r" style="display:flex;flex-direction:column;gap:.8rem">
+      <div class="card am"><h3>Patrón hepatocelular vs colestásico</h3><p style="font-size:.9rem"><strong>Colestásico</strong> (FA y GGT ↑↑ + bilirrubina directa) → obstrucción biliar: piensa <strong>colangiocarcinoma</strong>. <strong>Hepatocelular</strong> (AST/ALT) → refleja la hepatopatía de base.</p></div>
+      <div class="card cy"><h3>Reserva y síntesis</h3><p style="font-size:.9rem">Albúmina + INR + plaquetas miden <strong>reserva hepática</strong> y seguridad de procedimientos; integran Child-Pugh y MELD.</p></div>
+      <div class="card"><h3>Pistas paraneoplásicas</h3><p style="font-size:.9rem">Hipoglicemia + hipercalcemia + eritrocitosis en una masa hepática apoyan <strong>malignidad (HCC).</strong></p></div>
+    </div>
+  </div>
+ </div>
+</section>
+
+<!-- 18 · PLAN: marcadores + serologías -->
+<section class="slide" data-sec="Plan · Marcadores y etiología" data-src="AASLD 2023 · marcadores tumorales y estudio etiológico de la hepatopatía">
+ <div class="slide-inner">
+  <div class="r kicker am">Plan · marcadores tumorales y etiología de base</div>
+  <div class="cols" style="margin-top:.3rem">
+    <div class="r scroll">
+     <table style="font-size:.82rem">
+      <caption>Marcadores tumorales</caption>
+      <thead><tr><th>Marcador</th><th>Normal</th><th>Orientación</th></tr></thead>
+      <tbody>
+        <tr><td><strong>α-fetoproteína</strong></td><td>&lt;10 ng/mL (corte 20)</td><td>&gt;20 sospecha HCC; <strong>&gt;400 en cirrótico</strong> muy sugestivo. Sens. ~60%: ⅓ de HCC no la elevan</td></tr>
+        <tr><td><strong>CA 19-9</strong></td><td>&lt;37 U/mL</td><td>Colangiocarcinoma (y páncreas); sube en colestasis benigna</td></tr>
+        <tr><td><strong>CEA</strong></td><td>&lt;3–5 ng/mL</td><td>Metástasis de colon; también colangio</td></tr>
+        <tr><td><strong>PIVKA-II (DCP)</strong></td><td>&lt;40 mAU/mL</td><td>HCC (complementario, donde esté disponible)</td></tr>
+        <tr><td>Cromogranina A / 5-HIAA</td><td>—</td><td>Si metástasis <strong>hipervasculares</strong> → tumor neuroendocrino</td></tr>
+      </tbody>
+     </table>
+     <p class="legend">ng/mL nanogramos/mL · U/mL unidades/mL · mAU/mL miliunidades arbitrarias/mL · DCP des-γ-carboxiprotrombina.</p>
+    </div>
+    <div class="r scroll" style="display:flex;flex-direction:column;gap:.8rem">
+      <div class="card cy">
+        <h3>Etiología de la hepatopatía (si hay cirrosis)</h3>
+        <ul class="clean cy">
+          <li><b>Serologías virales:</b> HBsAg, anti-HBc, anti-VHC (± carga viral) <span class="why">el VHB causa HCC incluso sin cirrosis</span></li>
+          <li><b>Hierro:</b> ferritina + saturación de transferrina <span class="why">hemocromatosis</span></li>
+          <li><b>Cobre:</b> ceruloplasmina <span class="why">enfermedad de Wilson</span></li>
+          <li><b>Autoinmunidad</b> + perfil metabólico <span class="why">HAI, MASH</span></li>
+        </ul>
+      </div>
+      <div class="alert">La αFP <strong>complementa</strong> pero no basta: el diagnóstico del HCC es por <strong>imagen multifásica (LI-RADS)</strong>, no por el marcador.</div>
+    </div>
+  </div>
+ </div>
+</section>
+
+<!-- 19 · PLAN: imagen (overview de técnicas) -->
+<section class="slide" data-sec="Plan · Imagenología" data-src="ACR LI-RADS v2018/v2024 · AASLD 2023 — secuencia de imagen">
+ <div class="slide-inner">
+  <div class="r kicker">Plan · imagenología — del tamizaje a la caracterización</div>
+  <h2 class="sec r" style="font-size:clamp(1.5rem,2.7vw,2.2rem)">Cuatro técnicas, <em>en orden</em></h2>
+  <div class="cols-3 r" style="margin-top:1rem;grid-template-columns:1fr 1fr">
+    <div class="card"><h3>1 · Ecografía / CEUS</h3><p style="font-size:.92rem">Vigilancia semestral del cirrótico (+αFP). Distingue quiste vs sólido. Sens. limitada para HCC pequeño → todo nódulo ≥10 mm pasa a TC/RM.</p></div>
+    <div class="card am"><h3>2 · TC multifásica (decisiva)</h3><p style="font-size:.92rem">Sin contraste · arterial (APHE) · portal (wash-out) · tardía. LI-RADS: especificidad ~95–100% para HCC.</p></div>
+    <div class="card cy"><h3>3 · RM dinámica + hepatobiliar</h3><p style="font-size:.92rem">T2 (hemangioma "bombilla"), difusión (celularidad), <strong>fase hepatobiliar (Gd-EOB)</strong> resuelve HNF (capta) vs adenoma/HCC (no captan).</p></div>
+    <div class="card"><h3>4 · Extensión</h3><p style="font-size:.92rem">Colangio-RM (mapa biliar/Klatskin) · TC tórax · PET-TC · gammagrafía ósea según el caso.</p></div>
+  </div>
+  <p class="legend r" style="margin-top:auto">En las siguientes láminas, una técnica/lesión por diapositiva con su imagen real.</p>
+ </div>
+</section>
+
+<!-- 19a · ECOGRAFÍA / CEUS -->
+<section class="slide" data-sec="Imagen · Ecografía / CEUS" data-src="ACR US LI-RADS v2024 · CEUS — Wikimedia Commons (CC BY-SA)">
+ <div class="slide-inner">
+  <div class="r kicker cy">Técnica 1 · Ecografía / CEUS — tamizaje</div>
+  <h2 class="sec r" style="font-size:clamp(1.5rem,2.7vw,2.2rem)">El primer filtro</h2>
+  <div class="cols" style="margin-top:.5rem;align-items:stretch">
+    <figure class="r">
+      <div class="imgbox" style="overflow:hidden">
+        <img src="assets/img/img-01-ceus.png" alt="Patrones CEUS de lesiones focales" onload="this.parentElement.classList.add('has-img');this.nextElementSibling.style.display='none'" onerror="this.style.display='none'">
+        <span class="ph"><span class="code">IMG-01</span><span class="desc">Distribución de lesiones focales caracterizadas por CEUS</span></span>
+      </div>
+      <figcaption><b>Figura 1.</b> Distribución de lesiones focales caracterizadas por CEUS en una serie clínica: el HCC y las metástasis son las más frecuentes.</figcaption>
+    </figure>
+    <div class="r scroll">
+      <ul class="clean cy">
+        <li>Método de <b>vigilancia semestral</b> del HCC en cirróticos (junto con αFP): barato, inocuo, disponible.</li>
+        <li>Distingue <b>quiste</b> (anecoico, refuerzo posterior) de lesión <b>sólida</b>; mide tamaño.</li>
+        <li>Sensibilidad limitada para HCC pequeño (~60–80%) y operador-dependiente → todo nódulo <b>≥10 mm</b> se deriva a <b>TC/RM multifásica</b>.</li>
+        <li>La <b>CEUS</b> añade dinámica en tiempo real: realce arterial con lavado.</li>
+      </ul>
+    </div>
+  </div>
+ </div>
+</section>
+
+<!-- 19b · TC — HCC -->
+<section class="slide" data-sec="Imagen · TC multifásica (HCC)" data-src="Triphasic CT of HCC — Wikimedia Commons (CC BY-SA) · ACR LI-RADS">
+ <div class="slide-inner">
+  <div class="r kicker">Técnica 2 · TC multifásica — Hepatocarcinoma</div>
+  <h2 class="sec r" style="font-size:clamp(1.5rem,2.7vw,2.2rem)">El patrón <em>sello</em> del HCC</h2>
+  <div class="cols" style="margin-top:.5rem;align-items:stretch">
+    <figure class="r">
+      <div class="imgbox" style="overflow:hidden">
+        <img src="assets/img/img-02-hcc.jpg" alt="TC trifásica de HCC" onload="this.parentElement.classList.add('has-img');this.nextElementSibling.style.display='none'" onerror="this.style.display='none'">
+        <span class="ph"><span class="code">IMG-02</span><span class="desc">TC trifásica de HCC</span></span>
+      </div>
+      <figcaption><b>Figura 2.</b> TC multifásica del HCC (flecha = nódulo).</figcaption>
+      <div class="panelleg"><b>A</b> sin contraste · <b>B</b> arterial — APHE (realce) · <b>C</b> portal — wash-out (lavado) · <b>D</b> tardía/equilibrio</div>
+    </figure>
+    <div class="r scroll">
+      <ul class="clean">
+        <li><b>Sin contraste:</b> detecta grasa, calcio, hemorragia.</li>
+        <li><b>Arterial (~20–35 s):</b> ⭐ <b>APHE</b> — hipervascularización tumoral.</li>
+        <li><b>Portal (~60–80 s):</b> ⭐ <b>wash-out</b> — el nódulo se vuelve hipodenso respecto al hígado.</li>
+        <li><b>Tardía (~3–5 min):</b> <b>cápsula</b> realzante; relleno del hemangioma; realce del colangio.</li>
+      </ul>
+      <div class="alert" style="margin-top:.6rem">APHE + wash-out + cápsula (LR-5) → especificidad <strong>~95–100%</strong> para HCC: diagnóstico <strong>sin biopsia</strong> en paciente de riesgo.</div>
+    </div>
+  </div>
+ </div>
+</section>
+
+<!-- 19b2 · Colangiocarcinoma (imágenes de David) -->
+<section class="slide" data-sec="Imagen · Colangiocarcinoma" data-src="Imágenes: Radiology Assistant (uso académico) · realce tardío + retracción capsular · CA 19-9">
+ <div class="slide-inner">
+  <div class="r kicker cr">Técnica · Colangiocarcinoma intrahepático</div>
+  <h2 class="sec r" style="font-size:clamp(1.5rem,2.7vw,2.2rem)">"Entra tarde y <em>se queda</em>"</h2>
+  <div class="r" style="display:grid;grid-template-columns:1fr 1fr;gap:1.1rem;flex:1;min-height:0;margin-top:.5rem">
+    <figure>
+      <div class="imgbox" style="overflow:hidden">
+        <img src="assets/img/img-07-colangio-1.jpg" alt="Colangiocarcinoma individual" onload="this.parentElement.classList.add('has-img');this.nextElementSibling.style.display='none'" onerror="this.style.display='none'">
+        <span class="ph"><span class="code">IMG-07a</span><span class="desc">Colangiocarcinoma — lesión individual con retracción capsular</span></span>
+      </div>
+      <figcaption><b>Figura 6a.</b> Lesión única: realce tardío + retracción capsular.</figcaption>
+    </figure>
+    <figure>
+      <div class="imgbox" style="overflow:hidden">
+        <img src="assets/img/img-07-colangio-2.jpg" alt="Colangiocarcinoma múltiple" onload="this.parentElement.classList.add('has-img');this.nextElementSibling.style.display='none'" onerror="this.style.display='none'">
+        <span class="ph"><span class="code">IMG-07b</span><span class="desc">Colangiocarcinoma — retracción capsular en múltiples zonas</span></span>
+      </div>
+      <figcaption><b>Figura 6b.</b> Afectación multifocal con retracción capsular en varias zonas.</figcaption>
+      <div class="panelleg"><b>Izq.</b> realce heterogéneo de la masa · <b>Der.</b> fase venosa — flechas: retracción capsular en dos zonas</div>
+    </figure>
+  </div>
+  <div class="r" style="margin-top:.6rem;display:grid;grid-template-columns:1fr 1fr;gap:1.2rem">
+    <ul class="clean" style="margin:0">
+      <li><b>Realce tardío progresivo:</b> el estroma fibroso desmoplásico <b>atrapa</b> el contraste → realce centrípeto en fase tardía (≠ wash-out del HCC).</li>
+      <li>⭐ <b>Retracción capsular:</b> la fibrosis tira de la cápsula hepática hacia la lesión.</li>
+    </ul>
+    <ul class="clean" style="margin:0">
+      <li><b>Dilatación biliar periférica</b> a la masa; <b>CA 19-9</b> elevado.</li>
+      <li>En LI-RADS se clasifica como <b>LR-M</b> ("probablemente maligno, no específico de HCC").</li>
+    </ul>
+  </div>
+ </div>
+</section>
+
+<!-- 19c · RM — hemangioma -->
+<section class="slide" data-sec="Imagen · RM (hemangioma)" data-src="Hemangioma cavernoso, RM — Contemp Med Imaging (PMC3462338), CC BY 2.5">
+ <div class="slide-inner">
+  <div class="r kicker cy">Técnica 3 · RM dinámica — Hemangioma</div>
+  <h2 class="sec r" style="font-size:clamp(1.5rem,2.7vw,2.2rem)">El signo de la <em>"bombilla"</em></h2>
+  <div class="cols" style="margin-top:.5rem;align-items:stretch">
+    <figure class="r">
+      <div class="imgbox" style="overflow:hidden">
+        <img src="assets/img/img-04-hemangioma.jpg" alt="RM de hemangioma hepático" onload="this.parentElement.classList.add('has-img');this.nextElementSibling.style.display='none'" onerror="this.style.display='none'">
+        <span class="ph"><span class="code">IMG-04</span><span class="desc">RM de hemangioma hepático (multiparamétrica)</span></span>
+      </div>
+      <figcaption><b>Figura 3.</b> Hemangioma cavernoso en RM (flecha = lesión).</figcaption>
+      <div class="panelleg"><b>A</b> T2 — muy hiperintenso ("bombilla") · <b>B</b> T1 — hipointenso · <b>C</b> fase venosa — realce nodular periférico · <b>D</b> tardía — relleno centrípeto</div>
+    </figure>
+    <div class="r scroll">
+      <ul class="clean cy">
+        <li><b>T2:</b> el hemangioma es muy hiperintenso ("bombilla"); identifica también quistes.</li>
+        <li><b>Realce dinámico:</b> globular periférico discontinuo → <b>relleno centrípeto</b> que "sigue a la sangre".</li>
+        <li><b>Difusión (DWI):</b> marca celularidad → ayuda a sospechar malignidad.</li>
+        <li>⭐ <b>Fase hepatobiliar (Gd-EOB):</b> resuelve <b>HNF (capta)</b> vs <b>adenoma/HCC (no captan)</b>.</li>
+      </ul>
+      <p class="legend">La RM es el caracterizador más potente para lesiones indeterminadas y evita biopsiar un hemangioma.</p>
+    </div>
+  </div>
+ </div>
+</section>
+
+<!-- 19d · TC/RM — HNF -->
+<section class="slide" data-sec="Imagen · HNF" data-src="FNH late arterial & portal venous CT — Wikimedia Commons (CC BY-SA)">
+ <div class="slide-inner">
+  <div class="r kicker">Técnica · Hiperplasia nodular focal (HNF)</div>
+  <h2 class="sec r" style="font-size:clamp(1.5rem,2.7vw,2.2rem)">La <em>cicatriz central</em></h2>
+  <div class="cols" style="margin-top:.5rem;align-items:stretch">
+    <figure class="r">
+      <div class="imgbox" style="overflow:hidden">
+        <img src="assets/img/img-06-fnh.jpg" alt="TC de hiperplasia nodular focal" onload="this.parentElement.classList.add('has-img');this.nextElementSibling.style.display='none'" onerror="this.style.display='none'">
+        <span class="ph"><span class="code">IMG-06</span><span class="desc">TC de HNF (fase arterial y portal)</span></span>
+      </div>
+      <figcaption><b>Figura 4.</b> HNF (flecha): masa de realce homogéneo intenso que se vuelve casi isodensa al hígado.</figcaption>
+      <div class="panelleg"><b>Izq.</b> fase arterial tardía — realce homogéneo intenso · <b>Der.</b> fase portal venosa — la lesión se hace isodensa</div>
+    </figure>
+    <div class="r scroll">
+      <ul class="clean">
+        <li><b>Realce arterial homogéneo intenso</b> + <b>cicatriz central</b> que capta en fase tardía.</li>
+        <li>En <b>fase hepatobiliar capta</b> el contraste (tiene hepatocitos y conductillos) → iso/hipercaptante.</li>
+        <li><b>No sangra</b> y <b>no maligniza</b> — a diferencia del adenoma.</li>
+      </ul>
+      <div class="alert" style="margin-top:.6rem">Discriminador HNF vs adenoma: la <strong>fase hepatobiliar</strong> (HNF capta, adenoma no) y la <strong>cicatriz central</strong>.</div>
+    </div>
+  </div>
+ </div>
+</section>
+
+<!-- 19d2 · Adenoma hepatocelular (placeholder — sin imagen CC) -->
+<section class="slide" data-sec="Imagen · Adenoma hepatocelular" data-src="Adenoma multiparamétrico — BJR Case Reports (PMC10621575), CC BY 4.0">
+ <div class="slide-inner">
+  <div class="r kicker">Técnica · Adenoma hepatocelular</div>
+  <h2 class="sec r" style="font-size:clamp(1.5rem,2.7vw,2.2rem)">El "gemelo" <em>peligroso</em> de la HNF</h2>
+  <div class="cols" style="margin-top:.5rem;align-items:stretch">
+    <figure class="r">
+      <div class="imgbox" style="overflow:hidden">
+        <img src="assets/img/img-11-adenoma.jpg" alt="Adenoma hepático" onload="this.parentElement.classList.add('has-img');this.nextElementSibling.style.display='none'" onerror="this.style.display='none'">
+        <span class="ph"><span class="code">IMG-11</span><span class="desc">RM/TC de adenoma — guarda una como img-11-adenoma.jpg y aparece aquí</span></span>
+      </div>
+      <figcaption><b>Figura.</b> Adenoma hepatocelular, estudio multiparamétrico (flecha = lesión).</figcaption>
+      <div class="panelleg"><b>a</b> TC arterial · <b>b</b> TC portal · <b>c</b> T2 · <b>d</b> T2 sat. grasa · <b>e</b> difusión (DWI) · <b>f</b> ADC · <b>g</b> T1 en fase · <b>h</b> T1 fuera de fase → cae la señal = <b>grasa intralesional</b></div>
+    </figure>
+    <div class="r scroll">
+      <ul class="clean">
+        <li><b>Hormonodependiente:</b> mujer con ACO; varón con anabólicos; embarazo.</li>
+        <li>Realce arterial con <b>lavado leve</b>; <b>heterogéneo</b> por grasa y hemorragia, sin cicatriz central.</li>
+        <li>⭐ <b>No capta en fase hepatobiliar</b> (no tiene conductillos), a diferencia de la HNF.</li>
+        <li>⭐ Riesgo de <b>hemorragia</b> y de <b>malignización</b> (subtipo β-catenina).</li>
+      </ul>
+      <div class="alert" style="margin-top:.6rem">Discriminador con HNF: la HNF <strong>capta</strong> en fase hepatobiliar y <strong>no sangra</strong>; el adenoma <strong>no capta, sangra y puede malignizar</strong>.</div>
+    </div>
+  </div>
+ </div>
+</section>
+
+<!-- 19d2b · Fase hepatobiliar (Gd-EOB) -->
+<section class="slide" data-sec="Imagen · Fase hepatobiliar" data-src="FNH en fase hepatobiliar (Gd-EOB) — Insights Imaging (PMC3672515), CC BY">
+ <div class="slide-inner">
+  <div class="r kicker cy">Fase hepatobiliar (Gd-EOB) · el discriminador</div>
+  <h2 class="sec r" style="font-size:clamp(1.5rem,2.7vw,2.2rem)">¿Capta o <em>no capta</em>?</h2>
+  <div class="cols" style="margin-top:.5rem;align-items:stretch">
+    <figure class="r">
+      <div class="imgbox" style="overflow:hidden">
+        <img src="assets/img/img-12-hepatobiliar.jpg" alt="FNH en fase hepatobiliar con gadoxético" onload="this.parentElement.classList.add('has-img');this.nextElementSibling.style.display='none'" onerror="this.style.display='none'">
+        <span class="ph"><span class="code">IMG-12</span><span class="desc">HNF en fase hepatobiliar (Gd-EOB)</span></span>
+      </div>
+      <figcaption><b>Figura.</b> HNF con ácido gadoxético: en fase hepatobiliar <b>retiene el contraste</b> (iso/hiperintensa) = "capta".</figcaption>
+      <div class="panelleg"><b>A</b> T1 · <b>B</b> T2 · <b>C</b> arterial (realce intenso) · <b>D</b> venosa/transicional · <b>E–F</b> fase hepatobiliar — la HNF retiene contraste (capta)</div>
+    </figure>
+    <div class="r scroll">
+      <ul class="clean cy">
+        <li>El <b>Gd-EOB-DTPA</b> lo captan los <b>hepatocitos funcionantes</b> y se excreta a la bilis (fase hepatobiliar ~20 min).</li>
+        <li>⭐ <b>HNF capta</b> (tiene hepatocitos + conductillos) → iso/hiperintensa en fase hepatobiliar.</li>
+        <li>⭐ <b>Adenoma y HCC NO captan</b> → hipointensos (oscuros).</li>
+        <li>Resuelve el dilema <b>HNF vs adenoma</b> sin biopsia.</li>
+      </ul>
+      <div class="alert" style="margin-top:.6rem">Regla: lesión hipervascular en mujer joven que <strong>capta en fase hepatobiliar = HNF</strong>; si <strong>no capta → adenoma</strong> (riesgo de sangrado/malignización).</div>
+    </div>
+  </div>
+ </div>
+</section>
+
+<!-- 19d3 · Quiste simple -->
+<section class="slide" data-sec="Imagen · Quiste simple" data-src="Quiste(s) hepático(s) en TC — Wikimedia Commons (CC BY-SA)">
+ <div class="slide-inner">
+  <div class="r kicker cy">Técnica · Quiste hepático simple</div>
+  <h2 class="sec r" style="font-size:clamp(1.5rem,2.7vw,2.2rem)">Lo banal que <em>no realza</em></h2>
+  <div class="cols" style="margin-top:.5rem;align-items:stretch">
+    <figure class="r">
+      <div class="imgbox" style="overflow:hidden">
+        <img src="assets/img/img-10-quiste.jpg" alt="Quistes hepáticos en TC" onload="this.parentElement.classList.add('has-img');this.nextElementSibling.style.display='none'" onerror="this.style.display='none'">
+        <span class="ph"><span class="code">IMG-10</span><span class="desc">TC: quiste(s) hepático(s), densidad agua, sin realce</span></span>
+      </div>
+      <figcaption><b>Figura.</b> Quistes hepáticos: hipodensos (densidad agua), bien definidos, sin realce.</figcaption>
+    </figure>
+    <div class="r scroll">
+      <ul class="clean cy">
+        <li><b>No realza</b> con contraste: requisito que lo separa de una neoplasia sólida.</li>
+        <li>Eco: <b>anecoico</b> con <b>refuerzo acústico posterior</b> y pared imperceptible.</li>
+        <li>TC: <b>densidad agua</b>, bien delimitado; RM: hipointenso en T1, muy hiperintenso en T2.</li>
+        <li>Hallazgo incidental banal → <b>no requiere más estudio</b>.</li>
+      </ul>
+      <p class="legend">La imagen muestra varios quistes (hígado poliquístico); el comportamiento de cada uno es el del quiste simple: agua, sin realce.</p>
+    </div>
+  </div>
+ </div>
+</section>
+
+<!-- 19e · TC — metástasis -->
+<section class="slide" data-sec="Imagen · Metástasis" data-src="Multiple liver metastases CT — Wikimedia Commons (CC BY-SA)">
+ <div class="slide-inner">
+  <div class="r kicker cr">Técnica · Metástasis hepáticas</div>
+  <h2 class="sec r" style="font-size:clamp(1.5rem,2.7vw,2.2rem)"><em>Muchas</em> y en diana</h2>
+  <div class="cols" style="margin-top:.5rem;align-items:stretch">
+    <figure class="r">
+      <div class="imgbox" style="overflow:hidden">
+        <img src="assets/img/img-08-metastasis.jpg" alt="TC de metástasis hepáticas múltiples" onload="this.parentElement.classList.add('has-img');this.nextElementSibling.style.display='none'" onerror="this.style.display='none'">
+        <span class="ph"><span class="code">IMG-08</span><span class="desc">TC de metástasis hepáticas múltiples</span></span>
+      </div>
+      <figcaption><b>Figura 5.</b> Metástasis múltiples en un mismo hígado.</figcaption>
+    </figure>
+    <div class="r scroll">
+      <ul class="clean cy">
+        <li><b>Multiplicidad</b> = el dato clave: varias lesiones en un paciente con <b>primario conocido</b>.</li>
+        <li>Realce <b>en anillo periférico ("target")</b>; la mayoría son <b>hipovasculares</b>.</li>
+        <li>Las <b>hipervasculares</b> realzan en arterial: NET, renal, melanoma, tiroides.</li>
+      </ul>
+      <div class="alert" style="margin-top:.6rem">Cuidado: múltiples lesiones en un cirrótico con αFP alta y lavado → puede ser <strong>HCC multifocal</strong>, no metástasis.</div>
+    </div>
+  </div>
+ </div>
+</section>
+
+<!-- 19f · Absceso hepático (DDx) -->
+<section class="slide" data-sec="Imagen · Absceso hepático (DDx)" data-src="Absceso hepático en TC — Wikimedia Commons (CC BY-SA)">
+ <div class="slide-inner">
+  <div class="r kicker cr">DDx de metástasis · Absceso hepático</div>
+  <h2 class="sec r" style="font-size:clamp(1.5rem,2.7vw,2.2rem)">El imitador <em>séptico</em></h2>
+  <div class="cols" style="margin-top:.5rem;align-items:stretch">
+    <figure class="r">
+      <div class="imgbox" style="overflow:hidden">
+        <img src="assets/img/img-09-absceso.jpg" alt="Absceso hepático en TC" onload="this.parentElement.classList.add('has-img');this.nextElementSibling.style.display='none'" onerror="this.style.display='none'">
+        <span class="ph"><span class="code">IMG-09</span><span class="desc">TC: absceso hepático con realce en anillo</span></span>
+      </div>
+      <figcaption><b>Figura.</b> Absceso hepático: colección hipodensa con realce periférico en anillo.</figcaption>
+    </figure>
+    <div class="r scroll">
+      <ul class="clean">
+        <li>Realce <b>en anillo</b>, con frecuente <b>"doble diana"</b> + edema perilesional.</li>
+        <li>Contexto <b>séptico</b>: fiebre alta y leucocitosis (amebiano / origen biliar).</li>
+        <li>Puede ser <b>múltiple</b> y simular metástasis.</li>
+      </ul>
+      <div class="alert" style="margin-top:.6rem">Discriminador con metástasis: el <strong>cuadro séptico agudo</strong> (fiebre/leucocitosis) y la respuesta a antibióticos/drenaje; la metástasis se da en paciente oncológico sin sepsis.</div>
+    </div>
+  </div>
+ </div>
+</section>
+
+<!-- 20 · PLAN: especiales + gold standard -->
+<section class="slide" data-sec="Plan · Especiales y gold standard" data-src="AASLD 2023 · ACR LI-RADS — diagnóstico no invasivo vs biopsia">
+ <div class="slide-inner">
+  <div class="r kicker">Plan · estudios especiales y GOLD STANDARD</div>
+  <div class="cols" style="margin-top:.3rem">
+    <div class="r scroll" style="display:flex;flex-direction:column;gap:.7rem">
+      <div class="card"><h3>Biopsia percutánea + IHQ</h3><p style="font-size:.9rem">Árbitro cuando la imagen <strong>no es concluyente</strong>, en hígado no cirrótico o sospecha de no-HCC. IHQ: HepPar-1/glipicano-3 (HCC) · CK7/CK19 (colangio) · CDX2/CK20 (colon). <strong>No se biopsia el hemangioma</strong> (hemorragia) ni el HCC LR-5 (innecesario; siembra ~1–2%).</p></div>
+      <div class="card"><h3>Endoscopia · colonoscopia</h3><p style="font-size:.9rem">EDA: varices (hipertensión portal). Colonoscopia: primario colónico si lesiones parecen metástasis sin primario.</p></div>
+    </div>
+    <div class="r scroll" style="display:flex;flex-direction:column;gap:.7rem">
+      <div class="card cr"><h3 style="color:var(--crimson)">HCC sobre cirrosis</h3><p style="font-size:.9rem">Gold standard <strong>no invasivo</strong>: TC/RM con LI-RADS/AASLD. LR-5 (≥10 mm: APHE + wash-out + cápsula) = HCC <strong>sin biopsia</strong>. Especificidad ~95–100%.</p></div>
+      <div class="card am"><h3>No-HCC / dudoso</h3><p style="font-size:.9rem">Colangio, metástasis, adenoma dudoso → <strong>biopsia + histopatología/IHQ.</strong></p></div>
+      <div class="card cy"><h3>Benignos típicos</h3><p style="font-size:.9rem">Hemangioma, HNF, quiste → <strong>patrón radiológico (RM)</strong>; evita biopsia.</p></div>
+    </div>
+  </div>
+ </div>
+</section>
+
+<!-- 21 · ALGORITMO (tree animado) -->
+<section class="slide" data-sec="Algoritmo diagnóstico" data-src="AASLD 2023 · EASL · algoritmo diagnóstico de la lesión focal hepática">
+ <div class="slide-inner">
+  <div class="r kicker">Algoritmo diagnóstico</div>
+  <div class="r tree fill" style="justify-content:center;margin-top:.3rem">
+    <div class="tnode head s1">Lesión focal hepática detectada (incidental o en vigilancia)</div>
+    <div class="connector"></div>
+    <div class="trow">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:.5rem">
+        <div class="tnode cr s2">Cirrótico / VHB → <b>vía HCC</b></div>
+        <div class="connector"></div>
+        <div class="tnode s3">αFP + TC/RM + LI-RADS</div>
+        <div class="connector"></div>
+        <div class="tnode am s4"><b>LR-5</b> → HCC sin biopsia · LR-3/4 → biopsia/seguimiento</div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:.5rem">
+        <div class="tnode am s2">Primario conocido → <b>vía metástasis</b></div>
+        <div class="connector"></div>
+        <div class="tnode s3">TC/RM: múltiples "target"</div>
+        <div class="connector"></div>
+        <div class="tnode s4">Típico + primario → metástasis · dudosa → biopsia</div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:.5rem">
+        <div class="tnode cy s2">Hígado sano → <b>vía benigna</b></div>
+        <div class="connector"></div>
+        <div class="tnode s3">RM dinámica + hepatobiliar</div>
+        <div class="connector"></div>
+        <div class="tnode s4">Típico → benigno, alta · atípico → biopsia</div>
+      </div>
+    </div>
+    <div class="connector"></div>
+    <div class="tnode head s4">Confirmación → estadificación (TC tórax/PET) + reserva (Child-Pugh/MELD) + BCLC</div>
+  </div>
+  <div class="r alert" style="margin-top:.5rem">⚑ <strong>¿Qué NO se esperaría?</strong> Un "hemangioma" que <strong>lava</strong> o crece rápido NO es hemangioma → replantear a HCC/metástasis. Un "HCC" en hígado sano con αFP normal → pensar <strong>HCC fibrolamelar</strong>, adenoma o metástasis hipervascular.</div>
+ </div>
+</section>
+
+<!-- 22 · ESCALAS -->
+<section class="slide" data-sec="Escalas clínicas" data-src="ACR LI-RADS v2018/v2024 · Child-Pugh · MELD 3.0 · Reig M et al, BCLC J Hepatol 2022">
+ <div class="slide-inner">
+  <div class="r kicker cy">Escalas clínicas</div>
+  <h2 class="sec r" style="font-size:clamp(1.6rem,2.9vw,2.4rem)">Clasificar <em>para decidir</em></h2>
+  <div class="cols-3 r" style="margin-top:1rem">
+    <div class="card am"><h3>LI-RADS</h3><p style="font-size:.88rem">Estandariza TC/RM en pacientes de riesgo. LR-1 (benigno) → LR-5 (HCC). <strong>LR-5 = Dx sin biopsia.</strong> LR-M sugiere colangio; LR-TIV invasión venosa. US LI-RADS v2024 para tamizaje.</p></div>
+    <div class="card cy"><h3>Child-Pugh</h3><p style="font-size:.88rem">Reserva funcional: bilirrubina, albúmina, INR, ascitis, encefalopatía → clases A/B/C. Condiciona seguridad de procedimientos.</p></div>
+    <div class="card cy"><h3>MELD / MELD 3.0</h3><p style="font-size:.88rem">Bilirrubina, INR, creatinina (± Na, albúmina). Predice mortalidad a corto plazo; prioriza trasplante.</p></div>
+  </div>
+  <div class="r card cr" style="margin-top:1rem"><h3 style="color:var(--crimson)">BCLC (Barcelona Clinic Liver Cancer)</h3><p style="font-size:.92rem">Estadificación de referencia mundial del HCC: integra tamaño/número de nódulos, función hepática (Child-Pugh), invasión vascular/extrahepática y estado funcional (ECOG) → estadios 0/A/B/C/D ligados a pronóstico y tratamiento.</p></div>
+ </div>
+</section>
+
+<!-- 23 · ERRORES -->
+<section class="slide" data-sec="Errores diagnósticos" data-src="AASLD 2023 · ACG/AASLD lesiones focales · errores frecuentes de práctica">
+ <div class="slide-inner">
+  <div class="r kicker cr">Errores diagnósticos frecuentes</div>
+  <h2 class="sec r" style="font-size:clamp(1.6rem,2.9vw,2.4rem)">Dónde <em>se pierde</em> el diagnóstico</h2>
+  <div class="cols" style="margin-top:.6rem">
+    <div class="r scroll" style="display:flex;flex-direction:column;gap:.65rem">
+      <div class="card cr"><h3>Biopsiar un hemangioma</h3><p style="font-size:.88rem">"Para estar seguros" → hemorragia. Se diagnostica por relleno centrípeto en RM; <strong>nunca se biopsia.</strong></p></div>
+      <div class="card cr"><h3>Confundir HNF con adenoma / HCC fibrolamelar</h3><p style="font-size:.88rem">La HNF capta hepatobiliar y no sangra; el adenoma no capta, sangra y puede malignizar. Ignorar la fase hepatobiliar = mal manejo del riesgo.</p></div>
+    </div>
+    <div class="r scroll" style="display:flex;flex-direction:column;gap:.65rem">
+      <div class="card cr"><h3>Asumir metástasis sin confirmar primario</h3><p style="font-size:.88rem">Eran HCC multifocal, linfoma o absceso. No caracterizar retrasa un Dx tratable.</p></div>
+      <div class="card cr"><h3>Confiar en una αFP normal</h3><p style="font-size:.88rem">Hasta ⅓ de los HCC no la elevan. El Dx es por <strong>imagen multifásica.</strong></p></div>
+      <div class="card cr"><h3>Aplicar LI-RADS en hígado no cirrótico</h3><p style="font-size:.88rem">Solo válido en población de riesgo; fuera da falsos "LR-5".</p></div>
+    </div>
+  </div>
+ </div>
+</section>
+
+<!-- 24 · RESOLUCIÓN -->
+<section class="slide" data-sec="Resolución del caso" data-src="AASLD 2023 · ACR LI-RADS · BCLC 2022 — aplicado al caso">
+ <div class="slide-inner">
+  <div class="r kicker am">Volvamos al caso ancla</div>
+  <h2 class="sec r">Resolución</h2>
+  <div class="cols" style="margin-top:.5rem">
+    <div class="r scroll">
+      <p style="color:var(--ink)">Varón de 61 años, <strong>cirrótico por VHC/alcohol</strong>, que se descompensa (ascitis, ictericia, encefalopatía) con <strong>hepatomegalia dura nodular, soplo hepático</strong> y <strong>αFP 480 ng/mL.</strong></p>
+      <p style="color:var(--ink)">Se solicita <strong>RM hepática dinámica</strong>: nódulo de 3 cm en segmento VII con <strong>realce arterial intenso (APHE) + wash-out venoso + cápsula realzante</strong> → categoría <strong>LR-5.</strong></p>
+      <div class="alert" style="margin-top:.5rem"><strong>Diagnóstico:</strong> Hepatocarcinoma sobre cirrosis — confirmado <strong>sin biopsia</strong> por criterios LI-RADS en paciente de riesgo.</div>
+    </div>
+    <div class="r">
+      <div class="card am"><h3>Estadificación y reserva</h3>
+        <ul class="clean">
+          <li><b>Child-Pugh B–C</b> (bilirrubina, albúmina baja, INR alto, ascitis, encefalopatía)</li>
+          <li><b>MELD</b> elevado → pronóstico / trasplante</li>
+          <li><b>BCLC</b>: integra nódulo + función + ECOG → estadio y tratamiento</li>
+        </ul>
+      </div>
+      <p class="legend" style="margin-top:.6rem">Contexto (cirrosis) + patrón (wash-in/wash-out) + marcador (αFP) cierran el diagnóstico sin histología. El manejo queda fuera del alcance del seminario.</p>
+    </div>
+  </div>
+ </div>
+</section>
+
+<!-- 25 · PERLAS -->
+<section class="slide" data-sec="Síntesis" data-src="Reglas nemotécnicas · síntesis del seminario">
+ <div class="slide-inner">
+  <div class="r kicker">Síntesis · reglas nemotécnicas</div>
+  <h2 class="sec r" style="font-size:clamp(1.6rem,2.9vw,2.4rem)">Reconoce el <em>patrón</em></h2>
+  <div class="r scroll" style="margin-top:1rem">
+    <p class="pearl"><b>HCC</b> = "arterial-in, venoso-out, sobre hígado enfermo, con αFP".</p>
+    <p class="pearl"><b>Hemangioma</b> = "sigue a la sangre" (relleno nodular periférico que se rellena hacia el centro e iguala a la aorta en cada fase).</p>
+    <p class="pearl"><b>Colangiocarcinoma</b> = "entra tarde y se queda" (realce tardío progresivo + retracción capsular + CA 19-9).</p>
+    <p class="pearl"><b>Metástasis</b> = "muchas y en diana".</p>
+  </div>
+ </div>
+</section>
+
+<!-- 26 · CIERRE -->
+<section class="slide closing" data-sec="Cierre" data-src="Retrato de José María Vargas por Martín Tovar y Tovar (1875) · dominio público">
+  <div class="vargas-bg"></div>
+  <div class="slide-inner" style="position:relative;z-index:2;justify-content:center">
+    <div class="r cover-eyebrow">Escuela de Medicina «José María Vargas» · UCV</div>
+    <h1 class="kinetic r" style="font-size:clamp(2.3rem,6.2vw,5rem);color:var(--ink);margin:.3rem 0 .2rem">Gracias por su atención</h1>
+    <blockquote class="r">«El mundo es del hombre justo y honrado.»</blockquote>
+    <div class="r qauthor">— José María Vargas (1786–1854)</div>
+    <div class="r" style="margin-top:1.6rem;color:var(--ink-dim);font-family:var(--mono);font-size:.78rem;letter-spacing:.1em">Br. David Madrid · Tutor: Dr. Pedro Francis · Junio 2026</div>
+  </div>
+</section>
+
+<!-- 27 · FUENTES -->
+<section class="slide" data-sec="Fuentes" data-src="Bibliografía consultada">
+ <div class="slide-inner">
+  <div class="r kicker cy">Fuentes consultadas</div>
+  <h2 class="sec r" style="font-size:clamp(1.6rem,2.9vw,2.4rem)">Bibliografía</h2>
+  <div class="r scroll" style="margin-top:1rem">
+    <p class="srcitem">Singal AG, Llovet JM, et al. <strong>AASLD Practice Guidance on the prevention, diagnosis, and treatment of hepatocellular carcinoma.</strong> Hepatology. 2023.</p>
+    <p class="srcitem">American College of Radiology. <strong>CT/MRI LI-RADS v2018 core</strong> y <strong>US Surveillance LI-RADS v2024.</strong> Radiology, 2024.</p>
+    <p class="srcitem">EASL. <strong>Clinical Practice Guidelines: Management of hepatocellular carcinoma.</strong> J Hepatol.</p>
+    <p class="srcitem">Reig M, Forner A, et al. <strong>BCLC strategy: 2022 update.</strong> J Hepatol. 2022.</p>
+    <p class="srcitem">The Radiology Assistant. <strong>Characterisation of liver masses.</strong> <a href="https://radiologyassistant.nl/abdomen/liver/characterisation-of-liver-masses">radiologyassistant.nl</a></p>
+    <p class="srcitem">Argente HA, Álvarez ME. <strong>Semiología Médica</strong> (dolor referido, semiología hepática) · guías ALICIA-DPH (Oxford Medical Education, Geeky Medics, ddxof).</p>
+    <p class="srcitem"><strong>Imágenes:</strong> Wikimedia Commons (CC BY-SA) — HCC, HNF, metástasis, quiste, absceso, CEUS · PMC open-access (CC BY) — hemangioma (PMC3462338), adenoma (PMC10621575), fase hepatobiliar (PMC3672515) · Radiology Assistant — colangiocarcinoma · retrato de Vargas: Martín Tovar y Tovar (1875), dominio público.</p>
+  </div>
+ </div>
+</section>
+
+</div><!-- /stage -->
+
+<div class="chrome"><div id="c-sec"></div><div id="c-src"></div><div id="c-count"></div></div>
+<div id="bar"></div>
+<div id="hint">← →  ·  F pantalla  ·  O resumen</div>
+
+<script src="assets/gsap.min.js"></script>
+<script>
+(function(){
+  var hasG = typeof gsap !== 'undefined';
+  var stage = document.getElementById('stage');
+  var slides = [].slice.call(document.querySelectorAll('.slide'));
+  var index = 0, busy = false, ov = false;
+
+  // pre-split kinetic titles into words
+  document.querySelectorAll('.kinetic').forEach(function(el){
+    var words = el.textContent.trim().split(/\s+/);
+    el.innerHTML = words.map(function(w){return '<span class="word"><span class="inner">'+w+'</span></span>';}).join(' ');
+  });
+
+  function chrome(){
+    document.getElementById('c-sec').textContent = slides[index].dataset.sec || '';
+    document.getElementById('c-src').textContent = slides[index].dataset.src ? 'Fuente: '+slides[index].dataset.src : '';
+    document.getElementById('c-count').textContent = String(index+1).padStart(2,'0')+' / '+String(slides.length).padStart(2,'0');
+    document.getElementById('bar').style.width = ((index+1)/slides.length*100)+'%';
+  }
+
+  function countUp(slide){
+    slide.querySelectorAll('.count').forEach(function(el){
+      var to = parseFloat(el.dataset.to||'0'), pre = el.dataset.prefix||'', suf = el.dataset.suffix||'';
+      if(hasG){
+        var o={v:0};
+        gsap.to(o,{v:to,duration:1.1,ease:'power2.out',onUpdate:function(){el.textContent=pre+Math.round(o.v)+suf;}});
+      } else { el.textContent = pre+to+suf; }
+    });
+  }
+
+  function enter(slide){
+    slide.classList.add('play');
+    var rev = slide.querySelectorAll('.r');
+    var inners = slide.querySelectorAll('.kinetic .inner');
+    if(hasG){
+      gsap.killTweensOf(rev); gsap.killTweensOf(inners);
+      gsap.set(rev,{opacity:0,y:28});
+      gsap.to(rev,{opacity:1,y:0,duration:.6,ease:'power3.out',stagger:.07,delay:.12});
+      gsap.set(inners,{yPercent:115});
+      gsap.to(inners,{yPercent:0,duration:.8,ease:'power4.out',stagger:.05,delay:.18});
+    } else {
+      rev.forEach(function(r){r.style.opacity=1;});
+      inners.forEach(function(i){i.style.transform='none';});
+    }
+    countUp(slide);
+  }
+
+  function show(n){
+    n = Math.max(0, Math.min(slides.length-1, n));
+    if(n===index || busy) return;
+    var dir = n>index?1:-1, cur = slides[index], nxt = slides[n];
+    nxt.classList.remove('play');
+    if(hasG){
+      busy = true;
+      nxt.style.display='flex'; nxt.style.zIndex='2'; cur.style.zIndex='1';
+      gsap.killTweensOf([cur,nxt]);
+      gsap.set(nxt,{opacity:0,xPercent:6*dir,scale:.992});
+      gsap.to(cur,{opacity:0,xPercent:-5*dir,duration:.36,ease:'power2.in'});
+      gsap.to(nxt,{opacity:1,xPercent:0,scale:1,duration:.6,ease:'power3.out',
+        onComplete:function(){cur.style.display='none';gsap.set(cur,{xPercent:0,scale:1,opacity:1});cur.classList.remove('play');busy=false;}});
+      enter(nxt);
+    } else {
+      cur.style.display='none'; nxt.style.display='flex'; enter(nxt);
+    }
+    index = n; chrome();
+  }
+
+  function toggleOverview(){
+    ov = !ov; stage.classList.toggle('ov', ov);
+    document.getElementById('hint').style.display = ov?'none':'';
+    if(ov){
+      slides.forEach(function(s,n){ s.style.display='flex'; s.style.transform='none'; s.style.opacity=1;
+        s.classList.toggle('cur', n===index);
+        s.onclick=function(){ ov=false; stage.classList.remove('ov'); document.getElementById('hint').style.display='';
+          slides.forEach(function(x){x.style.display='none';x.onclick=null;x.classList.remove('cur');}); index=Math.max(0,n-1); show(n);
+        };
+      });
+    }
+  }
+
+  document.addEventListener('keydown',function(e){
+    if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){e.preventDefault(); if(!ov) show(index+1);}
+    else if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault(); if(!ov) show(index-1);}
+    else if(e.key==='Home'){show(0);}
+    else if(e.key==='End'){show(slides.length-1);}
+    else if(e.key.toLowerCase()==='f'){ if(!document.fullscreenElement){document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen();} else {document.exitFullscreen&&document.exitFullscreen();} }
+    else if(e.key.toLowerCase()==='o'){ toggleOverview(); }
+  });
+  var x0=null;
+  stage.addEventListener('touchstart',function(e){x0=e.touches[0].clientX;},{passive:true});
+  stage.addEventListener('touchend',function(e){ if(x0===null||ov)return; var dx=e.changedTouches[0].clientX-x0; if(Math.abs(dx)>50) show(index+(dx<0?1:-1)); x0=null; });
+
+  // init
+  slides.forEach(function(s,n){ s.style.display = n===0?'flex':'none'; });
+  enter(slides[0]); chrome();
+})();
+
+function playWash(){
+  var A=document.getElementById('lesA'), B=document.getElementById('lesB'), C=document.getElementById('lesC'), R=document.getElementById('lesCring');
+  // reset
+  A.setAttribute('fill','#4a3328'); A.style.filter='none';
+  B.setAttribute('fill','#4a3328'); B.style.filter='none';
+  C.setAttribute('fill','#4a3328'); C.style.filter='none';
+  R.setAttribute('stroke-width','0');
+  // arterial wash-in
+  setTimeout(function(){ B.setAttribute('fill','#f3eadb'); B.style.filter='drop-shadow(0 0 14px rgba(242,169,59,.9))'; },300);
+  // venous wash-out + capsule
+  setTimeout(function(){ C.setAttribute('fill','#241a14'); C.style.filter='none'; R.setAttribute('stroke-width','4'); },1100);
+}
+</script>
+</body>
+</html>

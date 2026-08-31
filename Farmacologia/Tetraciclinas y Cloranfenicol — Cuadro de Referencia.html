@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Tetraciclinas y Cloranfenicol — Cuadro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+
+html,body{
+  background:#e9e4da;
+  -webkit-print-color-adjust:exact;
+  print-color-adjust:exact;
+}
+body{
+  font-family:'Lora',Georgia,serif;
+  color:#1d1a16;
+  font-size:12.5px;
+  line-height:1.38;
+  padding:18px;
+}
+
+.sheet{
+  background:#fff;
+  max-width:1180px;
+  margin:0 auto 18px;
+  padding:22px 26px 26px;
+  box-shadow:0 1px 6px rgba(0,0,0,.12);
+}
+
+h1{
+  font-family:'Libre Franklin',sans-serif;
+  font-size:1.35rem;font-weight:700;
+  color:#5a4314;letter-spacing:.01em;
+}
+.sub{font-style:italic;color:#6b6457;font-size:.85rem;margin-top:1px;margin-bottom:4px;}
+
+/* group title bar */
+.gt{
+  font-family:'Libre Franklin',sans-serif;
+  font-size:1.05rem;font-weight:700;
+  color:#fff;background:#7a5c1e;
+  padding:6px 12px;margin:18px 0 0;
+  letter-spacing:.03em;border-radius:3px 3px 0 0;
+}
+.gt.teal{background:#1f6b5e;}
+
+table{width:100%;border-collapse:collapse;font-size:.8rem;}
+table.pk{margin-bottom:0;}
+
+th{
+  font-family:'Libre Franklin',sans-serif;
+  font-size:.62rem;font-weight:600;text-transform:uppercase;
+  letter-spacing:.05em;color:#fff;background:#9a7826;
+  padding:5px 8px;text-align:left;white-space:nowrap;
+  border:1px solid #846420;
+}
+.teal-tbl th{background:#2a7f72;border-color:#23695e;}
+
+td{padding:5px 8px;border:1px solid #d9d2c4;vertical-align:top;}
+tbody tr:nth-child(even) td{background:#faf8f3;}
+
+/* drug name cell */
+td.dn{font-family:'Libre Franklin',sans-serif;font-weight:600;white-space:nowrap;color:#5a4314;}
+.teal-tbl td.dn{color:#1f6b5e;}
+tr.hl td{background:#fbf3dc!important;}
+tr.hl.tl td{background:#e6f4f0!important;}
+
+/* clinical block: label + content rows */
+table.clin{margin-top:-1px;}
+table.clin td.lbl{
+  font-family:'Libre Franklin',sans-serif;
+  font-weight:600;font-size:.66rem;text-transform:uppercase;
+  letter-spacing:.04em;color:#5a4314;
+  background:#f1ead9;width:118px;white-space:nowrap;
+}
+.teal-tbl td.lbl{color:#1f6b5e;background:#e4f1ee;}
+table.clin td.ct{background:#fff!important;line-height:1.45;}
+
+/* inline emphasis */
+.tag{font-family:'Libre Franklin',sans-serif;font-size:.6rem;font-weight:600;
+  padding:0 5px;border-radius:2px;white-space:nowrap;display:inline-block;line-height:1.5;}
+.t-no{background:#fbe3df;color:#a01f12;}
+.t-adq{background:#fbf0d8;color:#8a5e00;}
+.t-si{background:#dff0e2;color:#1a6e34;}
+.no{color:#a01f12;font-weight:600;}
+.ok{color:#1a6e34;font-weight:600;}
+.am{color:#8a5e00;font-weight:600;}
+b.s3{color:#5a4314;}
+.star{color:#b5870f;font-weight:700;}
+.mech{font-style:italic;}
+.warn{color:#a01f12;font-weight:600;}
+
+ul.tight{margin:0;padding-left:15px;}
+ul.tight li{margin-bottom:1px;}
+
+@media print{
+  @page{size:A4 landscape;margin:8mm;}
+  html,body{background:#fff;}
+  body{padding:0;font-size:9.2px;}
+  .sheet{box-shadow:none;max-width:100%;margin:0;padding:0;}
+  .gt.teal{page-break-before:always;}
+  table,tr,td,th{page-break-inside:avoid;}
+}
+</style>
+</head>
+<body>
+<div class="sheet">
+
+<h1>Tetraciclinas &amp; Cloranfenicol</h1>
+<div class="sub">Cuadro de referencia · Antibióticos inhibidores de síntesis proteica · Farmacología 4° año</div>
+
+<!-- ════════ TETRACICLINAS ════════ -->
+<div class="gt">TETRACICLINAS</div>
+<table class="pk">
+  <thead><tr>
+    <th>Fármaco</th><th>Acción</th><th>Vida media</th><th>Dosis</th>
+    <th>¿Con comida?</th><th>Eliminación</th><th>Ajuste IRA</th><th>U. proteica</th><th>Uso principal / particularidad</th>
+  </tr></thead>
+  <tbody>
+    <tr><td class="dn">Clortetraciclina</td><td>Corta</td><td>6 h</td><td>c/6–8 h</td><td class="no">No (ayunas)</td><td>Biliar/fecal</td><td class="ok">No</td><td>45 %</td><td>En desuso sistémico — uso tópico histórico. Única corta con eliminación biliar</td></tr>
+    <tr><td class="dn">Tetraciclina base</td><td>Corta</td><td>8 h</td><td>500 mg c/6 h</td><td class="no">No (ayunas)</td><td>Renal 40–70 %</td><td class="am">Sí</td><td>20–65 %</td><td><b class="s3">H. pylori</b> (triple terapia) · acné. 4 dosis/día — poco usada hoy</td></tr>
+    <tr><td class="dn">Oxitetraciclina</td><td>Corta</td><td>9 h</td><td>c/8 h</td><td class="no">No (ayunas)</td><td>Renal</td><td class="am">Sí</td><td>20–40 %</td><td>Poco uso sistémico actual (mayormente tópico/veterinario)</td></tr>
+    <tr><td class="dn">Demeclociclina</td><td>Intermedia</td><td>12–14 h</td><td>c/12 h</td><td class="no">No (ayunas)</td><td>Renal</td><td class="am">Sí</td><td>35–90 %</td><td><b class="s3">SIADH (uso no antibiótico)</b> — induce diabetes insípida nefrogénica → corrige hiponatremia</td></tr>
+    <tr><td class="dn">Metaciclina</td><td>Intermedia</td><td>12–14 h</td><td>c/12 h</td><td class="no">No (ayunas)</td><td>Renal</td><td class="am">Sí</td><td>80–90 %</td><td>Poco usada — sin nicho propio frente a Doxi/Mino</td></tr>
+    <tr class="hl"><td class="dn">Minociclina ★★</td><td>Larga</td><td>16 h</td><td>100 mg c/12–24 h</td><td class="ok">Sí puede</td><td>Biliar/fecal</td><td class="ok">No</td><td>75 %</td><td><b class="s3">Acné · Artritis Reumatoide</b> (inmunomod.) · SAMR-CO. Mejor penetración SNC y articular</td></tr>
+    <tr class="hl"><td class="dn">Doxiciclina ★★★</td><td>Larga</td><td>18–20 h</td><td>100 mg c/24 h</td><td class="ok">Sí puede</td><td>Biliar/fecal</td><td class="ok">No</td><td>80–90 %</td><td><b class="s3">La de elección para casi todo:</b> Rickettsia · Lyme · Chlamydia · cólera · malaria · neumonía atípica. 1 dosis/día, no se acumula en IRA</td></tr>
+  </tbody>
+</table>
+
+<table class="clin">
+  <tr>
+    <td class="lbl">Mecanismo</td>
+    <td class="ct"><span class="mech">Bacteriostático · diana <b class="s3">30S</b> ribosomal · bloquea el sitio A → impide unión del aminoacil-ARNt → cesa la elongación proteica. Selectividad: las células humanas carecen del transportador activo bacteriano.</span> <span class="warn">⚠ NO combinar con betalactámicos (antagonismo: necesitan bacteria en división activa).</span></td>
+  </tr>
+  <tr>
+    <td class="lbl">Espectro</td>
+    <td class="ct">
+      <b class="s3">NO cubre —</b> <span class="tag t-no">Intrínseca</span> Pseudomonas aeruginosa · Proteus · Providencia &nbsp; <span class="tag t-adq">Resistencia/adquirida</span> Enterococcus · S. aureus hospitalario · Enterobacteriaceae (E. coli, Salmonella, Shigella, Klebsiella — alta hoy) · Estreptococos A/B · N. gonorrhoeae / N. meningitidis (emergente)<br>
+      <b class="s3">Sí cubre —</b> <span class="tag t-si">Confiable</span> Rickettsia · Chlamydia · Mycoplasma · Coxiella · Brucella · Borrelia · Leptospira · Treponema · Vibrio cholerae · H. pylori · Plasmodium · SAMR-CO (Doxy/Mino)
+    </td>
+  </tr>
+  <tr>
+    <td class="lbl">Indicaciones</td>
+    <td class="ct">
+      <span class="star">★★★ 1ª elección:</span> Rickettsiosis · Cólera · Brucelosis · Enf. de Lyme · Chlamydia (uretritis, cervicitis, EPI, epididimitis, tracoma) · Neumonía atípica (Mycoplasma, Chlamydophila, Legionella) · Acné moderado-severo<br>
+      <span class="star">★★ Alternativa:</span> Gonococia / Sífilis (alérgicos) · SAMR-CO en piel · H. pylori (triple terapia) · Malaria resistente (+ quinina) · Reagudización de EPOC<br>
+      <span class="star">★ Usos especiales:</span> Artritis Reumatoide → Minociclina (inhibe metaloproteinasas) · Aftas bucales → enjuague · Dosis subantimicrobianas 40 mg (solo antiinflamatorio)
+    </td>
+  </tr>
+  <tr>
+    <td class="lbl">RAM (por mecanismo)</td>
+    <td class="ct">
+      <ul class="tight">
+        <li><b class="s3">Quelación con Ca²⁺:</b> coloración dental parda permanente + hipoplasia del esmalte → <span class="no">contraindicadas en &lt;8 años y embarazo 2°–3er trim.</span></li>
+        <li><b class="s3">Supresión de flora:</b> candidiasis · colitis pseudomembranosa (C. difficile) · ↑ efecto de warfarina (↓ vitamina K)</li>
+        <li><b class="s3">Irritación de mucosa:</b> náuseas/vómitos/diarrea (≥10 %) · úlcera esofágica (tomar de pie con agua)</li>
+        <li><b class="s3">Penetración SNC (Minociclina):</b> pseudotumor cerebri · vértigo / ataxia</li>
+        <li><b class="s3">Fotosensibilidad (Doxiciclina):</b> reacción cutánea solar → usar protector</li>
+        <li><b class="s3">Pigmentación (Minociclina):</b> piel, uñas, córnea</li>
+        <li><b class="s3">Hematológico (raro):</b> anemia aplásica, trombocitopenia, neutropenia</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td class="lbl">Interacciones</td>
+    <td class="ct">
+      <span class="warn">⚠ Isotretinoína = contraindicación absoluta</span> (pseudotumor cerebri) · <b>Warfarina</b> → ↑ anticoagulación (monitorizar INR) · <b>Betalactámicos</b> → antagonismo (no combinar) · <b>Antiácidos / lácteos / Fe / Zn</b> → ↓ absorción (espaciar ≥2 h) · <b>Fenobarbital / rifampicina</b> → ↓ niveles de doxiciclina · <b>Metotrexato</b> → ↑ su toxicidad · <b>Litio</b> → ↑ litemia · <b>ACO</b> → ↓ eficacia anticonceptiva · <b>Digoxina</b> → ↑ niveles séricos
+    </td>
+  </tr>
+</table>
+
+<!-- ════════ CLORANFENICOL ════════ -->
+<div class="gt teal">CLORANFENICOL &amp; TIAMFENICOL</div>
+<table class="pk teal-tbl">
+  <thead><tr>
+    <th>Fármaco</th><th>Absorción</th><th>U. proteica</th><th>Distribución</th>
+    <th>Metabolismo</th><th>Eliminación</th><th>Ajuste IRA</th><th>Ajuste hepático</th><th>Uso principal / particularidad</th>
+  </tr></thead>
+  <tbody>
+    <tr class="hl tl"><td class="dn">Cloranfenicol</td><td>Muy alta (oral)</td><td>50 % (↓ en cirrosis y RN)</td><td class="ok">Excelente en LCR</td><td>90 % glucuronidación hepática</td><td>Renal (90 % inactivo)</td><td class="ok">No</td><td class="am">Sí</td><td><b class="s3">Meningitis y fiebre tifoidea de rescate · conjuntivitis (oftálmico)</b>. Semivida ∝ bilirrubina · parenteral = succinato</td></tr>
+    <tr><td class="dn">Tiamfenicol</td><td>Alta</td><td>Menor</td><td>Buena en LCR</td><td class="ok">No hepático</td><td>100 % renal inalterado</td><td class="am">Sí</td><td class="ok">No</td><td><b class="s3">Infecciones respiratorias y urogenitales</b> donde está disponible. Más hidrosoluble, menos hepatotóxico (grupo metilsulfonil)</td></tr>
+  </tbody>
+</table>
+
+<table class="clin teal-tbl">
+  <tr>
+    <td class="lbl">Mecanismo</td>
+    <td class="ct"><span class="mech">Bacteriostático (bactericida en división rápida) · diana <b class="s3">50S</b> ribosomal (mismo sitio que macrólidos/lincosamidas) · inhibe la peptidil transferasa → bloquea el enlace peptídico. Entrada por difusión facilitada.</span> <span class="warn">⚠ Ribosomas mitocondriales humanos 70S = bacterianos → toxicidad hematológica. No combinar con betalactámicos.</span></td>
+  </tr>
+  <tr>
+    <td class="lbl">Espectro</td>
+    <td class="ct">
+      <b class="s3">NO cubre —</b> <span class="tag t-no">Intrínseca</span> Pseudomonas aeruginosa &nbsp; <span class="tag t-adq">Resistencia alta</span> S. aureus hospitalario · Shigella · Salmonella · Enterococcus<br>
+      <b class="s3">Sí cubre —</b> <span class="tag t-si">Bien</span> H. influenzae · N. meningitidis · N. gonorrhoeae · Brucella · B. pertussis (95 %) · Streptococcus · Mycoplasma/Chlamydia/Rickettsia · Bacteroides fragilis (excelente) · Clostridium
+    </td>
+  </tr>
+  <tr>
+    <td class="lbl">Indicaciones</td>
+    <td class="ct">
+      <b class="warn">Solo cuando no hay alternativa segura:</b> Rickettsiosis graves (si tetraciclinas contraindicadas) · Meningitis por H. influenzae o meningococo (alt. a CFP 3G) · Infecciones pediátricas graves por H. influenzae (epiglotitis, osteomielitis, celulitis, neumonía + sepsis) · Fiebre tifoidea (hoy 1ª opción = CFP 3G/quinolonas) · Absceso cerebral · Melioidosis · Peste y tularemia graves · Brucelosis<br>
+      <span class="ok">Uso local seguro:</span> conjuntivitis bacteriana, blefaritis (oftálmico) — <i>en Venezuela es la única presentación disponible</i>
+    </td>
+  </tr>
+  <tr>
+    <td class="lbl">RAM (por mecanismo)</td>
+    <td class="ct">
+      <ul class="tight">
+        <li><b class="s3">Mitocondrial dosis-dependiente (reversible):</b> anemia + leucopenia + trombocitopenia → revierte al suspender</li>
+        <li><b class="warn">Aplasia medular idiosincrásica (irreversible):</b> 1:10.000–45.000 · mortalidad ~80 % · no predecible, sin relación con dosis ni duración</li>
+        <li><b class="s3">Síndrome Gris del RN:</b> inmadurez de glucuronil transferasa + renal → acumulación → hipotonía → color gris → apnea → colapso (mort. &gt;50 %). Tto: suspender + exsanguinotransfusión / hemoperfusión</li>
+        <li><b class="s3">Neuritis óptica:</b> tratamiento crónico → atrofia óptica + ceguera (niños con fibrosis quística)</li>
+        <li><b class="s3">Flora:</b> colitis pseudomembranosa · glositis · náuseas/vómitos</li>
+        <li><b class="s3">Ototoxicidad:</b> gotas óticas &gt;5 % en meningitis por H. influenzae</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td class="lbl">Interacciones</td>
+    <td class="ct">
+      <span class="warn">Inhibidor potente del CYP450</span> → ↑ niveles y toxicidad de: <b>Warfarina</b> (hemorragia) · <b>Fenitoína</b> · <b>Clorpropamida / tolbutamida</b> (hipoglucemia severa) · inhibidores de proteasas / rifabutina.<br>
+      <b>Fenobarbital / rifampicina</b> (inductores) → ↓ niveles de cloranfenicol → fallo terapéutico · <b>Betalactámicos</b> → antagonismo · <b>ACO</b> → ↓ eficacia anticonceptiva
+    </td>
+  </tr>
+</table>
+
+</div>
+</body>
+</html>
