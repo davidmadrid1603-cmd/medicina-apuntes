@@ -50,6 +50,8 @@ Redacta un párrafo narrativo en tercera persona. Si el usuario dio una descripc
 
 `Paciente [género en minúscula: masculino/femenino] de [edad] años de edad, natural de [lugar de nacimiento]` + (si hay procedencia) ` y procedente de [procedencia]` + `. Refiere inicio de enfermedad actual [el/hace ...] cuando [desencadenante]...`
 
+Si el lugar de nacimiento y la procedencia son la **misma localidad**, no la repitas dos veces: usa `natural y procedente de [localidad]` en una sola frase (nunca "natural de Caracas" a secas omitiendo procedente, ni "natural de Caracas y procedente de Caracas").
+
 Desarrolla con los componentes **ALICIA-DPH** que tengas: **A**parición, **L**ocalización, **I**rradiación, **C**arácter, **I**ntensidad, fenómenos **A**sociados/concomitantes, agravantes, atenuantes, **D**uración, **P**eriodicidad, **H**orario. No inventes datos que no te dieron; usa solo los que el usuario aportó, hilados en prosa clínica fluida.
 
 ### Antecedentes personales y epidemiológicos
