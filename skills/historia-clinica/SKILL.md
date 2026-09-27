@@ -80,7 +80,9 @@ Desarrolla con los componentes **ALICIA-DPH** que tengas: **A**parición, **L**o
 
 ### Examen físico
 - **8.1 Signos vitales**: dos líneas con Temperatura/PA/FR y Pulso/Peso/Talla/IMC; agrega PAM si la calculaste. Los valores que falten → `___`.
-- **8.2 a 8.14**: usa el **texto normal por defecto** de `references/plantilla-base.md` salvo en las áreas donde el usuario reportó hallazgos anormales, que reescribes integrando el hallazgo en el párrafo correspondiente.
+- **8.2 a 8.16**: usa el **texto normal por defecto** de `references/plantilla-base.md`, **completo y textual**, salvo en las áreas donde el usuario reportó hallazgos anormales, que reescribes integrando el hallazgo en el párrafo correspondiente. Nunca resumas, fusiones ni acortes una subsección solo porque no hay hallazgos ahí — "sin positivos" significa copiar el texto normal completo, no comprimirlo.
+- **8.13 Genitales Externos** y **8.14 Extremidades** son subsecciones propias, separadas entre sí y de 8.16 Articular — no las fusiones en un solo párrafo aunque no haya hallazgos.
+- **8.16 Articular**: siempre van las 10 regiones (a-j) completas, con sus maniobras específicas (Jobe/Patte/Gerber/Neer en hombro; McMurray/Apley/bostezo en rodilla; Schober en lumbosacra), tal cual están en la plantilla. Solo se modifica una región si el usuario reportó un hallazgo ahí, o si hay un déficit motor/neurológico ya documentado que impida evaluar movilidad activa (en ese caso, aclara activa vs. pasiva en esa región puntual — no se omiten las maniobras de las demás).
 
 ### Diagnóstico
 - `## DIAGNÓSTICO SINDRÓMÁTICO` y `## DIAGNÓSTICO DE PATOLOGÍA`. Rellena lo que el usuario indique; si no dio diagnóstico, deja el encabezado y, si puedes, sugiere uno razonable marcándolo como propuesta (`(propuesta) ...`).

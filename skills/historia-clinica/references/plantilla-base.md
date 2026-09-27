@@ -159,7 +159,14 @@ Hígado no palpable. Riñones no palpables ni dolorosos, puño percusión negati
 Bazo no palpable ni percutible.
 Estómago chapoteo gástrico de Chomel negativo, no se palpan tumoraciones. Ciego y Colon no palpables ni dolorosos.
 
-### 8.13 NEUROLÓGICO
+### 8.13 GENITALES EXTERNOS
+[Hombre:] Pene y testículos de aspecto y configuración normal, acordes a edad y sexo, sin tumoraciones, secreciones ni lesiones. Ambos testículos descendidos en bolsa escrotal, no dolorosos a la palpación.
+[Mujer:] Genitales externos de aspecto y configuración normal, acordes a edad y sexo, sin tumoraciones, secreciones ni lesiones, sin edema.
+
+### 8.14 EXTREMIDADES
+Simétricas, eutróficas, sin deformidades. Movilidad activa y pasiva conservada. Sin edema, sin signos de trombosis venosa profunda (Homans negativo). Pulsos periféricos presentes y simétricos. Llenado capilar menor a 3 segundos. Sin cianosis distal ni acropaquia.
+
+### 8.15 NEUROLÓGICO
 Paciente vigil, colaborador(a), ubicado(a) en tiempo, espacio y persona. Escala de Glasgow 15/15 puntos (respuesta ocular 4/4, respuesta verbal 5/5 y motora 6/6). Con lenguaje fluido, coherente, repetición, denominación, articulación y prosodia adecuados. Praxia y gnosia indemnes. Memoria conservada.
 SENSIBILIDAD: sensibilidad superficial y profunda conservada. Grafiestesia, barestesia, barognosia, batiestesia, palestesia y estereognosia conservada.
 PARES CRANEALES:
@@ -189,7 +196,7 @@ Talón-rodilla: negativo bilateral.
 Movimientos rápidamente alternados: positivos bilateral.
 Prueba de Romberg: negativa.
 
-### 8.14 ARTICULAR
+### 8.16 ARTICULAR
 a) COLUMNA CERVICAL: No se evidencian tumefacciones, masas ni puntos dolorosos. Movimientos de flexo-extensión, rotación y lateralidad conservados y no dolorosos.
 
 b) COLUMNA DORSAL: No se evidencian tumefacciones, masas ni puntos dolorosos. Movilidad conservada.
