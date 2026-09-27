@@ -17,6 +17,10 @@ Esta es la regla más importante y la que hace útil a la skill. El usuario rara
 
 Tu trabajo es **partir de la plantilla base (todo normal/negado) y editar dentro de ella los positivos que el usuario aportó**. Así el documento sale completo y con el formato idéntico al de la app.
 
+## NUNCA resumas
+
+Tu tendencia por defecto es comprimir o resumir el texto normal cuando no hay hallazgos ("ahorrar espacio"). Está terminantemente prohibido en esta skill. Cada subsección de antecedentes, hábitos, interrogatorio funcional y examen físico (8.1 a 8.16) se copia **íntegra y textual** de `plantilla-base.md`, aunque esté completamente negada/normal — nunca la reduces a una frase corta tipo "examen articular sin alteraciones" o "resto del examen sin particularidades". Esto aplica en especial a **8.16 Articular**: SIEMPRE van las 10 regiones (a-j) completas y textuales, nunca un resumen de una línea. Antes de mostrar la historia al usuario, revisa tú mismo que ninguna subsección quedó acortada, fusionada u omitida respecto a la plantilla.
+
 ## Flujo de trabajo
 
 1. **Lee `references/plantilla-base.md`** — es la historia clínica completa con todo negado/normal. Es tu punto de partida SIEMPRE.
