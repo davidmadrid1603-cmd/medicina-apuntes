@@ -100,8 +100,66 @@ HOSPITALARIO (pielonefritis) – IV
 
 ---
 
+## 5. Flujo vaginal: Tricomonas, Gardnerella y E. coli
+
+**Por qué importa en el embarazo:** las tres rompen el equilibrio de la flora de lactobacilos. Sin lactobacilos no hay ácido láctico, sube el pH y aparece inflamación del cuello y de las membranas. Por eso aumentan el riesgo de **RPM, parto pretérmino, corioamnionitis y endometritis posparto**. En el embarazo **se tratan siempre que haya síntomas**, y la tricomoniasis también si es asintomática.
+
+### Tabla comparativa (lo que las diferencia)
+
+| | **Tricomoniasis** (*T. vaginalis*) | **Vaginosis bacteriana** (*Gardnerella*) | **Vaginitis aeróbica** (*E. coli*, estreptococo B, *S. aureus*) | *Candidiasis* (para comparar) |
+|---|---|---|---|---|
+| **Flujo** | Abundante, **amarillo-verdoso, espumoso**, maloliente | **Blanco-grisáceo, fino, homogéneo**, adherido a la pared | **Amarillento, purulento**, espeso | **Blanco grumoso**, "leche cortada" |
+| **Olor** | Fétido | ⭐ **A pescado**, peor tras el coito o la menstruación (aminas) | Desagradable, **no** a pescado | Sin olor |
+| **Inflamación** | ⭐ Sí: vulvovaginitis, disuria, **cérvix en fresa** (colpitis macular) | ⭐ **No**: por eso es "vaginosis" y no "vaginitis" | ⭐ **Sí, intensa**: vagina roja, dispareunia | Sí: prurito y ardor intensos |
+| **pH** | > 4,5 | > 4,5 | > 4,5 (a menudo > 6) | **< 4,5** (normal) |
+| **Prueba de aminas (KOH)** | ± | ⭐ **Positiva** | Negativa | Negativa |
+| **Microscopía** | ⭐ **Tricomonas móviles** en fresco + muchos PMN | ⭐ **Células clave** (> 20 %), **pocos PMN** | ⭐ **Muchos PMN + células parabasales**, sin lactobacilos | Hifas/levaduras con KOH |
+| **¿ITS? / pareja** | ⭐ **Sí, es ITS: tratar a la pareja** y buscar otras ITS | No es ITS: **no** se trata a la pareja | No es ITS | No es ITS |
+
+*Leyenda: RPM = rotura prematura de membranas; PMN = polimorfonucleares; KOH = hidróxido de potasio al 10 % (al agregarlo libera aminas con olor a pescado); células clave = células epiteliales tapizadas de cocobacilos que borran sus bordes.*
+
+> **Criterios de Amsel para vaginosis bacteriana (≥ 3 de 4):** flujo homogéneo, pH > 4,5, KOH positivo, células clave > 20 %. El gold standard de laboratorio es la **tinción de Gram con score de Nugent ≥ 7**.
+
+> **Sobre la E. coli:** si salió en el **urocultivo**, es una ITU y se trata con el esquema de la sección 4. Si salió en el **cultivo de flujo** con inflamación y pus, es una **vaginitis aeróbica**. Esta no se trata con metronidazol, porque el metronidazol cubre anaerobios y no enterobacterias.
+
+### Tratamiento en el embarazo
+
+```
+TRICOMONIASIS
+ ├─ Metronidazol 500 mg VO c/12 h × 7 días       (de elección; CDC 2021)
+ ├─ Alternativa: Metronidazol 2 g VO dosis única
+ ├─ TRATAR A LA PAREJA + abstinencia hasta terminar ambos
+ ├─ Pedir VIH, VDRL, clamidia y gonorrea (es ITS → buscar las demás)
+ └─ Control (test de cura) a los 3 meses: reinfección frecuente
+
+VAGINOSIS BACTERIANA (Gardnerella)
+ ├─ Metronidazol 500 mg VO c/12 h × 7 días
+ ├─ o Metronidazol gel 0,75 % intravaginal c/noche × 5 días
+ ├─ o Clindamicina 300 mg VO c/12 h × 7 días
+ └─ NO se trata a la pareja
+
+VAGINITIS AERÓBICA (E. coli)
+ ├─ Clindamicina crema vaginal 2 % c/noche × 7 días
+ └─ Si hay mucha inflamación: + corticoide tópico suave (según especialista)
+
+CANDIDIASIS (para comparar)
+ └─ Clotrimazol óvulo/crema vaginal × 7 días (en el embarazo, 7 días y no 1–3)
+    ✗ Evitar fluconazol oral en el embarazo
+```
+
+> **Metronidazol en el embarazo:** el CDC 2021 lo considera **seguro en cualquier trimestre**, porque los estudios grandes no muestran teratogenicidad. Algunos servicios prefieren evitarlo en el 1er trimestre por costumbre: pregunta qué hacen en el tuyo. Durante el tratamiento y hasta 48 h después, **sin alcohol** (efecto disulfiram).
+
+### ¿Qué no encaja?
+- **Flujo con fiebre, dolor abdominal o útero doloroso:** no es una vaginitis simple. Pensar en **corioamnionitis** o enfermedad pélvica.
+- **Flujo acuoso, transparente y que no para:** puede ser **líquido amniótico** (RPM), no infección. Hacer especuloscopía buscando salida de líquido por el orificio cervical.
+- **Flujo mucopurulento que sale del cuello y no de la vagina:** cervicitis por **clamidia o gonorrea**, frecuentes en adolescentes. Pedir PCR.
+
+---
+
 ## Fuentes
 - ACOG Committee Opinion / Clinical Consensus on UTI in pregnancy (2023) – acog.org
 - IDSA – Clinical Practice Guideline for Asymptomatic Bacteriuria (Nicolle et al., *Clin Infect Dis*, 2019)
 - OMS – Recomendaciones sobre atención prenatal para una experiencia positiva del embarazo (2016)
 - MINSAL Chile – Guía Perinatal (2015)
+- CDC – Sexually Transmitted Infections Treatment Guidelines (Workowski et al., *MMWR Recomm Rep*, 2021) – cdc.gov/std/treatment-guidelines
+- Donders GGG et al. – Aerobic vaginitis: no longer a stranger. *Res Microbiol*, 2017
