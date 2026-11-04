@@ -156,10 +156,77 @@ CANDIDIASIS (para comparar)
 
 ---
 
+## 6. Candidiasis en el embarazo: vaginitis vs. ITU
+
+**Por qué es tan frecuente en el embarazo:** los estrógenos aumentan el glucógeno vaginal, que alimenta a *Candida*, y la inmunidad celular local disminuye. Es la vaginitis más común del embarazo y recurre con facilidad. **No** se asocia a parto pretérmino (a diferencia de las de la sección 5): se trata para aliviar los síntomas.
+
+### Primero: ¿es vaginitis o es ITU?
+
+Ambas pueden dar disuria, y con frecuencia la muestra de orina se contamina con flujo. La clave está en **dónde** arde y **qué acompaña**:
+
+| | **Vaginitis por Candida** | **ITU (cistitis)** |
+|---|---|---|
+| **Disuria** | ⭐ **Externa**: arde cuando la orina toca la vulva inflamada | ⭐ **Interna**: arde "por dentro", al inicio o al final de la micción |
+| **Síntomas vesicales** | Ausentes | ⭐ Polaquiuria, urgencia, tenesmo, dolor suprapúbico |
+| **Síntomas vulvovaginales** | ⭐ **Prurito intenso**, flujo blanco grumoso, eritema y fisuras vulvares | Ausentes |
+| **Tira reactiva** | Leucocitos ±, **nitritos negativos** | Leucocitos +, **nitritos +** (*E. coli* reduce nitratos a nitritos; *Candida* no) |
+| **Examen** | Especuloscopía: placas blancas adheridas, pH < 4,5, hifas con KOH | Especuloscopía normal; puño-percusión negativa (si es positiva: pielonefritis) |
+
+> **Pueden coexistir.** Si hay prurito con flujo grumoso **y además** polaquiuria con nitritos positivos, trata las dos.
+
+### Tratamiento: vaginitis por Candida (candidiasis vulvovaginal)
+
+```
+EMBARAZO → SOLO TÓPICO, 7 DÍAS
+ ├─ Clotrimazol 100 mg óvulo vaginal c/noche × 7 días   (de elección)
+ ├─ o Clotrimazol crema 1 % intravaginal × 7–14 días
+ ├─ o Miconazol 2 % crema / óvulo 200 mg × 7 días
+ ├─ Alternativa: Nistatina 100.000 UI óvulo c/noche × 14 días (menos eficaz)
+ ├─ + crema en la vulva si hay prurito/eritema externo
+ └─ ✗ NO fluconazol oral (ni 150 mg dosis única)
+```
+
+- **Por qué 7 días y no 1–3:** en el embarazo los esquemas cortos fallan más porque el estímulo hormonal persiste. El CDC recomienda 7 días de azol tópico.
+- **Por qué no fluconazol oral:** una dosis única de 150 mg se asocia a más abortos espontáneos (Mølgaard-Nielsen, *JAMA* 2016). Las dosis altas y prolongadas (≥ 400 mg/día) se asocian a malformaciones craneofaciales.
+- **Pareja:** no se trata, salvo que tenga balanitis.
+- **Recurrente** (≥ 4 episodios/año): en el embarazo se prolonga el tópico (10–14 días) y se descarta diabetes gestacional con PTOG, porque la glucosuria favorece a *Candida*.
+
+### Tratamiento: Candida en la orina (candiduria)
+
+**Primero piensa que es contaminación.** En una embarazada con candidiasis vaginal, lo más probable es que la *Candida* del urocultivo venga del flujo, no de la vejiga.
+
+```
+URO CON CANDIDA
+ │
+ ├─ ¿Hay flujo/prurito? → tratar la vaginitis (tópico)
+ │     y REPETIR el urocultivo bien tomado:
+ │     aseo genital + tapón vaginal (gasa) + chorro medio
+ │
+ ├─ Candiduria ASINTOMÁTICA confirmada → NO se trata (IDSA 2016)
+ │     (a diferencia de la bacteriuria asintomática, que sí se trata)
+ │     → buscar causas: diabetes/glucosuria, antibióticos recientes, sonda
+ │
+ └─ Cistitis o pielonefritis por Candida (sintomática, rara)
+       → manejo con especialista/hospital
+       → en el embarazo se evita el fluconazol: la opción es
+          anfotericina B IV (la más segura en el embarazo)
+```
+
+> **La gran diferencia:** la **bacteriuria** asintomática **siempre** se trata en el embarazo (riesgo de pielonefritis y parto pretérmino). La **candiduria** asintomática **no**: casi siempre es contaminación o colonización, y tratarla expone al feto a antifúngicos sistémicos sin beneficio.
+
+### ¿Qué no encaja?
+- **Flujo "de Candida" con olor a pescado o pH > 4,5:** probablemente hay otra infección (vaginosis o tricomonas) o una infección mixta. Hacer el frotis.
+- **Candidiasis que no responde a 7 días de tópico:** pensar en especies no *albicans* (*C. glabrata*, resistente a azoles) o en **diabetes gestacional**. Pedir cultivo con especie.
+- **Candiduria con fiebre y dolor lumbar:** no es contaminación. Hospitalizar.
+
+---
+
 ## Fuentes
 - ACOG Committee Opinion / Clinical Consensus on UTI in pregnancy (2023) – acog.org
 - IDSA – Clinical Practice Guideline for Asymptomatic Bacteriuria (Nicolle et al., *Clin Infect Dis*, 2019)
 - OMS – Recomendaciones sobre atención prenatal para una experiencia positiva del embarazo (2016)
 - MINSAL Chile – Guía Perinatal (2015)
 - CDC – Sexually Transmitted Infections Treatment Guidelines (Workowski et al., *MMWR Recomm Rep*, 2021) – cdc.gov/std/treatment-guidelines
+- Pappas PG et al. – IDSA Clinical Practice Guideline for the Management of Candidiasis. *Clin Infect Dis*, 2016
+- Mølgaard-Nielsen D et al. – Association between use of oral fluconazole during pregnancy and risk of spontaneous abortion and stillbirth. *JAMA*, 2016
 - Donders GGG et al. – Aerobic vaginitis: no longer a stranger. *Res Microbiol*, 2017
